@@ -79,4 +79,4 @@ theme: landscape
 deploy:
   type: git
   repo: git@github.com:aliceeee/aliceeee.github.io.git
-  branch: hexo_version
+  branch: master
