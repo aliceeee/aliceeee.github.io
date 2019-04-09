@@ -1,6 +1,10 @@
 language: node_js
 node_js: stable
 
+# safelist
+branches:
+  only:
+  - hexo_version
 
 cache:
   directories:
