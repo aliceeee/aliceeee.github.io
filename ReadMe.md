@@ -4,6 +4,12 @@
 
 My blog
 
+# Development
+
+Branch master, is release branch.
+
+Branch hexo_version, is current develop branch.
+
 # Dependency
 
 ## Hexo
@@ -18,6 +24,7 @@ Run
 ```
 npm install -g hexo
 ```
+
 * Init
 
 Go to the project root directory.
