@@ -16,4 +16,7 @@ script:
 - hexo clean
 - hexo generate
 after_success:
+- git config user.name "alice"
+- git config user.email "alice"
+- sed -i "s/mytoken/${mytoken}/g" ./_config.yml
 - hexo deploy
