@@ -8,39 +8,23 @@ My blog
 
 Branch master, is release branch.
 
-Branch hexo_version, is current develop branch.
+Branch hexo_version, is current development branch.
 
-# Dependency
+## Local setup
 
-## Hexo
+- Install nodejs
 
-[Hexo](https://hexo.io/zh-cn/docs/) is a fast, simple & powerful blog framework
+- Clone code
 
-* Environment
-
-Install nodejs
-
-Run 
+- Run 
 ```
-npm install -g hexo
-```
-
-* Init
-
-Go to the project root directory.
-
-For the first time, run
-```shell
-hexo init 
-```
-
-After clone, run
-```shell
 npm install
 npm install hexo-deployer-git --save
+npm i hexo-generator-json-content --save  # support Yilia filter
+npm install hexo-toc --save # support toc
 ```
 
-* Usage
+## Local Run
 
 ```shell
 hexo new [layout] <title>
@@ -63,4 +47,10 @@ hexo clean
 hexo list <type>
 ```
 
+# Reference
 
+* [Hexo](https://hexo.io/zh-cn/docs/) 
+
+* [Theme Yilia](https://github.com/litten/hexo-theme-yilia)
+
+* [Theme NexT](http://theme-next.iissnan.com/)
