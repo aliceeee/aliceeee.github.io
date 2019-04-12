@@ -1,12 +1,14 @@
 ---
 title: Nginx Configuration
 tags:
-    - nginx
-    - configuration
+  - nginx
+  - configuration
 categories:
-    - Tech
-toc: true        
+  - Tech
+toc: true
+date: 2019-04-12 16:19:20
 ---
+
 
 # 如何调试Nginx配置
 
