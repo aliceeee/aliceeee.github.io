@@ -21,7 +21,6 @@ Branch hexo_version, is current development branch.
 npm install
 npm install hexo-deployer-git --save
 npm i hexo-generator-json-content --save  # support Yilia filter
-npm install hexo-toc --save # support toc
 ```
 
 ## Local Run
@@ -47,9 +46,20 @@ hexo clean
 hexo list <type>
 ```
 
+## toc support
+
+>  [Hexo toc](https://github.com/bubkoo/hexo-toc)
+
+问题是使用后侧栏的目录会失效，所以不使用
+```
+npm install hexo-toc --save # support toc, usage: https://github.com/bubkoo/hexo-toc
+```
+
+
 # Reference
 
 * [Hexo](https://hexo.io/zh-cn/docs/) 
+
 
 * [Theme Yilia](https://github.com/litten/hexo-theme-yilia)
 

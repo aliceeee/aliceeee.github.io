@@ -6,11 +6,13 @@ tags:
     - cheatsheet
 categories:  
     - Tech
-toc: true    
+    
 ---
-
+<!-- toc -->
 
 See [Official Manual](https://git-scm.com/docs)
+
+<!-- more -->
 
 # Clone
 

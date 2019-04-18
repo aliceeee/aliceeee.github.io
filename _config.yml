@@ -14,7 +14,7 @@ timezone:
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: http://aliceeee.github.io
 root: /
-permalink: :year/:month/:day/:title/
+permalink: :year/:title/ # :year/:month/:day/:title/
 permalink_defaults:
 
 # Directory
@@ -81,7 +81,17 @@ deploy:
   repo: https://mytoken@github.com/aliceeee/aliceeee.github.io.git
   branch: master
 
-
+# hexo-toc
+# https://github.com/bubkoo/hexo-toc
+toc:
+  maxdepth: 6
+  class: toc
+  slugify: transliteration
+  decodeEntities: false
+  anchor:
+    position: after
+    symbol: ''
+    style: header-anchor
 
 jsonContent:
   meta: false

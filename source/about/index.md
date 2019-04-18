@@ -3,6 +3,6 @@ title: About Me
 date: 2019-04-11 17:48:51
 ---
 
-Hello
+I am Alice.  That's all.  
 
-{% asset_img avatar.gif Avatar %}
+Thank you!
