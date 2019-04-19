@@ -8,7 +8,7 @@ categories:
     - Tech
     
 ---
-<!-- toc -->
+
 
 See [Official Manual](https://git-scm.com/docs)
 

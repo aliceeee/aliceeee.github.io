@@ -81,17 +81,20 @@ deploy:
   repo: https://mytoken@github.com/aliceeee/aliceeee.github.io.git
   branch: master
 
-# hexo-toc
-# https://github.com/bubkoo/hexo-toc
-toc:
-  maxdepth: 6
-  class: toc
-  slugify: transliteration
-  decodeEntities: false
-  anchor:
-    position: after
-    symbol: ''
-    style: header-anchor
+# npm install hexo-generator-searchdb --save
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
+
+# Dependencies: https://github.com/theme-next/hexo-symbols-count-time
+symbols_count_time:
+    symbols: true
+    time: true
+    total_symbols: true
+    total_time: true
+
 
 jsonContent:
   meta: false
