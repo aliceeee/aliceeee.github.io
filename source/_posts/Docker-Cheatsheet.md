@@ -1,15 +1,17 @@
 ---
 title: Docker Cheatsheet
 tags:
-    - docker
-    - cheatsheet
+  - docker
+  - cheatsheet
 categories:
-    - Tech
+  - Tech
+date: 2019-04-23 15:16:49
 ---
 
-> See [Use the Docker command line](https://docs.docker.com/engine/reference/commandline/cli/)
 
+参考：[Use the Docker command line](https://docs.docker.com/engine/reference/commandline/cli/)
 
+<!-- more -->
 
 # Common
 
@@ -19,8 +21,6 @@ docker version
 docker --help
 docker attach --help
 ```
-
-<!-- more -->
 
 # Images
 
@@ -40,6 +40,26 @@ To see which images are present locally
 docker images
 ```
 
+```
+
+docker pull xxx:v1
+
+docker search xxx
+
+
+
+# create image from container
+docker commit -m "comments" -a "" <md5> xxx:v1
+
+# Remove image
+docker rmi xxx:v1
+# Clean dangling images
+docker images|grep \<none\>|awk '{print $3}'|xargs docker rmi
+docker rmi $(docker images -f "dangling=true" -q)
+
+docker history xxx:v1
+
+```
 
 # Containers
 

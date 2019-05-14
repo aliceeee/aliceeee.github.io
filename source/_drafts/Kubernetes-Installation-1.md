@@ -7,4 +7,6 @@ categories:
     - Tech
 ---
 
+https://kubernetes.io/docs/setup/minikube/
+
 

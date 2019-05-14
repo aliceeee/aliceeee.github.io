@@ -149,12 +149,19 @@ location / {
           proxy_pass http://example/;
           proxy_set_header  X-Real-IP  $remote_addr;
           proxy_set_header  X-Forwarded-For  $remote_addr;
-          error_page 502 503 504 /maintainance.html;
+          error_page 502 503 504 = /maintainance.html;
   }
 
   location = /maintainance.html {
           root /path/to/html/;
   }
+```
+或者
+```
+500 502 503 504 @jump_to_error;
+location @jump_to_error {    
+    ...
+}
 ```
 
 ### Websocket Support
