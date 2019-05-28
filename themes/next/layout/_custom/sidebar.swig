@@ -12,7 +12,7 @@
             <a href="{{ url_for(config.tag_dir) + '/' }}"> {{visibleTags}} Tags </a>
         </div>
         <div class="tag-cloud-tags">
-            {{ tagcloud({min_font: 12, max_font: 18, amount: 200, color: true, start_color: '#ccc', end_color: '#111'}) }}
+            {{ tagcloud({min_font: 12, max_font: 18, amount: 10, color: true, start_color: '#ccc', end_color: '#111'}) }}
         </div>
     </div>
 {% endif %}

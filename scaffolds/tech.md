@@ -7,11 +7,11 @@ categories:
     - Tech
 ---
 
+# Introduction
+
 <!-- more -->
 
-# 1 Install
-
-## Standalone
+# Install
 
 环境
 
@@ -22,9 +22,7 @@ categories:
 验证
 
 
-## 集群安装
-
-# 2 Startup
+# Startup
 
 # Q&A
 

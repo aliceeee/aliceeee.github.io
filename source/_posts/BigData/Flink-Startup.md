@@ -25,7 +25,6 @@ Download
 https://flink.apache.org/downloads.html
 
 ```
-cd /apps/svr
 wget http://mirror.bit.edu.cn/apache/flink/flink-1.7.2/flink-1.7.2-bin-scala_2.11.tgz
 tar xzf flink-*.tgz
 cd flink-1.7.2
@@ -33,7 +32,7 @@ cd flink-1.7.2
 ./bin/start-cluster.sh
 ```
 
-浏览器访问：http://10.199.168.127:8081
+浏览器访问：http://localhost:8081
 
 ## Local Setup on Windows
 
@@ -65,7 +64,7 @@ nc -l 9009
 ```
 会话2，运行example
 ```bash
-cd /apps/svr/flink-1.7.2/
+cd $FLINK_HOME
 
 ./bin/flink run examples/streaming/SocketWindowWordCount.jar --port 9009
 ```
