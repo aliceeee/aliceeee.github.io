@@ -96,6 +96,34 @@ squash a931ac7 c
 ```
 保存后修改comment即可
 
+## Git修改上一次commit人
+> https://www.jianshu.com/p/7def4f387e9f
+
+修改最近一次
+```sh
+git commit --amend --author="userName <userEmail>"
+```
+
+批量修改
+```sh
+git filter-branch --env-filter '
+if [ "$GIT_AUTHOR_NAME" = "oldName" ]
+then
+export GIT_AUTHOR_NAME="newName"
+export GIT_AUTHOR_EMAIL="newEmail"
+fi
+' ref..HEAD
+
+git filter-branch --env-filter '
+if [ "$GIT_COMMITTER_NAME" = "oldName" ]
+then
+export GIT_COMMITTER_NAME="newName"
+export GIT_COMMITTER_EMAIL="newEmail"
+fi
+' ref..HEAD
+```
+
+
 # Git gc
 控制git repo大小
 ```

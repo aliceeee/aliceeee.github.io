@@ -33,6 +33,10 @@ cd flink-1.7.2
 ```
 
 浏览器访问：http://localhost:8081
+组件
+- TaskManagerRunner:28634/32732和本地13076
+- StandaloneSessionClusterEntrypoint:6123/8081/4767/22889
+
 
 ## Local Setup on Windows
 
@@ -47,12 +51,12 @@ start-cluster.bat
 浏览器访问：http://localhost:8081
 
 
-# Configuration
+# Configuration                               
 
 flink-1.7.2/conf/flink-conf.yaml
 
-
-# Streaming Example：SocketWindowWordCount
+# Example
+## Streaming Example：SocketWindowWordCount
 
 Java代码：https://github.com/apache/flink/blob/master/flink-examples/flink-examples-streaming/src/main/java/org/apache/flink/streaming/examples/socket/SocketWindowWordCount.java
 
@@ -75,3 +79,11 @@ tail -f flink-*-taskexecutor-*.out
 在会话1中输入一些什么，按回车提交
 
 这个例子功能是：每5s统计输入（会话1）的单词出现次数
+
+## Batch Examples: WordCount
+> https://ci.apache.org/projects/flink/flink-docs-release-1.8/dev/batch/examples.html#word-count
+> 代码 https://github.com/apache/flink/blob/master//flink-examples/flink-examples-batch/src/main/java/org/apache/flink/examples/java/wordcount/WordCount.java
+
+```sh
+./bin/flink run examples/streaming/WordCount.jar --input a.log --output result.log
+```

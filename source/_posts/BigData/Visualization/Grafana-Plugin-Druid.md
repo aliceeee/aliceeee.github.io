@@ -16,18 +16,27 @@ date: 2019-05-22 15:12:25
 Grafana从apache druid数据源获取数据。找到以下官方插件，但是很久不更新了。
 
 > 官方插件开发：https://github.com/grafana-druid-plugin/druidplugin
-
-另外有一个贡献者的forked version
 > 维护者相关讨论：https://github.com/grafana-druid-plugin/druidplugin/issues/91 
+
+其中一个贡献者另外维护的的forked version
 > forked version：https://github.com/GoshPosh/druidplugin 
 
 <!-- more -->
 
+两者对比如下表
 
-# 加入开发
-Fork项目地址：git@github.com:aliceeee/druidplugin.git
+ Name  | grafana-druid-plugin/druidplugin | GoshPosh/druidplugin 
+---- | --- | ---
+代码维护 | 较旧 | 较新
+dashboard variable支持 |  无 | 无
+Alert支持 | 无 | 支持 [Issue](https://github.com/grafana/grafana/issues/6841) [Un-merged Commit](https://github.com/GoshPosh/druidplugin/pull/20)
 
-代码目录下
+# Compile, package and deployment
+Clone from 
+git@github.com:aliceeee/druidplugin.git 
+OR 
+git@github.com:GoshPosh/druidplugin.git
+
 ```sh
 npm install
 grunt
@@ -36,9 +45,9 @@ zip druidplugin.zip druidplugin
 ```
 把zip放到grafana的plugins目录下，重启grafana
 
-
 # 二次开发
-## 支持grafana dashboard variable
+
+## Fix dashboard template variables（Based on grafana-druid-plugin/druidplugin）
 
 > 讨论：https://github.com/grafana-druid-plugin/druidplugin/issues/47
 
@@ -91,6 +100,7 @@ zip druidplugin.zip druidplugin
     return this.backendSrv.datasourceRequest(options);
   };
 ```
+
 
 # 参考
 

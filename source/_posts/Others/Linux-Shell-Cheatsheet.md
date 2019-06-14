@@ -7,6 +7,26 @@ categories:
 
 <!-- more -->
 
+# Shell 
+
+## Logic
+
+### for
+
+```sh
+for file in ./*
+do
+    if test -f $file
+    then
+        echo $file is file
+    fi
+    if test -d $file
+    then
+        echo $file is dictionary
+    fi
+done
+```
+
 # Network
 
 ## DNS
@@ -46,3 +66,13 @@ tc qdisc add dev eth0 root netem delay 100ms
 tc qdisc del dev eth0 root netem delay 100ms
 
 ```
+
+# Common
+## Date & Time
+
+```
+# date +%Y%m%d
+20190613
+
+```
+

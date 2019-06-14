@@ -87,6 +87,14 @@ CoordinatorConsole: http://localhost:8081
 - 日志：${DRUID_HOME}/var/sv/*.log
 - Resetting cluster state: 删除${DRUID_HOME}/var目录
 - Resetting Kafka: 删除/tmp/kafka-logs
+- 组件进程和端口映射
+  - zk:2181
+  - coordinator:8081
+  - broker:8082
+  - historical:8083
+  - router:8888
+  - overlord:8090
+  - middleManager:8091
 
 如果出现启动报错， zk.log出现：Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain，检查zk引用是否正确。
 
@@ -166,3 +174,8 @@ select * from "rollup-tutorial";
 # SQL
 
 > http://druid.io/docs/latest/querying/sql.html
+
+# Data Ingestion
+
+## Kafka Indexing Service (Stream Pull)
+> http://druid.io/docs/0.14.0-incubating/development/extensions-core/kafka-ingestion.html

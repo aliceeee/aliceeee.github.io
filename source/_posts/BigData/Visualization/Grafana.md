@@ -62,6 +62,7 @@ cat conf/defaults.ini |grep admin
 # 插件
 
 > Install Plugins: http://docs.grafana.org/plugins/installation/
+> Plugin Repo: https://grafana.com/plugins
 
 ## 手动安装插件
 

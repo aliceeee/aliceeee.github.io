@@ -147,3 +147,16 @@ Remove a volumn
 ```
 docker rm -v 
 ```
+
+
+# Q & A
+
+## `docker stop` has no effect and `docker rm --force` with 'device or resource busy'
+
+```sh
+# 找出没有umount的路径
+cat /proc/mounts | grep "mapper/docker" | awk '{print $2}'
+
+# 依次umount
+# 略
+```
