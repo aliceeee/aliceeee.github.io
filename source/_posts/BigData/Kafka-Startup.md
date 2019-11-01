@@ -124,12 +124,24 @@ listeners = PLAINTEXT://<ip>:9093
 advertised.listeners=PLAINTEXT://<ip>:9093
 ```
 
+## Java 参数
+设置环境变量：KAFKA_HEAP_OPTS="-Xms512m -Xmx1g"
+或者启动脚本
+
+## 清理数据
+
+```
+log.retention.hours=168 //保留7d
+log.retention.check.interval.ms=300000 //5min检查一次segment是否过期
+log.segment.bytes=1073741824 //1G，超过生成一个新的
+```
+
 # Commands
 
 ## Topic
 
 查看topic信息
-```
+```sh
 bin/kafka-topics.sh --zookeeper 127.0.0.1:2181 --topic "test-topic" --describe
 ```
 - "leader" is the node responsible for all reads and writes for the given partition. Each node will be the leader for a randomly selected portion of the partitions.
@@ -138,14 +150,27 @@ bin/kafka-topics.sh --zookeeper 127.0.0.1:2181 --topic "test-topic" --describe
 
 
 查看指定group信息
-```
+```sh
 bin/kafka-topics.sh --new-consumer --bootstrap-server 127.0.0.1:9092 --group test-group --describe
 ```
-
 
 ## Balancing leadership
 
 重平衡
 ```
 bin/kafka-preferred-replica-election.sh --zookeeper 127.0.0.1:2181
+```
+
+## Consumer
+
+查看消费组
+```sh
+# list
+bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --list
+
+# describe group 
+bin/kafka-consumer-groups.sh  --bootstrap-server localhost:9092 --group xxx --describe
+# describe group - expired
+bin/kafka-topics.sh --new-consumer --bootstrap-server 127.0.0.1:9092 --group test-group --describe
+
 ```

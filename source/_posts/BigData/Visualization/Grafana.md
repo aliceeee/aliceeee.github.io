@@ -44,6 +44,23 @@ cd grafana-6.1.6
 Default configuration from `$WORKING_DIR/conf/defaults.ini`
 Custom configuration from `$WORKING_DIR/conf/custom.ini`
 
+Example
+```
+[database]
+url=mysql://user:pwd@ip:3306/grafana
+type=mysql
+
+[auth.anonymous]
+enabled = true
+org_role = Viewer
+
+[security]
+# set to true if you want to allow browsers to render Grafana in a <frame>, <iframe>, <embed> or <object>. default is false.
+# https://github.com/grafana/grafana/issues/14189
+allow_embedding = true
+
+```
+
 ## 自定义配置
 
 会覆盖默认配置

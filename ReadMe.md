@@ -6,9 +6,9 @@ My blog
 
 # Development
 
-Branch master, is release branch.
+Branch `master`, is release branch.
 
-Branch hexo_version, is current development branch.
+Branch `hexo_version`, is current development branch.
 
 ## Install
 
