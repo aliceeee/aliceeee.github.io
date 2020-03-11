@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[Hive SQL Cheatsheet]]></title>
+    <url>%2FTech%2FBigData%2FHive-SQL-Cheatsheet%2F</url>
+    <content type="text"><![CDATA[database123456show databases;show tables in default;-- 使用默认库use default ; Table信息123desc tmp_table;show create table tmp_namespace.tmp_table; DDL删除表1drop table if exists tmp_table; 创建表12345678910create table tmp_table( name string, hobby array&lt;string&gt;, add map&lt;String,string&gt;)partitioned by (dt string comment 'date', hm string comment 'hour and minut')ROW FORMAT DELIMITED FIELDS TERMINATED BY ','collection items terminated by '-'map keys terminated by ':'; 创建分区1alter table tmp_table add partition(dt='20190101', hm='0000') partition(dt='20190101', hm='0100'); 插入数据123456789insert into table tmp_table partition(dt='20190101', hm='0000') select 'a', array('sing,dance'), str_to_map('a:1,b:2') ;``` 查看```sqldesc tmp_table;show create table tmp_table;show partitions tmp_table; 字符串替换1234567891011121314151617181920212223select regexp_replace('[a,b,c]','\\[|\\]','') -- 把方括号替换``` 多行拼接```sql-- slow, why?select concat_ws(',',collect_set(val)) from dual lateral view explode(array('a','b','c','a')) tmp_table as val; ``` # 日期```sqlselect unix_timestamp(); -- 当前时间戳：1572425940select current_timestamp(); -- 当前日期：2019-10-30 16:59:24.24select date_add('2019-10-31', 1); -- tomorrowselect date_sub('2019-10-31', 1); -- yesterdayselect unix_timestamp('2018-06-29 00:00:00'); -- string to timestamp: 1530201600select unix_timestamp('2018/06/29 09', 'yyyy/MM/dd HH'); -- string to timestamp: 1530234000select from_unixtime(1356768454, 'yyyy-MM-dd HH:mm:ss'); -- timestamp to string 内置UDTF查看Function/UDF123SHOW FUNCTIONS;DESCRIBE FUNCTION &lt;function_name&gt;;DESCRIBE FUNCTION EXTENDED &lt;function_name&gt;; 数组转表12345select explode(array('a','b','c')) as col;select table_b.col from dual lateral view explode(array('a','b','c','a')) table_b as col; -- UDTF cannot be used in select JSON转表123select get_json_object('&#123;"a":1,"b":2&#125;','$.a') as col;select get_json_object('&#123;"list":[&#123;"a":1&#125;,&#123;"a":11&#125;,&#123;"a":111&#125;]&#125;','$.list.a') ; 123select * from tmp_table lateral view json_tuple('&#123;"a":1,"b":2&#125;','a','b') tmp_json as col_a, col_b;]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>cheatsheet</tag>
+        <tag>hive</tag>
+        <tag>sql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Google protobuf - 开源序列化框架]]></title>
+    <url>%2FTech%2FJava%2FGoogle-protobuf-%E5%BC%80%E6%BA%90%E5%BA%8F%E5%88%97%E5%8C%96%E6%A1%86%E6%9E%B6%2F</url>
+    <content type="text"><![CDATA[Introduction 官方文档：https://developers.google.com/protocol-buffers/?hl=zh-CN 官方代码：https://github.com/protocolbuffers/protobuf Google Protocol Buffer 的使用和原理： https://www.ibm.com/developerworks/cn/linux/l-cn-gpb/index.html Protobuf 有没有比 JSON 快 5 倍？： https://www.infoq.cn/article/json-is-5-times-faster-than-protobuf Protocol buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data. InstallIntellJ Plugin插件 Protobuf Support Java maven project12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849&lt;properties&gt; &lt;protobuf.version&gt;2.5.0&lt;/protobuf.version&gt;&lt;/properties&gt;&lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;com.google.protobuf&lt;/groupId&gt; &lt;artifactId&gt;protobuf-java&lt;/artifactId&gt; &lt;version&gt;$&#123;protobuf.version&#125;&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;com.googlecode.protobuf-java-format&lt;/groupId&gt; &lt;artifactId&gt;protobuf-java-format&lt;/artifactId&gt; &lt;version&gt;1.4&lt;/version&gt; &lt;/dependency&gt;&lt;/dependencies&gt;&lt;build&gt; &lt;plugins&gt; &lt;plugin&gt; &lt;groupId&gt;com.github.os72&lt;/groupId&gt; &lt;artifactId&gt;protoc-jar-maven-plugin&lt;/artifactId&gt; &lt;version&gt;3.5.1.1&lt;/version&gt; &lt;executions&gt; &lt;execution&gt; &lt;phase&gt;generate-sources&lt;/phase&gt; &lt;goals&gt; &lt;goal&gt;run&lt;/goal&gt; &lt;/goals&gt; &lt;configuration&gt; &lt;protocVersion&gt;$&#123;protobuf.version&#125;&lt;/protocVersion&gt; &lt;inputDirectories&gt; &lt;include&gt;src/main/proto&lt;/include&gt; &lt;/inputDirectories&gt; &lt;!-- &lt;outputTargets&gt; &lt;outputTarget&gt; &lt;type&gt;java&lt;/type&gt; &lt;addSources&gt;none&lt;/addSources&gt; &lt;outputDirectory&gt;target/generated-sources/java&lt;/outputDirectory&gt; &lt;/outputTarget&gt; &lt;/outputTargets&gt; --&gt; &lt;/configuration&gt; &lt;/execution&gt; &lt;/executions&gt; &lt;/plugin&gt; &lt;/plugins&gt;&lt;/build&gt; Manual 2.5 官方java版：https://developers.google.com/protocol-buffers/docs/javatutorial?hl=zh-CN Example 写proto文件 1234567891011121314151617181920212223242526272829syntax = &quot;proto2&quot;;package tutorial;option java_package = &quot;com.example.tutorial&quot;;option java_outer_classname = &quot;AddressBookProtos&quot;;message Person &#123;required string name = 1;required int32 id = 2;optional string email = 3;enum PhoneType &#123;MOBILE = 0;HOME = 1;WORK = 2;&#125;message PhoneNumber &#123;required string number = 1;optional PhoneType type = 2 [default = HOME];&#125;repeated PhoneNumber phones = 4;&#125;message AddressBook &#123;repeated Person people = 1;&#125; 下载编译器 Download Protocol Buffers https://github.com/protocolbuffers/protobuf/releases/tag/v2.5.0可以用windows版本：protoc-2.5.0-win32 编译1：手动编译项目根目录下 12protoc.exe --versionprotoc.exe -I src\main\proto\ --java_out=src\main\java\ src\main\proto\Person.proto 得到java类，注意包名 编译2：maven编译配置如上面pom，target对应目录上会生成java文件，所在文件夹设为java source即可 参考：https://www.cnblogs.com/crazymakercircle/p/10093385.html 问题：编译失败 使用1Person p = Person .newBuilder().setName(ByteString.copyFromUtf8("somename")).build(); Protobuf to String12Person p = Person .newBuilder().setName(ByteString.copyFromUtf8("somename")).build();String str = TextFormat.printToUnicodeString(p); 逐一输出所有字段，和proto文件格式类似 Protobuf to JSON使用fastjson等失败，需要用12345&lt;dependency&gt;&lt;groupId&gt;com.googlecode.protobuf-java-format&lt;/groupId&gt;&lt;artifactId&gt;protobuf-java-format&lt;/artifactId&gt;&lt;version&gt;1.4&lt;/version&gt;&lt;/dependency&gt; 使用123byte[] content = xxx;UserBaseInfo user = UserBaseInfo.parseFrom(content);String json = new JsonFormat().printToString(user ); 如果对象中有字段是中文，看保存字段类型，如果是bytestring，那么会出现编码问题。如果string可能没问题。 JSON to Protobuf12345UserPurposeSumInfo.Builder builder = UserPurposeSumInfo.newBuilder();new JsonFormat().merge(new ByteArrayInputStream(jsonStr.getBytes()), builder);UserPurposeSumInfo info = builder.build(); String to ByteString类赋值的时候需要类型转换1234public static ByteString toByteString(String value) &#123; return ByteString.copyFromUtf8(value);&#125;]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>startup</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[XML-Based Swagger 2 Configuration With Spring MVC]]></title>
+    <url>%2FTech%2FJava%2FSpring%2FXML-Based-Swagger-2-Configuration-With-Spring-MVC%2F</url>
+    <content type="text"><![CDATA[Introduction XML-Based Swagger 2 Configuration With Spring MVC Below is the step-by-step guide to configuring Swagger 2 with Spring MVC using an XML-based configuration. Envspring version: 4.0.5.RELEASE servlet-api: 2.5 Springfox-swagger: 2.6.1 Stepspom.xml12345678910111213&lt;!--Dependency for swagger 2 --&gt;&lt;dependency&gt; &lt;groupId&gt;io.springfox&lt;/groupId&gt; &lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt; &lt;version&gt;2.6.1&lt;/version&gt;&lt;/dependency&gt;&lt;!--Dependency for swagger ui --&gt;&lt;dependency&gt; &lt;groupId&gt;io.springfox&lt;/groupId&gt; &lt;artifactId&gt;springfox-swagger-ui&lt;/artifactId&gt; &lt;version&gt;2.6.1&lt;/version&gt;&lt;/dependency&gt; servlet-context.xml12345678910111213141516171819&lt;!--Here com.example.service is the base package for swagger configuration --&gt;&lt;context:component-scan base-package="com.example.service" use-default-filters="false"&gt; &lt;context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" /&gt; &lt;context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" /&gt;&lt;/context:component-scan&gt;&lt;!-- for swagger --&gt;&lt;bean id="swagger2Config" class="springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration"&gt;&lt;/bean&gt;&lt;mvc:resources order="1" location="/resources/" mapping="/resources/**" /&gt;&lt;mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/" /&gt;&lt;mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/" /&gt;&lt;mvc:default-servlet-handler /&gt; web.xml123456789&lt;servlet&gt; &lt;servlet-name&gt;xxx&lt;/servlet-name&gt; &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt; &lt;init-param&gt; &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt; &lt;param-value&gt;classpath:servlet-context.xml&lt;/param-value&gt; &lt;/init-param&gt; &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;&lt;/servlet&gt; Start server and visit http://&lt;Your Host&gt;:&lt;Port&gt;/&lt;Context&gt;/Swagger-ui.html]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+        <tag>mvc</tag>
+        <tag>swagger2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Spark Startup]]></title>
+    <url>%2FTech%2FBigData%2FSpark-Startup%2F</url>
+    <content type="text"><![CDATA[InstallationSpark 2.4.0 Standalone Monde See https://spark.apache.org/docs/latest/spark-standalone.html Pre-installjdk 8 Downloadhttps://spark.apache.org/downloads.html 123wget http://mirror.bit.edu.cn/apache/spark/spark-2.4.0/spark-2.4.0-bin-hadoop2.7.tgztar -zxf spark-2.4.0-bin-hadoop2.7.tgzcd spark-2.4.0-bin-hadoop2.7 Start server1./sbin/start-master.sh 启动后 WebUI: http://ip_address:8080/ Spark服务：7077 Starting a Cluster Manually See https://spark.apache.org/docs/latest/spark-standalone.html#starting-a-cluster-manually 使用命令手动启动整个集群。类似上面，启动更多worker并关联到mater1./sbin/start-slave.sh &lt;master-spark-URL&gt; Cluster Launch Scripts使用脚本启动集群 See https://spark.apache.org/docs/latest/spark-standalone.html#cluster-launch-scripts 创建配置 &lt;SPARK_HOME&gt;/conf/slaves，内容是所有worker的主机名，一行一个。如果不存在conf/slaves即单机模式。master和worker通过ssh Configuration https://spark.apache.org/docs/latest/configuration.html Environment variablesscripts启动可以复制conf/spark-env.sh.template创建配置： conf/spark-env.sh StartupRunning the Examples and Shellhttps://spark.apache.org/docs/latest/#running-the-examples-and-shell 123cd &lt;SPARK_HOME&gt;# bin/run-example &lt;class&gt; [params]./bin/run-example SparkPi 10 Launching Spark Applications使用spark-submit See https://spark.apache.org/docs/latest/submitting-applications.html 分析上面命令 bin/run-example，可以得到运行测试任务SparkPi 的实际命令是1./bin/spark-submit run-example SparkPi 10]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>starkup</tag>
+        <tag>spark</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Log4j 2 Startup]]></title>
+    <url>%2FTech%2FJava%2FLog4j-2-Startup%2F</url>
+    <content type="text"><![CDATA[Introduction 官网：http://logging.apache.org/log4j/2.x/ InstallationInstall See http://logging.apache.org/log4j/2.x/maven-artifacts.htmlMaven pom.xmlpom.xml12345678910&lt;dependency&gt; &lt;groupId&gt;org.apache.logging.log4j&lt;/groupId&gt; &lt;artifactId&gt;log4j-api&lt;/artifactId&gt; &lt;version&gt;2.11.2&lt;/version&gt;&lt;/dependency&gt;&lt;dependency&gt; &lt;groupId&gt;org.apache.logging.log4j&lt;/groupId&gt; &lt;artifactId&gt;log4j-core&lt;/artifactId&gt; &lt;version&gt;2.11.2&lt;/version&gt;&lt;/dependency&gt; Install Log4j with Slf4j https://www.slf4j.org/manual.html pom.xml12345&lt;dependency&gt; &lt;groupId&gt;org.slf4j&lt;/groupId&gt; &lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt; &lt;version&gt;1.8.0-beta4&lt;/version&gt;&lt;/dependency&gt; 这会同时包含slf4j-api和log4j-1依赖 Configuration http://logging.apache.org/log4j/2.x/manual/configuration.html Configuration of Log4j 2 can be accomplished in 1 of 4 ways: Through a configuration file written in XML, JSON, or YAML. Programmatically, by creating a ConfigurationFactory and Configuration implementation. Programmatically, by calling the APIs exposed in the Configuration interface to add components to the default configuration. Programmatically, by calling methods on the internal Logger class. Usage日志到标准输出log4j.properties123456log4j.rootLogger=info, STDOUTlog4j.appender.STDOUT=org.apache.log4j.ConsoleAppender#log4j.appender.STDOUT.Target=System.outlog4j.appender.STDOUT.layout=org.apache.log4j.PatternLayoutlog4j.appender.STDOUT.layout.ConversionPattern=[%-5p] %d&#123;yyyy-MM-dd HH:mm:ss,SSS&#125; method:%l%n%m%n 日志到文件log4j.properties123456log4j.appender.LOGFILE=org.apache.log4j.RollingFileAppenderlog4j.appender.LOGFILE.MaxFileSize=100MBlog4j.appender.LOGFILE.MaxBackupIndex=10log4j.appender.LOGFILE.File=/tmp/xxx.loglog4j.appender.LOGFILE.layout=org.apache.log4j.PatternLayoutlog4j.appender.LOGFILE.layout.ConversionPattern=%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125; %p [metric-detection] [%t] %c %x - %m%n 指定某些包/类的日志log4j.properties12345log4j.logger.org.test=debug,console# 默认情况下 子Logger 会继承 父Logger 的appender，也就是说 子Logger 会在 父Logger 的appender里输出。# 若是additivity设为false，则 子Logger 只会在自己的appender里输出，而不会在 父Logger 的appender里输出。log4j.additivity.org.test=false]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>startup</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Grafana Plugin - Druid]]></title>
+    <url>%2FTech%2FBigData%2FVisualization%2FGrafana-Plugin-Druid%2F</url>
+    <content type="text"><![CDATA[背景Grafana从apache druid数据源获取数据。找到以下官方插件，但是很久不更新了。 官方插件开发：https://github.com/grafana-druid-plugin/druidplugin维护者相关讨论：https://github.com/grafana-druid-plugin/druidplugin/issues/91 其中一个贡献者另外维护的的forked version forked version：https://github.com/GoshPosh/druidplugin 两者对比如下表 Name grafana-druid-plugin/druidplugin GoshPosh/druidplugin 代码维护 较旧 较新 dashboard variable支持 无 无 Alert支持 无 支持 Issue Un-merged Commit Compile, package and deploymentClone fromgit@github.com:aliceeee/druidplugin.gitORgit@github.com:GoshPosh/druidplugin.git 1234npm installgruntcd ..zip druidplugin.zip druidplugin 把zip放到grafana的plugins目录下，重启grafana 二次开发Fix dashboard template variables（Based on grafana-druid-plugin/druidplugin） 讨论：https://github.com/grafana-druid-plugin/druidplugin/issues/47 参考以上讨论中的实现 src/datasource.ts123456789101112131415161718192021222324252627282930313233343536373839404142434445metricFindQuery(query: any) &#123; let druidSqlQuery = &#123; query: this.templateSrv.replace(query), // 为了实现variable相互引用，实现级联查询 context: &#123; "sqlTimeZone": this.periodGranularity &#125; &#125; return new Promise((resolve, reject) =&gt; &#123; this._druidQuery(druidSqlQuery, "/druid/v2/sql") .then( result =&gt; &#123; let variableData = result.data .map(row =&gt; &#123; let vals = [] for (let property in row) &#123; vals.push(&#123; "text": row[property] &#125;) &#125; return vals; &#125;) .reduce((a, b) =&gt; &#123; return a.concat(b) &#125;) resolve(variableData) &#125;, error =&gt; &#123; console.log(error.data.errorMessage) reject(new Error(error.data.errorMessage)) &#125; ) &#125;)&#125;_druidQuery(query, path = "/druid/v2/") &#123; let options = &#123; method: 'POST', url: this.url + path, data: query &#125;; console.log("Make http request"); console.log(options); return this.backendSrv.datasourceRequest(options);&#125;; 参考 官方插件开发指南：https://grafana.com/docs/plugins/developing/development/官方datasource插件开发：https://grafana.com/docs/plugins/developing/datasources/]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>druid</tag>
+        <tag>apache</tag>
+        <tag>grafana</tag>
+        <tag>plugin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Grafana]]></title>
+    <url>%2FTech%2FBigData%2FVisualization%2FGrafana%2F</url>
+    <content type="text"><![CDATA[IntroductionGrafana - UI of analytics and monitoringThe open platform for beautiful analytics and monitoringNo matter where your data is, or what kind of database it lives in, you can bring it together with Grafana. Beautifully. Installation 6.1.6 on CentOS7 See http://docs.grafana.org/installation/rpm/ 下载123wget https://dl.grafana.com/oss/release/grafana-6.1.6.linux-amd64.tar.gztar -zxvf grafana-6.1.6.linux-amd64.tar.gzcd grafana-6.1.6 启动服务1./bin/grafana-server web 启动后， 日志: ./data/log/ sqlite3 数据库：./data/grafana.db 插件：./data/plugins/ Configuration See https://grafana.com/docs/installation/configuration/ Default configuration from $WORKING_DIR/conf/defaults.iniCustom configuration from $WORKING_DIR/conf/custom.ini Example123456789101112[database]url=mysql://user:pwd@ip:3306/grafanatype=mysql[auth.anonymous]enabled = trueorg_role = Viewer[security]# set to true if you want to allow browsers to render Grafana in a &lt;frame&gt;, &lt;iframe&gt;, &lt;embed&gt; or &lt;object&gt;. default is false.# https://github.com/grafana/grafana/issues/14189allow_embedding = true 自定义配置会覆盖默认配置1touch conf/custom.ini 默认账号默认登录账号1cat conf/defaults.ini |grep admin 插件 Install Plugins: http://docs.grafana.org/plugins/installation/Plugin Repo: https://grafana.com/plugins 手动安装插件下载插件的git代码，目录文件放到grafana.ini上面配置的plugin地址（例如：/var/lib/grafana/plugins），重启服务即可 插件位置配置，例如/etc/grafana/grafana.ini12345#################################### Paths ####################################[paths]# Directory where grafana will automatically scan and look for pluginsplugins = /var/lib/grafana/plugins 使用grafana-cli安装插件1./bin/grafana-cli plugins install abhisant-druid-datasource 插件：Pie Chart https://grafana.com/plugins/grafana-piechart-panel 提供饼图 插件：Druid https://grafana.com/plugins/abhisant-druid-datasource维护者：https://github.com/grafana-druid-plugin/druidplugin/issues/91 使用druid作为datasource 问题：和dashboard的variable不能很好整合，方案讨论：https://github.com/grafana-druid-plugin/druidplugin/issues/47 参考官网： https://grafana.com/官网文档：http://docs.grafana.org/Getting started: http://docs.grafana.org/guides/getting_started/Alert配置：https://blog.csdn.net/Jailman/article/details/78920166]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>startup</tag>
+        <tag>grafana</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Python Startup]]></title>
+    <url>%2FTech%2FPython%2FPython-Startup%2F</url>
+    <content type="text"><![CDATA[InstallInstallation python1234567891011# installyum install python36# 如果有旧版本，例如python2，修改默认pythoncd /usr/binrm -rf pythonrm -rf python2 # 是否需要？ln -s python3.4 python# checkpython -V Q&amp;A 解决系统python软链接指向python2.7版本后，yum不能正常工作 修改/usr/bin/yum，将文件头部的1#!/usr/bin/python 改成1#!/usr/bin/python2.4.3]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>startup</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Python Virtual Env]]></title>
+    <url>%2FTech%2FPython%2FPython-Virtual-Env%2F</url>
+    <content type="text"><![CDATA[Python 环境管理 Virtualenv See https://virtualenv.pypa.io/en/stable/ virtualenv is a tool to create isolated Python environments. Install https://virtualenv.pypa.io/en/stable/installation/ 环境： CentOS 7, python34, pip 安装 123pip install virtualenvSuccessfully installed virtualenv-16.5.0 Startup初始化1virtualenv ENV27 新建ENV27目录（可改变）存放virtual environment. 新增python1virtualenv -p /usr/bin/python3.6 ENV36 激活环境123source ENV/bin/activate # or. ENV/bin/activate 之后提示符前面会一直显示当前环境名 停用环境1deactivate 删除环境1rm -r /path/to/ENV Anaconda See https://www.anaconda.com/ Anaconda是专注于数据分析的Python发行版本，包含了conda、Python等190多个科学包及其依赖项。]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Apache Druid]]></title>
+    <url>%2FTech%2FDatabase%2FApache-Druid%2F</url>
+    <content type="text"><![CDATA[Apache Druid (incubating) is a data store designed for high-performance slice-and-dice analytics (“OLAP”-style) on large data sets. See http://druid.io/docs/latest/design/index.html#what-is-druid Druid GitHub地址：https://github.com/apache/incubator-druid Architecture See http://druid.io/docs/0.14.0-incubating/design/index.html#architecture See Druid基础介绍和系统架构 Processes and Servers每个Druid process type可以独立配置、扩缩容 Pprocess types Coordinator processes manage data availability on the cluster. Overlord processes control the assignment of data ingestion workloads. Broker processes handle queries from external clients. Router processes are optional processes that can route requests to Brokers, Coordinators, and Overlords. Historical processes store queryable data. MiddleManager processes are responsible for ingesting data. 推荐部署方案 Master: Runs Coordinator and Overlord processes, manages data availability and ingestion. Query: Runs Broker and optional Router processes, handles queries from external clients. Data: Runs Historical and MiddleManager processes, executes ingestion workloads and stores all queryable data. External dependencies深度存储(Deep Storage)，比如HDFS、S3等元数据存储(Metadata Storage)，比如Mysql、PostgreSQLZookeeper，用于管理集群状态 Install See http://druid.io/docs/0.14.0-incubating/tutorials/index.htmlSee Druid系统安装与配置 StandaloneEnvironmentCentOs7, 8G of RAM, 2 vCPUsJava 8 Installation See https://www.apache.org/dyn/closer.cgi?path=/incubator/druid/0.14.0-incubating/apache-druid-0.14.0-incubating-bin.tar.gz 12345678910wget http://mirrors.tuna.tsinghua.edu.cn/apache/incubator/druid/0.14.0-incubating/apache-druid-0.14.0-incubating-bin.tar.gztar -xzf apache-druid-0.14.0-incubating-bin.tar.gzcd apache-druid-0.14.0-incubating# tutorial 启动脚本要求的zk位置ln -s ../zookeeper-3.4.14 zk# start serverbin/supervise -c quickstart/tutorial/conf/tutorial-cluster.conf 访问：Druid Overlord Console: http://localhost:8090/console.htmlDruid Unified Console: http://localhost:8888/unified-console.htmlCoordinatorConsole: http://localhost:8081 启动后， 持久化数据在（深度存储和元数据存储）：${DRUID_HOME}/var目录下 zk:2181，数据文件var/zk 日志：${DRUID_HOME}/var/sv/*.log Resetting cluster state: 删除${DRUID_HOME}/var目录 Resetting Kafka: 删除/tmp/kafka-logs 组件进程和端口映射 zk:2181 coordinator:8081 broker:8082 historical:8083 router:8888 overlord:8090 middleManager:8091 如果出现启动报错， zk.log出现：Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain，检查zk引用是否正确。 Clustering See http://druid.io/docs/0.14.0-incubating/tutorials/cluster.html TutorialTutorial: Loading a file使用 Apache Druid (incubating)’s native batch ingestion，提交一个ingestion task（quickstart/tutorial/wikipedia-index.json），加载数据（quickstart/tutorial/wikiticker-2015-09-12-sampled.json.gz） 提交task See http://druid.io/docs/0.14.0-incubating/tutorials/tutorial-batch.html 12345## 方法一，使用脚本，但是python报错：httplib.BadStatusLine: ''（TODO）# bin/post-index-task --file quickstart/tutorial/wikipedia-index.json ## 方法二curl -X 'POST' -H 'Content-Type:application/json' -d @quickstart/tutorial/wikipedia-index.json http://localhost:8090/druid/indexer/v1/task # 使用ip 成功后返回task id 查询task See http://druid.io/docs/0.14.0-incubating/tutorials/tutorial-query.html 使用Native JSON queries 1curl -X 'POST' -H 'Content-Type:application/json' -d @quickstart/tutorial/wikipedia-top-pages.json http://localhost:8082/druid/v2?pretty # 使用ip 使用Druid SQL queries http请求1curl -X 'POST' -H 'Content-Type:application/json' -d @quickstart/tutorial/wikipedia-top-pages-sql.json http://localhost:8082/druid/v2/sql # 使用ip 或者dsql client （同样python报错：httplib.BadStatusLine: ‘’）（TODO）123456$ bin/dsqlWelcome to dsql, the command-line client for Druid SQL.Connected to [http://localhost:8082/].Type "\h" for help.dsql&gt; SELECT page, COUNT(*) AS Edits FROM wikipedia WHERE "__time" BETWEEN TIMESTAMP '2015-09-12 00:00:00' AND TIMESTAMP '2015-09-13 00:00:00' GROUP BY page ORDER BY Edits DESC LIMIT 10; 访问页面http://localhost:8888/unified-console.html#tasks 看到task状态SUCCESShttp://localhost:8888/unified-console.html#datasources 查看Datasources状态 Fully availablehttp://localhost:8888/unified-console.html#sql 运行SQL Tutorial: Roll-up http://druid.io/docs/latest/tutorials/tutorial-rollup.html Roll-up是导入数据时做的初步聚合操作，可以减少存储数据 123bin/post-index-task --file quickstart/tutorial/rollup-index.json # orcurl -X 'POST' -H 'Content-Type:application/json' -d @quickstart/tutorial/rollup-index.json http://localhost:8090/druid/indexer/v1/task # 使用ip 查看sql1select * from "rollup-tutorial"; Tutorial: Updating existing dataSQL http://druid.io/docs/latest/querying/sql.html Data IngestionKafka Indexing Service (Stream Pull) http://druid.io/docs/0.14.0-incubating/development/extensions-core/kafka-ingestion.html]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>startup</tag>
+        <tag>druid</tag>
+        <tag>apache</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Zookeeper Startup]]></title>
+    <url>%2FTech%2FBigData%2FZookeeper-Startup%2F</url>
+    <content type="text"><![CDATA[ZooKeeper: A Distributed Coordination Service for Distributed Applications See https://zookeeper.apache.org/doc/current/zookeeperOver.html InstallStandalone Mode on CentOS7 Download: http://www.apache.org/dyn/closer.cgi/zookeeper/ 123wget https://mirrors.tuna.tsinghua.edu.cn/apache/zookeeper/stable/zookeeper-3.4.14.tar.gztar -zxf zookeeper-3.4.14.tar.gz cd zookeeper-3.4.14 创建文件conf/zoo.cfg123tickTime=2000dataDir=/var/lib/zookeeperclientPort=2181 Start zk1bin/zkServer.sh start Replicated ZooKeeper至少三台，建议奇数台server，每台安装zk 新建文件dataDir/myid，内容是server number, in ASCII conf/zoo.cfg12345678tickTime=2000dataDir=/var/lib/zookeeperclientPort=2181initLimit=5syncLimit=2server.1=zoo1:2888:3888server.2=zoo2:2888:3888server.3=zoo3:2888:3888 Startup进入控制台12345# bin/zkCli.sh -server 127.0.0.1:2181Connecting to 127.0.0.1:2181[zk: 127.0.0.1:2181(CONNECTED) 1] ls /[zookeeper] 简单例子1234567# 进入控制台以后create /zk_test my_datals /get /zk_testset /zk_test junkdelete /zk_testls / 查看kafka的topicls /brokers/topics 检查状态http://zookeeper.apache.org/doc/r3.1.2/zookeeperAdmin.html#sc_zkCommands$ echo stat | nc 127.0.0.1 2181 Q&amp;A]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>startup</tag>
+        <tag>zookeeper</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Superset]]></title>
+    <url>%2FTech%2FBigData%2FVisualization%2FSuperset%2F</url>
+    <content type="text"><![CDATA[Apache Superset (incubating) is a modern, enterprise-ready business intelligence web application See https://github.com/apache/incubator-superset Install superset 0.28.1环境CentOS 7python 3.6virtualenv-16.5.0 安装步骤1234567891011121314151617181920212223242526272829sudo yum upgrade python-setuptoolssudo yum install gcc gcc-c++ libffi-devel python-devel python-pip python-wheel openssl-devel libsasl2-devel openldap-devel # 或者python36-pip/python36-devel等，根据版本选择# install virtualenv(略)# active virtualenvsource $&#123;virtualenv&#125;/bin/activatepip install --upgrade setuptools pip # Install supersetpip install supersetsuperset version# Create an admin user (you will be prompted to set a username, first and last name before setting a password)fabmanager create-admin --app superset# Initialize the databasesuperset db upgrade# Load some data to play withsuperset load_examples# Create default roles and permissionssuperset init# To start a development web server on port 8088, use -p to bind to another portsuperset runserver -d 启动后，数据库sqlite:////root/.superset/superset.db 访问：http://ip_address:8088 Startup创建Druid数据源 Sources &gt; Druid Clusters &gt; add Sources &gt; Scan New DataSources Q&amp;A pip install superset 报错：pyconfig.h: No such file or directory 需要安装python-devel fabmanager create-admin –app superset 报错：Was unable to import superset Error: cannot import name ‘_maybe_box_datetimelike’ 这是 pandas 库版本太高导致的，需要安装低版本的 pandas 库1234$ pip list | grep pandaspandas 0.24.2 $ pip install pandas==0.23.4 superset db upgrade 报错：sqlalchemy.exc.InvalidRequestError: Can’t determine which FROM clause to join from, there are multiple FROMS which can join to this entity. SQLAlchemy 库版本太高导致的，需要安装低版本的 SQLAlchemy 库1234567$ pip list | grep -i sqlalchemyFlask-SQLAlchemy 2.4.0 marshmallow-sqlalchemy 0.16.3 SQLAlchemy 1.3.3 SQLAlchemy-Utils 0.33.11 $ pip install SQLAlchemy==1.2.18 dashboard中使用filter组件筛选，会出现组件空白https://github.com/apache/incubator-superset/issues/6165]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>startup</tag>
+        <tag>superset</tag>
+        <tag>bi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Mysql Basis]]></title>
+    <url>%2FTech%2FDatabase%2FMysql-Basis%2F</url>
+    <content type="text"><![CDATA[关键字distinct123456SELECT DISTINCT(gender) FROM employees;gender --------M F 但是以下情况失效。这时适合用group by12SELECT DISTINCT(gender), emp_no FROM employees;SELECT gender, emp_no FROM employees GROUP BY gender;]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+        <tag>todo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Mysql Index]]></title>
+    <url>%2FTech%2FDatabase%2FMysql-Index%2F</url>
+    <content type="text"><![CDATA[创建官方测试库 官方 Employees Sample DatabaseGit: https://github.com/datacharmer/test_db MySQL 5.5+ Download the repository Change directory to the repositoryThen run 1mysql &lt; employees.sql 基本操作 See https://www.runoob.com/mysql/mysql-index.html 修改表结构(添加索引)1234ALTER TABLE tbl_name ADD PRIMARY KEY (column_list); -- 该语句添加一个主键，这意味着索引值必须是唯一的，且不能为NULL。ALTER TABLE tbl_name ADD UNIQUE index_name (column_list); -- 这条语句创建索引的值必须是唯一的（除了NULL外，NULL可能会出现多次）。ALTER TABLE tbl_name ADD INDEX index_name (column_list); -- 添加普通索引，索引值可出现多次。ALTER TABLE tbl_name ADD FULLTEXT index_name (column_list); -- 该语句指定了索引为 FULLTEXT ，用于全文索引。 创建表的时候直接指定1234567CREATE TABLE mytable( ID INT NOT NULL, username1 VARCHAR(16) NOT NULL, username2 VARCHAR(16) NOT NULL, INDEX [indexName] (username1(length)) , UNIQUE [indexName] (username2(length)) ); 删除索引的语法12DROP INDEX [indexName] ON mytable; ALTER TABLE tbl_name DROP INDEX index_name; 查看索引1SHOW INDEX FROM table_name; 查看索引大小123USE `information_schema`;SELECT CONCAT(ROUND(SUM(index_length)/(1024*1024), 2), ' MB') AS 'Total Index Size' FROM `TABLES` WHERE table_name = 'dept_emp'; Index Typeconst123456EXPLAIN SELECT * FROM employees.titles WHERE emp_no=&apos;10001&apos; AND title=&apos;Senior Engineer&apos; AND from_date=&apos;1986-06-26&apos;;+----+-------------+--------+-------+---------------+---------+---------+-------------------+------+-------+| id | select_type | table | type | possible_keys | key | key_len | ref | rows | Extra |+----+-------------+--------+-------+---------------+---------+---------+-------------------+------+-------+| 1 | SIMPLE | titles | const | PRIMARY | PRIMARY | 59 | const,const,const | 1 | |+----+-------------+--------+-------+---------------+---------+---------+-------------------+------+-------+ 理论上索引对顺序是敏感的，但是由于MySQL的查询优化器会自动调整where子句的条件顺序以使用适合的索引]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+        <tag>todo</tag>
+        <tag>index</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Maven Plugin Most in Use]]></title>
+    <url>%2FTech%2FJava%2FMavenGradle%2FMaven-Plugin-Most-in-Use%2F</url>
+    <content type="text"><![CDATA[maven-surefire-plugin See https://maven.apache.org/surefire/maven-surefire-plugin/index.html]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>plugin</tag>
+        <tag>maven</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Kafka Client]]></title>
+    <url>%2FTech%2FBigData%2FKafka-Client%2F</url>
+    <content type="text"><![CDATA[Java Clientapache kafka-client 官方文档：https://kafka.apache.org/11/documentation.html#producerapi 官方java doc: https://kafka.apache.org/11/javadoc/overview-summary.html Kafka Tutorial: Writing a Kafka Producer in Java Kafka Producer配置解读 Example: Simple Producer Demopom.xml123456&lt;!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients --&gt;&lt;dependency&gt; &lt;groupId&gt;org.apache.kafka&lt;/groupId&gt; &lt;artifactId&gt;kafka-clients&lt;/artifactId&gt; &lt;version&gt;2.1.1&lt;/version&gt;&lt;/dependency&gt; 1234567891011121314151617181920212223242526272829303132333435363738394041public class KafkaProducerExample &#123; // ... private static Producer&lt;Long, String&gt; createProducer() &#123; Properties props = new Properties(); // ProducerConfig: https://kafka.apache.org/11/javadoc/index.html?org/apache/kafka/clients/producer/ProducerConfig.html props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS); props.put(ProducerConfig.CLIENT_ID_CONFIG, "KafkaExampleProducer"); props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, LongSerializer.class.getName()); props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName()); // KafkaProducer： https://kafka.apache.org/11/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html return new KafkaProducer&lt;&gt;(props); &#125; static void runProducer(final int sendMessageCount) throws Exception &#123; final Producer&lt;Long, String&gt; producer = createProducer(); long time = System.currentTimeMillis(); try &#123; for (long index = time; index &lt; time + sendMessageCount; index++) &#123; final ProducerRecord&lt;Long, String&gt; record = new ProducerRecord&lt;&gt;(TOPIC, index, "Hello Mom " + index); RecordMetadata metadata = producer.send(record).get(); long elapsedTime = System.currentTimeMillis() - time; System.out.printf("sent record(key=%s value=%s) " + "meta(partition=%d, offset=%d) time=%d\n", record.key(), record.value(), metadata.partition(), metadata.offset(), elapsedTime); &#125; &#125; finally &#123; producer.flush(); producer.close(); &#125; &#125;]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>kafka</tag>
+        <tag>client</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux Shell Cheatsheet]]></title>
+    <url>%2Funcategorized%2FOthers%2FLinux-Shell-Cheatsheet%2F</url>
+    <content type="text"><![CDATA[ShellLogicfor1234567891011for file in ./*do if test -f $file then echo $file is file fi if test -d $file then echo $file is dictionary fidone NetworkDNSDNS刷新缓存123service nscd restartservice dnsmasq restartrndc restart 查看某个record 何时才能失效,假设你的默认dns server 不是authoritative server1dig +nocmd +noall +answer www.google.com 查看某个record 从authoritative server 请求一个record 时被设置的ttl1dig @ns1.google.com +nocmd www.google.com +noall +answer Proxy/etc/profile12export http_proxy=xxxexport https_proxy=xxx tc See linux 下使用 tc 模拟网络延迟和丢包 1234# 将 eth0 网卡的传输设置为延迟 100 毫秒发送tc qdisc add dev eth0 root netem delay 100ms# 删除上面配置tc qdisc del dev eth0 root netem delay 100ms CommonDate &amp; Time12# date +%Y%m%d20190613]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[Windows Batch]]></title>
+    <url>%2Funcategorized%2FOthers%2FWindows-Batch-Cheatsheet%2F</url>
+    <content type="text"><![CDATA[Basic Batch Script Tutorial Q&amp;A How to set a variable inside a loop for /F NetworkDNSDNS刷新缓存1ipconfig /flushdns Netstat端口占用和杀死占用端口进程12345678# 端口占用netstat -aon|findstr "80"# 进程6604情况tasklist|findstr "6604"# 杀死进程taskkill /T /F /PID 6604 File &amp; Directory磁盘使用https://docs.microsoft.com/zh-cn/sysinternals/downloads/du 1234567891011du.exe -husage: du [-c[t]] [-l &lt;levels&gt; | -n | -v] [-u] [-q] &lt;directory&gt; -c Print output as CSV. Use -ct for tab delimiting. Use -nobanner to suppress banner. -l Specify subdirectory depth of information (default is one level). -n Do not recurse. -q Quiet. -nobanner Do not display the startup banner and copyright message. -u Count each instance of a hardlinked file. -v Show size (in KB) of all subdirectories. Reference Windows批处理(cmd/bat)常用命令教程]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[Hadoop HDFS Startup]]></title>
+    <url>%2FTech%2FBigData%2FHadoop-HDFS-Startup%2F</url>
+    <content type="text"><![CDATA[The Hadoop Distributed File System (HDFS) is a distributed file system designed to run on commodity hardware. User Guide：http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsUserGuide.html Web InterfaceWith the default configuration, the NameNode front page is at http://namenode-name:50070/ Shell Commands See http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>startup</tag>
+        <tag>hadoop</tag>
+        <tag>hdfs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Docker Cheatsheet]]></title>
+    <url>%2FTech%2FCloud%2FDocker-Cheatsheet%2F</url>
+    <content type="text"><![CDATA[参考：Use the Docker command line Common1234docker versiondocker --helpdocker attach --help ImagesPull an image or a repository from a registry1docker pull debian:jessie Build an image from a Dockerfile12docker build -t vieux/apache:2.0 .docker build -f Dockerfile.debug . To see which images are present locally1docker images 1234567891011121314151617docker pull xxx:v1docker search xxx# create image from containerdocker commit -m &quot;comments&quot; -a &quot;&quot; &lt;md5&gt; xxx:v1# Remove imagedocker rmi xxx:v1# Clean dangling imagesdocker images|grep \&lt;none\&gt;|awk &apos;&#123;print $3&#125;&apos;|xargs docker rmidocker rmi $(docker images -f &quot;dangling=true&quot; -q)docker history xxx:v1 Containers12345678910111213141516171819202122232425262728293031323334docker ps -adocker run ubuntu /bin/echo &apos;Hello world&apos;docker run --name mynginx -d nginx:latest# -t flag assigns a pseudo-tty or terminal inside our new container# -i flag allows us to make an interactive connection by grabbing the standard in (STDIN) of the containerdocker run -t -i ubuntu /bin/bash# -d flag tells Docker to run the container and put it in the background, to daemonize itdocker run -d ubuntu /bin/sh -c &quot;while true; do echo hello world; sleep 1; done&quot;docker run -it nginx:latest /bin/bash# -P flag is new and tells Docker to map any required network ports inside our container to our host# -p 80:5000 map port 5000 inside our container to port 80 on our local hostdocker run -p 127.0.0.1:80:8080/tcp ubuntu bashdocker run -p 80:80 -v /data:/data -d nginx:latestdocker run -P -d nginx:latestdocker logs 2b6333eb87eadocker logs -f elegant_coldendocker top elegant_coldendocker inspect elegant_coldendocker inspect -f &apos;&#123;&#123; .NetworkSettings.IPAddress&#125;&#125;&apos; elegant_coldendocker stop 2b6333eb87eadocker restart elegant_coldendocker rm elegant_coldendocker rm `docker ps --no-trunc -aq`docker rm $(docker ps -a -q) Save &amp; LoadSave running container1docker save -o xxx.tar.gz 2b6333eb87ea Save one or more images to a tar archive (streamed to STDOUT by default)1docker save busybox-1 &gt; /home/save.tar Load saved container12docker load -i xxx.tgzdocker load &lt; xxx.tgz Export命令用于持久化容器（不是镜像）: Export a container’s filesystem as a tar archive12docker export &lt;CONTAINER ID&gt; &gt; /home/export.tardocker export --output=&quot;latest.tar&quot; red_panda MonitorA live data stream for running containers1docker stats [OPTIONS] [CONTAINER...] VolumnCreate data volumn 1docker create -v /tools/ --name tools centos:6.6 /bin/true Start a container with a new data volumn 1docker run -i -t -v /tools centos:6.6 /bin/bash Mount a host directory as a data volume1docker run -i -t -v /tmp/tools:/tools centos:6.6 /bin/bash A read-only data volumn1docker run -i -t -v /tmp/tools:/tools:ro centos:6.6 /bin/bash 两个参数是:主机绝对路径or一个name:容器绝对路径:只读 Mount a host file as a data volume1docker run --rm -it -v ~/.bash_history:/root/.bash_history ubuntu /bin/bash Remove a volumn1docker rm -v]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>cheatsheet</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Flink Startup]]></title>
+    <url>%2FTech%2FBigData%2FFlink-Startup%2F</url>
+    <content type="text"><![CDATA[InstallationLocal Setup Flink 1.7 on Linux See https://ci.apache.org/projects/flink/flink-docs-release-1.7/tutorials/local_setup.html Pre-installjdk 8 Downloadhttps://flink.apache.org/downloads.html 12345wget http://mirror.bit.edu.cn/apache/flink/flink-1.7.2/flink-1.7.2-bin-scala_2.11.tgztar xzf flink-*.tgzcd flink-1.7.2./bin/start-cluster.sh 浏览器访问：http://localhost:8081组件 TaskManagerRunner:28634/32732和本地13076 StandaloneSessionClusterEntrypoint:6123/8081/4767/22889 Local Setup on Windows See https://ci.apache.org/projects/flink/flink-docs-release-1.7/tutorials/flink_on_windows.html Download 同上 &amp; 解压 12cd D:\flink-1.7.2\binstart-cluster.bat 浏览器访问：http://localhost:8081 Configurationflink-1.7.2/conf/flink-conf.yaml ExampleStreaming Example：SocketWindowWordCountJava代码：https://github.com/apache/flink/blob/master/flink-examples/flink-examples-streaming/src/main/java/org/apache/flink/streaming/examples/socket/SocketWindowWordCount.java 打好的包在安装目录下examples下都有 会话1，本地启动server监听90091nc -l 9009 会话2，运行example123cd $FLINK_HOME./bin/flink run examples/streaming/SocketWindowWordCount.jar --port 9009 会话3，查看结果1tail -f flink-*-taskexecutor-*.out 在会话1中输入一些什么，按回车提交 这个例子功能是：每5s统计输入（会话1）的单词出现次数 Batch Examples: WordCount https://ci.apache.org/projects/flink/flink-docs-release-1.8/dev/batch/examples.html#word-count代码 https://github.com/apache/flink/blob/master//flink-examples/flink-examples-batch/src/main/java/org/apache/flink/examples/java/wordcount/WordCount.java 1./bin/flink run examples/streaming/WordCount.jar --input a.log --output result.log]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>flink</tag>
+        <tag>starkup</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Junit5 Startup]]></title>
+    <url>%2FTech%2FTesting%2FJunit5-Startup%2F</url>
+    <content type="text"><![CDATA[IntroductionThe new major version of the programmer-friendly testing framework for Java 官网：https://junit.org/junit5/ User Guide: https://junit.org/junit5/docs/current/user-guide/#overview Getting Startedhttps://github.com/junit-team/junit5-samples/tree/r5.4.2/junit5-jupiter-starter-maven pom.xml123456789101112131415161718192021222324252627282930313233&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt; &lt;!-- omit --&gt; &lt;properties&gt; &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt; &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt; &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt; &lt;/properties&gt; &lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;org.junit.jupiter&lt;/groupId&gt; &lt;artifactId&gt;junit-jupiter&lt;/artifactId&gt; &lt;version&gt;5.4.2&lt;/version&gt; &lt;scope&gt;test&lt;/scope&gt; &lt;/dependency&gt; &lt;/dependencies&gt; &lt;build&gt; &lt;pluginManagement&gt; &lt;plugins&gt; &lt;plugin&gt; &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt; &lt;version&gt;2.22.1&lt;/version&gt; &lt;/plugin&gt; &lt;/plugins&gt; &lt;/pluginManagement&gt; &lt;/build&gt;&lt;/project&gt;]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>junit</tag>
+        <tag>test</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Kafka Startup]]></title>
+    <url>%2FTech%2FBigData%2FKafka-Startup%2F</url>
+    <content type="text"><![CDATA[Installation kafka 2.11 See https://kafka.apache.org/11/documentation.html#quickstart 单节点Download &amp; install12wget http://mirrors.shu.edu.cn/apache/kafka/2.1.1/kafka_2.11-2.1.1.tgztar -zxf kafka_2.11-2.1.1.tgz Start server12345# 因为依赖ZK，所以需要启动ZK# 如果没有安装，也可以运行kafka自带的bin/zookeeper-server-start.sh config/zookeeper.properties# 启动kafakbin/kafka-server-start.sh config/server.properties DemoCreate topic (on zk)12345bin/kafka-topics.sh --create \ --zookeeper 127.0.0.1:2181 \ --replication-factor 1 \ --partitions 1 \ --topic mytopic List topic (on zk)1bin/kafka-topics.sh --list --zookeeper localhost:2181 Send message12bin/kafka-console-producer.sh --broker-list localhost:9092 --topic mytopic输入一些字 Consume message同时能看到上面的输入123456789# &gt;=2.11-2.1.1bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 \ --topic mytopic \ --from-beginning# older versionbin/kafka-console-consumer.sh --zookeeper localhost:2181 \ --topic mytopic \ --from-beginning 多节点Let’s expand our cluster to three nodes (still all on our local machine). First we make a config file for each of the brokers12cp config/server.properties config/server-1.propertiescp config/server.properties config/server-2.properties Update config file123456789config/server-1.properties: broker.id=1 listeners=PLAINTEXT://:9093 log.dir=/tmp/kafka-logs-1 config/server-2.properties: broker.id=2 listeners=PLAINTEXT://:9094 log.dir=/tmp/kafka-logs-2 We already have Zookeeper and our single node started, so we just need to start the two new nodes:12bin/kafka-server-start.sh config/server-1.properties &amp;bin/kafka-server-start.sh config/server-2.properties &amp; Demo123bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 3 --partitions 1 --topic my-replicated-topicbin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic my-replicated-topic Configuration通常在 kafka/config/server.properties See https://kafka.apache.org/11/documentation.html#configuration Producer request.timeout.ms配置控制客户端等待请求响应的最长时间。 如果在超时之前未收到响应，客户端将在必要时重新发送请求，如果重试耗尽，则该请求将失败。这应该大于replica.lag.time.max.ms(broker配置)，以减少由于不必要的生产者重试引起的消息重复的可能性。 Change Port12listeners = PLAINTEXT://&lt;ip&gt;:9093advertised.listeners=PLAINTEXT://&lt;ip&gt;:9093 Java 参数设置环境变量：KAFKA_HEAP_OPTS=”-Xms512m -Xmx1g”或者启动脚本 清理数据123log.retention.hours=168 //保留7dlog.retention.check.interval.ms=300000 //5min检查一次segment是否过期log.segment.bytes=1073741824 //1G，超过生成一个新的 CommandsTopic查看topic信息1bin/kafka-topics.sh --zookeeper 127.0.0.1:2181 --topic "test-topic" --describe “leader” is the node responsible for all reads and writes for the given partition. Each node will be the leader for a randomly selected portion of the partitions. “replicas” is the list of nodes that replicate the log for this partition regardless of whether they are the leader or even if they are currently alive. “isr” is the set of “in-sync” replicas. This is the subset of the replicas list that is currently alive and caught-up to the leader. 查看指定group信息1bin/kafka-topics.sh --new-consumer --bootstrap-server 127.0.0.1:9092 --group test-group --describe Balancing leadership重平衡1bin/kafka-preferred-replica-election.sh --zookeeper 127.0.0.1:2181 Consumer查看消费组1234567# listbin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --list# describe group bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group xxx --describe# describe group - expiredbin/kafka-topics.sh --new-consumer --bootstrap-server 127.0.0.1:9092 --group test-group --describe]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>cheatsheet</tag>
+        <tag>startup</tag>
+        <tag>kafka</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Kubernetes Cheatsheet]]></title>
+    <url>%2FTech%2FCloud%2FKubernetes-Cheatsheet%2F</url>
+    <content type="text"><![CDATA[Cluster12kubectl cluster-infokubectl get nodes]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>cheatsheet</tag>
+        <tag>kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Nginx Configuration]]></title>
+    <url>%2FTech%2FWeb%2FNginx-Configuration%2F</url>
+    <content type="text"><![CDATA[Introduction官方：http://nginx.org/en/docs/beginners_guide.html Nginx VS. Nginx Plus: https://www.nginx.com/products/nginx/#compare-versions Concept Directives: Simple (single‑line) directives; Block directives Contexts: A few top‑level directives, referred to as contexts, group together the directives that apply to different traffic types. Directives placed outside of these contexts are said to be in the main context. events – General connection processing http – HTTP traffic mail – Mail traffic stream – TCP and UDP traffic Virtual Servers: server blocks Inheritance: See UNDERSTANDING THE NGINX CONFIGURATION INHERITANCE MODEL Configuration FileConfiguration file is typically one of /usr/local/nginx/conf, /etc/nginx, or /usr/local/etc/nginx. 文件最后一般有includes，例如：include /usr/local/nginx/conf/vhost/*.conf; 123456789101112131415161718192021222324252627282930user nobody; # a directive in the &apos;main&apos; contextevents &#123; # configuration of connection processing&#125;http &#123; # Configuration specific to HTTP and affecting all virtual servers server &#123; # configuration of HTTP virtual server 1 location /one &#123; # configuration for processing URIs starting with &apos;/one&apos; &#125; location /two &#123; # configuration for processing URIs starting with &apos;/two&apos; &#125; &#125; server &#123; # configuration of HTTP virtual server 2 &#125;&#125;stream &#123; # Configuration specific to TCP/UDP and affecting all virtual servers server &#123; # configuration of TCP virtual server 1 &#125;&#125; See Sample Configuration File with Multiple Contexts Debug Nginx Configurationerror_log 默认[notice]级别 例如：1error_log /var/logs/nginx/error.log debug; 仅收集rewrite错误1234server &#123; error_log /var/logs/nginx/error.log; rewrite_log on;&#125; 仅调试/admin/部分12345678server &#123; #other config error_log /var/logs/nginx/example.com.error.log; location /admin/ &#123; error_log /var/logs/nginx/admin-error.log debug; &#125; #other config&#125; Nginx 记录仅仅来自于你的 IP 的错误日志123events &#123; debug_connection 1.2.3.4;&#125; Virtual ServersOne or more server blocks define virtual servers Serving Static Content123456789server &#123; location / &#123; root /data/www; &#125; location /images/ &#123; root /data; &#125;&#125; Reverse Proxy1234567891011upstream tomcats &#123; server 127.0.0.1:9001; server 127.0.0.1:9002;&#125;location / &#123; proxy_pass_header Server; proxy_set_header Host $http_host; proxy_set_header X-Real-IP $remote_addr; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; proxy_pass http://tomcats;&#125; See NGINX Reverse ProxySee nginx http upstream module Custom Error Page12345678910location / &#123; proxy_pass http://example/; proxy_set_header X-Real-IP $remote_addr; proxy_set_header X-Forwarded-For $remote_addr; error_page 502 503 504 = /maintainance.html;&#125;location = /maintainance.html &#123; root /path/to/html/;&#125; 或者1234500 502 503 504 @jump_to_error;location @jump_to_error &#123; ...&#125; Websocket Support123456location ~ /ws &#123; proxy_pass http://127.0.0.1:8888; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection &quot;upgrade&quot;;&#125; Nginx Error Code See HTTP Return Codes 403 / Forbidden errors对于Nginx代理spring boot项目websocket出现403，修改配置1234567# Pass the csrf token (see https://de.wikipedia.org/wiki/Cross-Site-Request-Forgery)# Default in Spring Boot and required. Without it nginx suppresses the valueproxy_pass_header X-XSRF-TOKEN;# Set origin to the real instance, otherwise a of Spring security check will fail# Same value as defined in proxy_passproxy_set_header Origin &quot;http://testsysten:8080&quot;; See Nginx Reverse Proxy Websocket Authentication - HTTP 403 499 / ClientClosed Request 499 / ClientClosed Request An Nginx HTTP server extension. This codeis introduced to log the case when the connection is closed by client whileHTTP server is processing its request, making server unable to send the HTTP header back Solution 解决server响应慢问题，在client close请求前返回 nginx增加配置，不要主动关闭客户端的连接1proxy_ignore_client_abort on; See 服务器排障 之 nginx 499 错误的解决 504 / Gateway Timeout errorFor Nginx as Proxy for Apache web server, this is what you have to try to fix the 504 Gateway Timeout error: Add these variables to nginx.conf file:1234proxy_connect_timeout 300;proxy_send_timeout 300;proxy_read_timeout 300;send_timeout 300; See How to Fix 504 Gateway Timeout using Nginx]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>nginx</tag>
+        <tag>configuration</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Books to Read]]></title>
+    <url>%2FBook%2FInterests%2FReadingList%2F</url>
+    <content type="text"><![CDATA[2019 Reading Plan[] 月亮和六便士[] 三体 More PlanAmazon:100 Books to Read in a Lifetime 亚马逊编辑推荐-人生必读100本书 The 100 greatest novels of all time]]></content>
+      <categories>
+        <category>Book</category>
+      </categories>
+      <tags>
+        <tag>todo</tag>
+        <tag>book</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Git Cheatsheet]]></title>
+    <url>%2FTech%2FEngineering%2FGit-Cheatsheet%2F</url>
+    <content type="text"><![CDATA[See Official Manual &lt;!-more –&gt; 信息查看Branch12git symbolic-ref --short HEADgit rev-parse --abbrev-ref HEAD Clone12git clone xxxgit clone xxx --depth=1 Commit回退commit12345# 保留修改git reset HEAD~1 --soft# 不保留本地修改，！危险！git reset HEAD~1 --hard 回退git add（从暂存区删除）12git reset HEAD --git reset HEAD -&lt;directoryName&gt; 设置本地文件不提交到远程(例如本地的.project等)12$ git update-index --assume-unchanged /path/to/file #忽略跟踪$ git update-index --no-assume-unchanged /path/to/file #恢复跟踪 查看忽略跟踪的文件1git ls-files -v | grep &quot;^[[:lower:]]&quot; Git合并两次commit为一个commithttps://stackoverflow.com/questions/2563632/how-can-i-merge-two-commits-into-one123456$ git log --pretty=onelinea931ac7c808e2471b22b5bd20f0cad046b1c5d0d cb76d157d507e819d7511132bdb5a80dd421d854f bdf239176e1a2ffac927d8b496ea00d5488481db5 a$ git rebase --interactive HEAD~2 出现编辑123456789101112131415pick b76d157 bpick a931ac7 c# Rebase df23917..a931ac7 onto df23917## Commands:# p, pick = use commit# r, reword = use commit, but edit the commit message# e, edit = use commit, but stop for amending# s, squash = use commit, but meld into previous commit# f, fixup = like &quot;squash&quot;, but discard this commit&apos;s log message## If you remove a line here THAT COMMIT WILL BE LOST.# However, if you remove everything, the rebase will be aborted.# 改为12pick b76d157 bsquash a931ac7 c 保存后修改comment即可 Git修改上一次commit人 https://www.jianshu.com/p/7def4f387e9f 修改最近一次1git commit --amend --author="userName &lt;userEmail&gt;" 批量修改123456789101112131415git filter-branch --env-filter 'if [ "$GIT_AUTHOR_NAME" = "oldName" ]thenexport GIT_AUTHOR_NAME="newName"export GIT_AUTHOR_EMAIL="newEmail"fi' ref..HEADgit filter-branch --env-filter 'if [ "$GIT_COMMITTER_NAME" = "oldName" ]thenexport GIT_COMMITTER_NAME="newName"export GIT_COMMITTER_EMAIL="newEmail"fi' ref..HEAD Git gc控制git repo大小1git gc PatchGit create/apply patch1234567# 标准patchgit diff master &gt; patchgit apply patch# git专用patchgit format-patch -M mastergit am 0001-Fix1.patch Git cleanhttps://git-scm.com/docs/git-clean 123456789101112131415161718// 一次clean的演习git clean -n// 删除当前目录下所有没有track过的文件. 他不会删除.gitignore文件里面指定的文件夹和文件, 不管这些文件有没有被track过.git clean -f// 删除指定路径下的没有被track过的文件git clean -f &lt;path&gt;// 删除当前目录下没有被track过的文件和文件夹.git clean -df// 删除当前目录下所有没有track过的文件. 不管他是否是.gitignore文件里面指定的文件夹和文件git clean -xfgit reset --hard和git clean -f是一对好基友. 结合使用他们能让你的工作目录完全回退到最近一次commit的时候.git clean对于刚编译过的项目也非常有用. 如, 他能轻易删除掉编译后生成的.o和.exe等文件. 这个在打包要发布一个release的时候非常有用. Git mergehttps://git-scm.com/docs/git-merge 123456git checkout mastergit merge dev # =--ff，即fast-forward，当merge是fast-forward时，只更新指针（如果删除分支，则会丢失分支信息）git merge --no-ff # 即使fast-forward也创建 merge commitgit merge --squash # 使用squash方式合并，把多次分支commit历史压缩为一次 –squash：是用来把一些不必要commit进行压缩，比如说，你的feature在开发的时候写的commit很乱，那么我们合并的时候不希望把这些历史commit带过来，于是使用–squash进行合并，此时文件已经同合并后一样了，但不移动HEAD，不提交。需要进行一次额外的commit来“总结”一下，然后完成最终的合并。 Git去掉某个mergehttps://segmentfault.com/q/1010000000140446https://git-scm.com/blog/2010/03/02/undoing-merges.htmlhttp://schacon.github.io/git/git-revert.html 1git revert -m 1 00519a]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>git cheatsheet</tag>
+      </tags>
+  </entry>
+</search>
