@@ -9,6 +9,25 @@ categories:
     - Tech
 ---
 
+# database
+
+```sql
+show databases;
+
+show tables in default;
+
+-- 使用默认库
+use default ;  
+```
+
+# Table信息
+
+```sql
+desc tmp_table;
+
+show create table tmp_namespace.tmp_table;
+```
+
 <!-- more -->
 
 # DDL
@@ -45,8 +64,9 @@ select 'a', array('sing,dance'),  str_to_map('a:1,b:2') ;
 
 查看
 ```sql
-show create table  temp_vip_realtime_feature.tmp_table;
-show partitions  temp_vip_realtime_feature.tmp_table;
+desc tmp_table;
+show create table  tmp_table;
+show partitions  tmp_table;
 ```
 
 # 字符串
@@ -79,6 +99,13 @@ select from_unixtime(1356768454, 'yyyy-MM-dd HH:mm:ss'); -- timestamp to string
 ```
 
 # 内置UDTF
+
+查看Function/UDF
+```sql
+SHOW FUNCTIONS;
+DESCRIBE FUNCTION <function_name>;
+DESCRIBE FUNCTION EXTENDED <function_name>;
+```
 
 数组转表
 ```sql

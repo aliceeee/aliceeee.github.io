@@ -24,30 +24,28 @@ Protocol buffers are a language-neutral, platform-neutral extensible mechanism f
 
 # Install
 
+## IntellJ Plugin
+插件 Protobuf Support
+
+## Java maven project
+
 ```xml
-
- 
-
 <properties>
     <protobuf.version>2.5.0</protobuf.version>
 </properties>
 
-
 <dependencies>
-
-<dependency>
-<groupId>com.google.protobuf</groupId>
-<artifactId>protobuf-java</artifactId>
-<version>${protobuf.version}</version>
-</dependency>
-<dependency>
-<groupId>com.googlecode.protobuf-java-format</groupId>
-<artifactId>protobuf-java-format</artifactId>
-<version>1.4</version>
-</dependency>
-
+    <dependency>
+        <groupId>com.google.protobuf</groupId>
+        <artifactId>protobuf-java</artifactId>
+        <version>${protobuf.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>com.googlecode.protobuf-java-format</groupId>
+        <artifactId>protobuf-java-format</artifactId>
+        <version>1.4</version>
+    </dependency>
 </dependencies>
-
 
 <build>
     <plugins>
@@ -67,13 +65,13 @@ Protocol buffers are a language-neutral, platform-neutral extensible mechanism f
                         <inputDirectories>
                             <include>src/main/proto</include>
                         </inputDirectories>
-                        <outputTargets>
+                        <!-- <outputTargets>
                             <outputTarget>
                                 <type>java</type>
                                 <addSources>none</addSources>
                                 <outputDirectory>target/generated-sources/java</outputDirectory>
                             </outputTarget>
-                        </outputTargets>
+                        </outputTargets> -->
                     </configuration>
                 </execution>
             </executions>
@@ -81,14 +79,13 @@ Protocol buffers are a language-neutral, platform-neutral extensible mechanism f
 
     </plugins>
 </build>
-
-
 ```
 
-# Usage 2.5
+# Manual 2.5
 > 官方java版：https://developers.google.com/protocol-buffers/docs/javatutorial?hl=zh-CN
 
 ## Example
+
 - 写proto文件
 ```addressbook.proto
 syntax = "proto2";
@@ -126,12 +123,19 @@ repeated Person people = 1;
 > https://github.com/protocolbuffers/protobuf/releases/tag/v2.5.0
 可以用windows版本：protoc-2.5.0-win32
 
-- 编译proto文件得到java类
+- 编译1：手动编译
 项目根目录下
-```
+```batch
 protoc.exe --version
-protoc.exe -I src\main\proto\ --java_out=src\main\java\ src\main\proto\rtrs_userbase_info.proto
+protoc.exe -I src\main\proto\ --java_out=src\main\java\ src\main\proto\Person.proto
 ```
+得到java类，注意包名
+
+- 编译2：maven编译
+配置如上面pom，target对应目录上会生成java文件，所在文件夹设为java source即可
+> 参考：https://www.cnblogs.com/crazymakercircle/p/10093385.html
+
+问题：编译失败
 
 - 使用
 ```java

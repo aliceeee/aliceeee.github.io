@@ -1,16 +1,18 @@
 [![Build Status](https://travis-ci.org/aliceeee/aliceeee.github.io.svg?branch=hexo_version)](https://travis-ci.org/aliceeee/aliceeee.github.io)
 
-# Introduction
+# 1 Introduction
 
 My blog
 
-# Development
+# 2 Development
 
 Branch `master`, is release branch.
 
 Branch `hexo_version`, is current development branch.
 
-## Install
+## 2.1 Installation
+
+本地机器上
 
 - Install nodejs
 略
@@ -24,7 +26,9 @@ npm install
 npm install hexo-deployer-git --save
 ```
 
-## Local Run
+## 2.2 Usage
+
+本地机器上
 
 ```shell
 hexo new [layout] <title>
@@ -47,15 +51,15 @@ hexo clean
 hexo list <type>
 ```
 
-## Theme: Yilia
-安装略
+## 2.3 Theme: Yilia
+仅实验，没有使用，安装过程略
 
 额外安装
-```
+```sh
 npm i hexo-generator-json-content --save  # support Yilia filter
 ```
 
-## Theme: NexT
+## 2.4 Theme: NexT
 安装略
 
 ### Local search
@@ -117,7 +121,7 @@ symbols_count_time:
 npm install hexo-toc --save # support toc, usage: https://github.com/bubkoo/hexo-toc
 ```
 
-# Reference
+# 3 Reference
 
 * [Hexo](https://hexo.io/zh-cn/docs/) 
 
