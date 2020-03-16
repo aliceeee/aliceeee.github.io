@@ -10,9 +10,7 @@ categories:
 ---
 
 
-See [Official Manual](https://git-scm.com/docs)
-
-<!-more -->
+> See [Official Manual](https://git-scm.com/docs)
 
 
 # 信息查看
@@ -22,6 +20,8 @@ See [Official Manual](https://git-scm.com/docs)
 git symbolic-ref --short HEAD
 git rev-parse --abbrev-ref HEAD
 ```
+
+<!-- more -->
 
 # Clone
 
