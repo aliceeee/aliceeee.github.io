@@ -1,14 +1,13 @@
 ---
 title: Books to Read
 tags:
-  - book
   - todo
 categories:
-  - Book
-date: 2019-04-12 13:03:21
+  - Reading
+date: 2020-04-8 13:03:21
 ---
 
-# 2019 Reading Plan 
+# 2020 Reading Plan 
 
 [] 月亮和六便士
 [] 三体
