@@ -3,7 +3,7 @@ title: Flink Startup
 date: 2019-04-23 10:05:18
 tags:
     - flink
-    - starkup
+    - startup
 categories:
     - Tech
 ---
