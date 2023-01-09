@@ -3,7 +3,7 @@ title: Spark Startup
 date: 2019-05-27 10:05:18
 tags:
     - spark
-    - starkup
+    - startup
 categories:
     - Tech
 ---
