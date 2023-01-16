@@ -4,17 +4,10 @@ name: CI
 # optional
 run-name: [alice's workflow run] ${{ github.actor }} 
 
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "master" branch
   push:
-    branches: [ "hexo_version" ]
-  pull_request:
-    branches: [ "hexo_version" ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+    branches:
+      - hexo_version
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -31,28 +24,21 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@hexo_version
         with:
-          node-version: '14'
+          node-version: '16'
 
       - name: Install Dependencies
         run: |
           npm install
           npm install hexo-deployer-git --save
           npm install -g hexo-cli
+          npm run build
           npm --version
-
-      - name: Run hexo
-        run: |
-          hexo clean
-          hexo generate
-          hexo deploy
           
-#       - name: Build and Deploy
-#         uses: JamesIves/github-pages-deploy-action@master
-#         env:
-#           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-#           BRANCH: gh-pages
-#           FOLDER: build
-#           BUILD_SCRIPT: npm install && npm run build
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
 
 
 
