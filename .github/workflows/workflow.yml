@@ -1,9 +1,8 @@
 # This is a basic workflow to help you get started with Actions
-
 name: CI
 
 # optional
-run-name: [workflow run] ${{ github.actor }} 
+run-name: [alice's workflow run] ${{ github.actor }} 
 
 
 # Controls when the workflow will run
@@ -35,7 +34,7 @@ jobs:
           node-version: '14'
 
       - name: Install Dependencies
-        run: 
+        run: |
           npm install
           npm install hexo-deployer-git --save
 
@@ -43,3 +42,15 @@ jobs:
         run: |
           hexo clean
           hexo generate
+          hexo deploy
+          
+#       - name: Build and Deploy
+#         uses: JamesIves/github-pages-deploy-action@master
+#         env:
+#           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+#           BRANCH: gh-pages
+#           FOLDER: build
+#           BUILD_SCRIPT: npm install && npm run build
+
+
+
