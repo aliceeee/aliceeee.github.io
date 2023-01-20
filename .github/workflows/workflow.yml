@@ -1,4 +1,4 @@
-name: Pages
+name: Deploy Hexo GithubPages
 on:
   push:
     branches:
