@@ -22,7 +22,7 @@ jobs:
       - name: Install Dependencies - npm
         run: npm install -g npm@9
       - name: Install Dependencies - hexo
-        run: npm install hexo
+        run: npm install -g hexo-cli
       - name: Build
         run: hexo generate
       - name: Deploy
