@@ -19,10 +19,10 @@ jobs:
           key: ${{ runner.OS }}-npm-cache
           restore-keys: |
             ${{ runner.OS }}-npm-cache
-      - name: Install Dependencies
-        run: |
-          npm install -g npm@9
-          npm install hexo
+      - name: Install Dependencies - npm
+        run: npm install -g npm@9
+      - name: Install Dependencies - hexo
+        run: npm install hexo
       - name: Build
         run: hexo generate
       - name: Deploy
