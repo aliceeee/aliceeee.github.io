@@ -1,4 +1,4 @@
-name: Pages
+name: Deploy Hexo GithubPages
 on:
   push:
     branches:
@@ -19,12 +19,23 @@ jobs:
           key: ${{ runner.OS }}-npm-cache
           restore-keys: |
             ${{ runner.OS }}-npm-cache
+            
+      # 安装npm, hexo
       - name: Install Dependencies
-        run: npm install
-      - name: Deploy
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npm install -g hexo
-          npm install hexo-deployer-git --save
-          hexo clean && hexo deploy
+          npm install -g npm@9
+          npm install -g hexo-cli
+          
+      # Build static files to public directory and cache files
+      - name: Build 
+        run: |
+          hexo clean
+          hexo generate
+          
+      # https://github.com/peaceiris/actions-gh-pages    
+      - name: Deploy public directory to 
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: hexo-gh-pages  # default: gh-pages

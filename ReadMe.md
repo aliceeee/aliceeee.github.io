@@ -6,7 +6,7 @@ My blog
 
 # 2 Development
 
-Branch `master`, is release branch.
+Branch `hexo-gh-pages`, is release branch.
 
 Branch `hexo_version`, is current development branch.
 
