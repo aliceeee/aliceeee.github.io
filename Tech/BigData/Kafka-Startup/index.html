@@ -1,23 +1,306 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Kafka Startup | Alice&#39;s Secret Base</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Installation kafka 2.11 See https:&#x2F;&#x2F;kafka.apache.org&#x2F;11&#x2F;documentation.html#quickstart  单节点Download &amp; install 12wget http:&#x2F;&#x2F;mirrors.shu.edu.cn&#x2F;apache&#x2F;kafka&#x2F;2.1.1&#x2F;kafka_2.11-2.1.1.tgztar -zxf kafka_">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kafka Startup">
+<meta property="og:url" content="http://aliceeee.github.io/Tech/BigData/Kafka-Startup/index.html">
+<meta property="og:site_name" content="Alice&#39;s Secret Base">
+<meta property="og:description" content="Installation kafka 2.11 See https:&#x2F;&#x2F;kafka.apache.org&#x2F;11&#x2F;documentation.html#quickstart  单节点Download &amp; install 12wget http:&#x2F;&#x2F;mirrors.shu.edu.cn&#x2F;apache&#x2F;kafka&#x2F;2.1.1&#x2F;kafka_2.11-2.1.1.tgztar -zxf kafka_">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-04-19T15:19:08.000Z">
+<meta property="article:modified_time" content="2023-01-28T10:33:25.926Z">
+<meta property="article:author" content="Alice">
+<meta property="article:tag" content="cheatsheet">
+<meta property="article:tag" content="startup">
+<meta property="article:tag" content="kafka">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Alice&#39;s Secret Base" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+  
 
-{% block page_class %}page-post-detail{% endblock %}
+<meta name="generator" content="Hexo 6.3.0"></head>
 
-{% block content %}
-
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Alice&#39;s Secret Base</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://aliceeee.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-BigData/Kafka-Startup" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/Tech/BigData/Kafka-Startup/" class="article-date">
+  <time datetime="2019-04-19T15:19:08.000Z" itemprop="datePublished">2019-04-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Tech/">Tech</a>
   </div>
 
-{% endblock %}
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Kafka Startup
+    </h1>
+  
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Installation-kafka-2-11"><a href="#Installation-kafka-2-11" class="headerlink" title="Installation kafka 2.11"></a>Installation kafka 2.11</h1><blockquote>
+<p>See <a target="_blank" rel="noopener" href="https://kafka.apache.org/11/documentation.html#quickstart">https://kafka.apache.org/11/documentation.html#quickstart</a></p>
+</blockquote>
+<h2 id="单节点"><a href="#单节点" class="headerlink" title="单节点"></a>单节点</h2><p>Download &amp; install</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget http://mirrors.shu.edu.cn/apache/kafka/2.1.1/kafka_2.11-2.1.1.tgz</span><br><span class="line">tar -zxf kafka_2.11-2.1.1.tgz</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+<p>Start server</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 因为依赖ZK，所以需要启动ZK</span></span><br><span class="line"><span class="comment"># 如果没有安装，也可以运行kafka自带的</span></span><br><span class="line">bin/zookeeper-server-start.sh config/zookeeper.properties</span><br><span class="line"><span class="comment"># 启动kafak</span></span><br><span class="line">bin/kafka-server-start.sh config/server.properties</span><br></pre></td></tr></table></figure>
+
+<h3 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h3><p>Create topic (on zk)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-topics.sh --create \</span><br><span class="line">    --zookeeper 127.0.0.1:2181 \</span><br><span class="line">    --replication-factor 1 \</span><br><span class="line">    --partitions 1 \</span><br><span class="line">    --topic mytopic</span><br></pre></td></tr></table></figure>
+
+<p>List topic (on zk)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-topics.sh --list --zookeeper localhost:2181</span><br></pre></td></tr></table></figure>
+
+<p>Send message</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-console-producer.sh --broker-list localhost:9092 --topic mytopic</span><br><span class="line">输入一些字</span><br></pre></td></tr></table></figure>
+
+<p>Consume message<br>同时能看到上面的输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &gt;=2.11-2.1.1</span></span><br><span class="line">bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 \</span><br><span class="line">    --topic mytopic \</span><br><span class="line">    --from-beginning</span><br><span class="line"></span><br><span class="line"><span class="comment"># older version</span></span><br><span class="line">bin/kafka-console-consumer.sh --zookeeper localhost:2181 \</span><br><span class="line">    --topic mytopic \</span><br><span class="line">    --from-beginning</span><br></pre></td></tr></table></figure>
+
+<h2 id="多节点"><a href="#多节点" class="headerlink" title="多节点"></a>多节点</h2><p>Let’s expand our cluster to three nodes (still all on our local machine).</p>
+<p>First we make a config file for each of the brokers </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp config/server.properties config/server-1.properties</span><br><span class="line">cp config/server.properties config/server-2.properties</span><br></pre></td></tr></table></figure>
+
+<p>Update config file</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">config/server-1.properties:</span><br><span class="line">    broker.id=1</span><br><span class="line">    listeners=PLAINTEXT://:9093</span><br><span class="line">    log.dir=/tmp/kafka-logs-1</span><br><span class="line"> </span><br><span class="line">config/server-2.properties:</span><br><span class="line">    broker.id=2</span><br><span class="line">    listeners=PLAINTEXT://:9094</span><br><span class="line">    log.dir=/tmp/kafka-logs-2</span><br></pre></td></tr></table></figure>
+
+<p>We already have Zookeeper and our single node started, so we just need to start the two new nodes:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-server-start.sh config/server-1.properties &amp;</span><br><span class="line">bin/kafka-server-start.sh config/server-2.properties &amp;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Demo-1"><a href="#Demo-1" class="headerlink" title="Demo"></a>Demo</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 3 --partitions 1 --topic my-replicated-topic</span><br><span class="line"></span><br><span class="line">bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic my-replicated-topic</span><br></pre></td></tr></table></figure>
+
+<h1 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h1><p>通常在 kafka&#x2F;config&#x2F;server.properties</p>
+<blockquote>
+<p>See <a target="_blank" rel="noopener" href="https://kafka.apache.org/11/documentation.html#configuration">https://kafka.apache.org/11/documentation.html#configuration</a></p>
+</blockquote>
+<h2 id="Producer"><a href="#Producer" class="headerlink" title="Producer"></a>Producer</h2><ul>
+<li>request.timeout.ms<br>配置控制客户端等待请求响应的最长时间。 如果在超时之前未收到响应，客户端将在必要时重新发送请求，如果重试耗尽，则该请求将失败。<br>这应该大于replica.lag.time.max.ms(broker配置)，以减少由于不必要的生产者重试引起的消息重复的可能性。</li>
+</ul>
+<h2 id="Change-Port"><a href="#Change-Port" class="headerlink" title="Change Port"></a>Change Port</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">listeners = PLAINTEXT://&lt;ip&gt;:9093</span><br><span class="line">advertised.listeners=PLAINTEXT://&lt;ip&gt;:9093</span><br></pre></td></tr></table></figure>
+
+<h2 id="Java-参数"><a href="#Java-参数" class="headerlink" title="Java 参数"></a>Java 参数</h2><p>设置环境变量：KAFKA_HEAP_OPTS&#x3D;”-Xms512m -Xmx1g”<br>或者启动脚本</p>
+<h2 id="清理数据"><a href="#清理数据" class="headerlink" title="清理数据"></a>清理数据</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">log.retention.hours=168 //保留7d</span><br><span class="line">log.retention.check.interval.ms=300000 //5min检查一次segment是否过期</span><br><span class="line">log.segment.bytes=1073741824 //1G，超过生成一个新的</span><br></pre></td></tr></table></figure>
+
+<h1 id="Commands"><a href="#Commands" class="headerlink" title="Commands"></a>Commands</h1><h2 id="Topic"><a href="#Topic" class="headerlink" title="Topic"></a>Topic</h2><p>查看topic信息</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-topics.sh --zookeeper 127.0.0.1:2181 --topic <span class="string">&quot;test-topic&quot;</span> --describe</span><br></pre></td></tr></table></figure>
+<ul>
+<li>“leader” is the node responsible for all reads and writes for the given partition. Each node will be the leader for a randomly selected portion of the partitions.</li>
+<li>“replicas” is the list of nodes that replicate the log for this partition regardless of whether they are the leader or even if they are currently alive.</li>
+<li>“isr” is the set of “in-sync” replicas. This is the subset of the replicas list that is currently alive and caught-up to the leader.</li>
+</ul>
+<p>查看指定group信息</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-topics.sh --new-consumer --bootstrap-server 127.0.0.1:9092 --group test-group --describe</span><br></pre></td></tr></table></figure>
+
+<h2 id="Balancing-leadership"><a href="#Balancing-leadership" class="headerlink" title="Balancing leadership"></a>Balancing leadership</h2><p>重平衡</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-preferred-replica-election.sh --zookeeper 127.0.0.1:2181</span><br></pre></td></tr></table></figure>
+
+<h2 id="Consumer"><a href="#Consumer" class="headerlink" title="Consumer"></a>Consumer</h2><p>查看消费组</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># list</span></span><br><span class="line">bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --list</span><br><span class="line"></span><br><span class="line"><span class="comment"># describe group </span></span><br><span class="line">bin/kafka-consumer-groups.sh  --bootstrap-server localhost:9092 --group xxx --describe</span><br><span class="line"><span class="comment"># describe group - expired</span></span><br><span class="line">bin/kafka-topics.sh --new-consumer --bootstrap-server 127.0.0.1:9092 --group test-group --describe</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://aliceeee.github.io/Tech/BigData/Kafka-Startup/" data-id="cldftfdn9000qdgon5jrddzuf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cheatsheet/" rel="tag">cheatsheet</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kafka/" rel="tag">kafka</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/startup/" rel="tag">startup</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/Tech/Testing/Junit5-Startup/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Junit5 Startup
+        
+      </div>
+    </a>
+  
+  
+    <a href="/Tech/Cloud/Kubernetes-Cheatsheet/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Kubernetes Cheatsheet</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Others/">Others</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Reading/">Reading</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/apache/" rel="tag">apache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bi/" rel="tag">bi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cheatsheet/" rel="tag">cheatsheet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/client/" rel="tag">client</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/configuration/" rel="tag">configuration</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/druid/" rel="tag">druid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flink/" rel="tag">flink</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git-cheatsheet/" rel="tag">git cheatsheet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grafana/" rel="tag">grafana</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hdfs/" rel="tag">hdfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hive/" rel="tag">hive</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/index/" rel="tag">index</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/journal/" rel="tag">journal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/junit/" rel="tag">junit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/" rel="tag">kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/" rel="tag">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maven/" rel="tag">maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/" rel="tag">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/" rel="tag">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paddlepaddle/" rel="tag">paddlepaddle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/plugin/" rel="tag">plugin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spark/" rel="tag">spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/" rel="tag">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/" rel="tag">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/startup/" rel="tag">startup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/superset/" rel="tag">superset</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swagger2/" rel="tag">swagger2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/todo/" rel="tag">todo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/apache/" style="font-size: 12.5px;">apache</a> <a href="/tags/bi/" style="font-size: 10px;">bi</a> <a href="/tags/cheatsheet/" style="font-size: 17.5px;">cheatsheet</a> <a href="/tags/client/" style="font-size: 10px;">client</a> <a href="/tags/configuration/" style="font-size: 10px;">configuration</a> <a href="/tags/docker/" style="font-size: 12.5px;">docker</a> <a href="/tags/druid/" style="font-size: 12.5px;">druid</a> <a href="/tags/flink/" style="font-size: 10px;">flink</a> <a href="/tags/git-cheatsheet/" style="font-size: 10px;">git cheatsheet</a> <a href="/tags/grafana/" style="font-size: 12.5px;">grafana</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/hdfs/" style="font-size: 10px;">hdfs</a> <a href="/tags/hive/" style="font-size: 10px;">hive</a> <a href="/tags/index/" style="font-size: 10px;">index</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/journal/" style="font-size: 10px;">journal</a> <a href="/tags/junit/" style="font-size: 10px;">junit</a> <a href="/tags/kafka/" style="font-size: 12.5px;">kafka</a> <a href="/tags/kubernetes/" style="font-size: 10px;">kubernetes</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mvc/" style="font-size: 10px;">mvc</a> <a href="/tags/mysql/" style="font-size: 12.5px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/paddlepaddle/" style="font-size: 10px;">paddlepaddle</a> <a href="/tags/plugin/" style="font-size: 12.5px;">plugin</a> <a href="/tags/python/" style="font-size: 12.5px;">python</a> <a href="/tags/spark/" style="font-size: 10px;">spark</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/sql/" style="font-size: 10px;">sql</a> <a href="/tags/startup/" style="font-size: 20px;">startup</a> <a href="/tags/superset/" style="font-size: 10px;">superset</a> <a href="/tags/swagger2/" style="font-size: 10px;">swagger2</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/todo/" style="font-size: 15px;">todo</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/Others/NonTech/BulletJournal/">BulletJournal</a>
+          </li>
+        
+          <li>
+            <a href="/Reading/NonTech/ReadingList/">Books to Read</a>
+          </li>
+        
+          <li>
+            <a href="/Tech/AI/Paddlepaddle-Installation/">Paddlepaddle Installation</a>
+          </li>
+        
+          <li>
+            <a href="/Tech/BigData/Hive-SQL-Cheatsheet/">Hive SQL Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/Tech/Java/Google-protobuf-%E5%BC%80%E6%BA%90%E5%BA%8F%E5%88%97%E5%8C%96%E6%A1%86%E6%9E%B6/">Google protobuf - 开源序列化框架</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Alice<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  </div>
+</body>
+</html>

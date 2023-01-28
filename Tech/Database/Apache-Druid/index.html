@@ -1,23 +1,359 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Apache Druid | Alice&#39;s Secret Base</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Apache Druid (incubating) is a data store designed for high-performance slice-and-dice analytics (“OLAP”-style) on large data sets.   See http:&#x2F;&#x2F;druid.io&#x2F;docs&#x2F;latest&#x2F;design&#x2F;index.html#what-is-druid">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Apache Druid">
+<meta property="og:url" content="http://aliceeee.github.io/Tech/Database/Apache-Druid/index.html">
+<meta property="og:site_name" content="Alice&#39;s Secret Base">
+<meta property="og:description" content="Apache Druid (incubating) is a data store designed for high-performance slice-and-dice analytics (“OLAP”-style) on large data sets.   See http:&#x2F;&#x2F;druid.io&#x2F;docs&#x2F;latest&#x2F;design&#x2F;index.html#what-is-druid">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://druid.io/docs/img/druid-architecture.png">
+<meta property="article:published_time" content="2019-05-10T18:12:25.000Z">
+<meta property="article:modified_time" content="2023-01-28T10:33:25.926Z">
+<meta property="article:author" content="Alice">
+<meta property="article:tag" content="startup">
+<meta property="article:tag" content="druid">
+<meta property="article:tag" content="apache">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://druid.io/docs/img/druid-architecture.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Alice&#39;s Secret Base" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+  
 
-{% block page_class %}page-post-detail{% endblock %}
+<meta name="generator" content="Hexo 6.3.0"></head>
 
-{% block content %}
-
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Alice&#39;s Secret Base</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://aliceeee.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Database/Apache-Druid" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/Tech/Database/Apache-Druid/" class="article-date">
+  <time datetime="2019-05-10T18:12:25.000Z" itemprop="datePublished">2019-05-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Tech/">Tech</a>
   </div>
 
-{% endblock %}
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Apache Druid
+    </h1>
+  
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Apache Druid (incubating) is a data store designed for high-performance slice-and-dice analytics (“OLAP”-style) on large data sets. </p>
+<blockquote>
+<p>See <a target="_blank" rel="noopener" href="http://druid.io/docs/latest/design/index.html#what-is-druid">http://druid.io/docs/latest/design/index.html#what-is-druid</a></p>
+</blockquote>
+<blockquote>
+<p>Druid GitHub地址：<a target="_blank" rel="noopener" href="https://github.com/apache/incubator-druid">https://github.com/apache/incubator-druid</a></p>
+</blockquote>
+<span id="more"></span>
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+<h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><blockquote>
+<p>See <a target="_blank" rel="noopener" href="http://druid.io/docs/0.14.0-incubating/design/index.html#architecture">http://druid.io/docs/0.14.0-incubating/design/index.html#architecture</a></p>
+<p>See <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/2347abf563df">Druid基础介绍和系统架构</a></p>
+</blockquote>
+<p><img src="http://druid.io/docs/img/druid-architecture.png" alt="Druid Architecture" title="Druid Architecture"></p>
+<h2 id="Processes-and-Servers"><a href="#Processes-and-Servers" class="headerlink" title="Processes and Servers"></a>Processes and Servers</h2><p>每个Druid process type可以独立配置、扩缩容</p>
+<p>Pprocess types</p>
+<ul>
+<li>Coordinator processes manage data availability on the cluster.</li>
+<li>Overlord processes control the assignment of data ingestion workloads.</li>
+<li>Broker processes handle queries from external clients.</li>
+<li>Router processes are optional processes that can route requests to Brokers, Coordinators, and Overlords.</li>
+<li>Historical processes store queryable data.</li>
+<li>MiddleManager processes are responsible for ingesting data.</li>
+</ul>
+<p>推荐部署方案</p>
+<ul>
+<li>Master: Runs Coordinator and Overlord processes, manages data availability and ingestion.</li>
+<li>Query: Runs Broker and optional Router processes, handles queries from external clients.</li>
+<li>Data: Runs Historical and MiddleManager processes, executes ingestion workloads and stores all queryable data.</li>
+</ul>
+<h2 id="External-dependencies"><a href="#External-dependencies" class="headerlink" title="External dependencies"></a>External dependencies</h2><p>深度存储(Deep Storage)，比如HDFS、S3等<br>元数据存储(Metadata Storage)，比如Mysql、PostgreSQL<br>Zookeeper，用于管理集群状态</p>
+<h1 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h1><blockquote>
+<p>See <a target="_blank" rel="noopener" href="http://druid.io/docs/0.14.0-incubating/tutorials/index.html">http://druid.io/docs/0.14.0-incubating/tutorials/index.html</a><br>See <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a4b8bf4c82b9">Druid系统安装与配置</a></p>
+</blockquote>
+<h2 id="Standalone"><a href="#Standalone" class="headerlink" title="Standalone"></a>Standalone</h2><h3 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h3><p>CentOs7, 8G of RAM, 2 vCPUs<br>Java 8</p>
+<h3 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h3><blockquote>
+<p>See <a target="_blank" rel="noopener" href="https://www.apache.org/dyn/closer.cgi?path=/incubator/druid/0.14.0-incubating/apache-druid-0.14.0-incubating-bin.tar.gz">https://www.apache.org/dyn/closer.cgi?path=/incubator/druid/0.14.0-incubating/apache-druid-0.14.0-incubating-bin.tar.gz</a></p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">wget http://mirrors.tuna.tsinghua.edu.cn/apache/incubator/druid/0.14.0-incubating/apache-druid-0.14.0-incubating-bin.tar.gz</span><br><span class="line">tar -xzf apache-druid-0.14.0-incubating-bin.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> apache-druid-0.14.0-incubating</span><br><span class="line"></span><br><span class="line"><span class="comment"># tutorial 启动脚本要求的zk位置</span></span><br><span class="line"><span class="built_in">ln</span> -s ../zookeeper-3.4.14 zk</span><br><span class="line"></span><br><span class="line"><span class="comment"># start server</span></span><br><span class="line">bin/supervise -c quickstart/tutorial/conf/tutorial-cluster.conf</span><br></pre></td></tr></table></figure>
+
+<p>访问：<br>Druid Overlord Console: <a target="_blank" rel="noopener" href="http://localhost:8090/console.html">http://localhost:8090/console.html</a><br>Druid Unified Console: <a target="_blank" rel="noopener" href="http://localhost:8888/unified-console.html">http://localhost:8888/unified-console.html</a><br>CoordinatorConsole: <a target="_blank" rel="noopener" href="http://localhost:8081/">http://localhost:8081</a></p>
+<p>启动后，</p>
+<ul>
+<li>持久化数据在（深度存储和元数据存储）：${DRUID_HOME}&#x2F;var目录下<ul>
+<li>zk:2181，数据文件var&#x2F;zk</li>
+</ul>
+</li>
+<li>日志：${DRUID_HOME}&#x2F;var&#x2F;sv&#x2F;*.log</li>
+<li>Resetting cluster state: 删除${DRUID_HOME}&#x2F;var目录</li>
+<li>Resetting Kafka: 删除&#x2F;tmp&#x2F;kafka-logs</li>
+<li>组件进程和端口映射<ul>
+<li>zk:2181</li>
+<li>coordinator:8081</li>
+<li>broker:8082</li>
+<li>historical:8083</li>
+<li>router:8888</li>
+<li>overlord:8090</li>
+<li>middleManager:8091</li>
+</ul>
+</li>
+</ul>
+<p>如果出现启动报错， zk.log出现：Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain，检查zk引用是否正确。</p>
+<h2 id="Clustering"><a href="#Clustering" class="headerlink" title="Clustering"></a>Clustering</h2><blockquote>
+<p>See <a target="_blank" rel="noopener" href="http://druid.io/docs/0.14.0-incubating/tutorials/cluster.html">http://druid.io/docs/0.14.0-incubating/tutorials/cluster.html</a></p>
+</blockquote>
+<h1 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h1><h2 id="Tutorial-Loading-a-file"><a href="#Tutorial-Loading-a-file" class="headerlink" title="Tutorial: Loading a file"></a>Tutorial: Loading a file</h2><p>使用 Apache Druid (incubating)’s native batch ingestion，提交一个ingestion task（quickstart&#x2F;tutorial&#x2F;wikipedia-index.json），加载数据（quickstart&#x2F;tutorial&#x2F;wikiticker-2015-09-12-sampled.json.gz）</p>
+<ol>
+<li>提交task</li>
+</ol>
+<blockquote>
+<p>See <a target="_blank" rel="noopener" href="http://druid.io/docs/0.14.0-incubating/tutorials/tutorial-batch.html">http://druid.io/docs/0.14.0-incubating/tutorials/tutorial-batch.html</a></p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 方法一，使用脚本，但是python报错：httplib.BadStatusLine: &#x27;&#x27;（TODO）</span></span><br><span class="line"><span class="comment"># bin/post-index-task --file quickstart/tutorial/wikipedia-index.json </span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 方法二</span></span><br><span class="line">curl -X <span class="string">&#x27;POST&#x27;</span> -H <span class="string">&#x27;Content-Type:application/json&#x27;</span> -d @quickstart/tutorial/wikipedia-index.json http://localhost:8090/druid/indexer/v1/task <span class="comment"># 使用ip</span></span><br></pre></td></tr></table></figure>
+<p>成功后返回task id</p>
+<ol start="2">
+<li>查询task</li>
+</ol>
+<blockquote>
+<p>See <a target="_blank" rel="noopener" href="http://druid.io/docs/0.14.0-incubating/tutorials/tutorial-query.html">http://druid.io/docs/0.14.0-incubating/tutorials/tutorial-query.html</a></p>
+</blockquote>
+<ul>
+<li><p>使用Native JSON queries</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X <span class="string">&#x27;POST&#x27;</span> -H <span class="string">&#x27;Content-Type:application/json&#x27;</span> -d @quickstart/tutorial/wikipedia-top-pages.json http://localhost:8082/druid/v2?pretty <span class="comment"># 使用ip</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用Druid SQL queries</p>
+</li>
+</ul>
+<p>http请求</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X <span class="string">&#x27;POST&#x27;</span> -H <span class="string">&#x27;Content-Type:application/json&#x27;</span> -d @quickstart/tutorial/wikipedia-top-pages-sql.json http://localhost:8082/druid/v2/sql <span class="comment"># 使用ip</span></span><br></pre></td></tr></table></figure>
+
+<p>或者dsql client （同样python报错：httplib.BadStatusLine: ‘’）（TODO）</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ bin/dsql</span><br><span class="line">Welcome to dsql, the command-line client <span class="keyword">for</span> Druid SQL.</span><br><span class="line">Connected to [http://localhost:8082/].</span><br><span class="line"></span><br><span class="line">Type <span class="string">&quot;\h&quot;</span> <span class="keyword">for</span> <span class="built_in">help</span>.</span><br><span class="line">dsql&gt; SELECT page, COUNT(*) AS Edits FROM wikipedia WHERE <span class="string">&quot;__time&quot;</span> BETWEEN TIMESTAMP <span class="string">&#x27;2015-09-12 00:00:00&#x27;</span> AND TIMESTAMP <span class="string">&#x27;2015-09-13 00:00:00&#x27;</span> GROUP BY page ORDER BY Edits DESC LIMIT 10;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>访问页面<br><a target="_blank" rel="noopener" href="http://localhost:8888/unified-console.html#tasks">http://localhost:8888/unified-console.html#tasks</a> 看到task状态SUCCESS<br><a target="_blank" rel="noopener" href="http://localhost:8888/unified-console.html#datasources">http://localhost:8888/unified-console.html#datasources</a> 查看Datasources状态 Fully available<br><a target="_blank" rel="noopener" href="http://localhost:8888/unified-console.html#sql">http://localhost:8888/unified-console.html#sql</a> 运行SQL</li>
+</ul>
+<h2 id="Tutorial-Roll-up"><a href="#Tutorial-Roll-up" class="headerlink" title="Tutorial: Roll-up"></a>Tutorial: Roll-up</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="http://druid.io/docs/latest/tutorials/tutorial-rollup.html">http://druid.io/docs/latest/tutorials/tutorial-rollup.html</a></p>
+</blockquote>
+<p>Roll-up是导入数据时做的初步聚合操作，可以减少存储数据</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bin/post-index-task --file quickstart/tutorial/rollup-index.json </span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">curl -X <span class="string">&#x27;POST&#x27;</span> -H <span class="string">&#x27;Content-Type:application/json&#x27;</span> -d @quickstart/tutorial/rollup-index.json http://localhost:8090/druid/indexer/v1/task <span class="comment"># 使用ip</span></span><br></pre></td></tr></table></figure>
+<p>查看sql</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> &quot;rollup-tutorial&quot;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Tutorial-Updating-existing-data"><a href="#Tutorial-Updating-existing-data" class="headerlink" title="Tutorial: Updating existing data"></a>Tutorial: Updating existing data</h2><h1 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="http://druid.io/docs/latest/querying/sql.html">http://druid.io/docs/latest/querying/sql.html</a></p>
+</blockquote>
+<h1 id="Data-Ingestion"><a href="#Data-Ingestion" class="headerlink" title="Data Ingestion"></a>Data Ingestion</h1><h2 id="Kafka-Indexing-Service-Stream-Pull"><a href="#Kafka-Indexing-Service-Stream-Pull" class="headerlink" title="Kafka Indexing Service (Stream Pull)"></a>Kafka Indexing Service (Stream Pull)</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="http://druid.io/docs/0.14.0-incubating/development/extensions-core/kafka-ingestion.html">http://druid.io/docs/0.14.0-incubating/development/extensions-core/kafka-ingestion.html</a></p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://aliceeee.github.io/Tech/Database/Apache-Druid/" data-id="cldftfdne0015dgonc45d3u6s" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/apache/" rel="tag">apache</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/druid/" rel="tag">druid</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/startup/" rel="tag">startup</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/Tech/Python/Python-Virtual-Env/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Python Virtual Env
+        
+      </div>
+    </a>
+  
+  
+    <a href="/Tech/BigData/Zookeeper-Startup/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Zookeeper Startup</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Others/">Others</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Reading/">Reading</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/apache/" rel="tag">apache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bi/" rel="tag">bi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cheatsheet/" rel="tag">cheatsheet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/client/" rel="tag">client</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/configuration/" rel="tag">configuration</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/druid/" rel="tag">druid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flink/" rel="tag">flink</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git-cheatsheet/" rel="tag">git cheatsheet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grafana/" rel="tag">grafana</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hdfs/" rel="tag">hdfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hive/" rel="tag">hive</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/index/" rel="tag">index</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/journal/" rel="tag">journal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/junit/" rel="tag">junit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/" rel="tag">kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/" rel="tag">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maven/" rel="tag">maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/" rel="tag">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/" rel="tag">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paddlepaddle/" rel="tag">paddlepaddle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/plugin/" rel="tag">plugin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spark/" rel="tag">spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/" rel="tag">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/" rel="tag">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/startup/" rel="tag">startup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/superset/" rel="tag">superset</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swagger2/" rel="tag">swagger2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/todo/" rel="tag">todo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/apache/" style="font-size: 12.5px;">apache</a> <a href="/tags/bi/" style="font-size: 10px;">bi</a> <a href="/tags/cheatsheet/" style="font-size: 17.5px;">cheatsheet</a> <a href="/tags/client/" style="font-size: 10px;">client</a> <a href="/tags/configuration/" style="font-size: 10px;">configuration</a> <a href="/tags/docker/" style="font-size: 12.5px;">docker</a> <a href="/tags/druid/" style="font-size: 12.5px;">druid</a> <a href="/tags/flink/" style="font-size: 10px;">flink</a> <a href="/tags/git-cheatsheet/" style="font-size: 10px;">git cheatsheet</a> <a href="/tags/grafana/" style="font-size: 12.5px;">grafana</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/hdfs/" style="font-size: 10px;">hdfs</a> <a href="/tags/hive/" style="font-size: 10px;">hive</a> <a href="/tags/index/" style="font-size: 10px;">index</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/journal/" style="font-size: 10px;">journal</a> <a href="/tags/junit/" style="font-size: 10px;">junit</a> <a href="/tags/kafka/" style="font-size: 12.5px;">kafka</a> <a href="/tags/kubernetes/" style="font-size: 10px;">kubernetes</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mvc/" style="font-size: 10px;">mvc</a> <a href="/tags/mysql/" style="font-size: 12.5px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/paddlepaddle/" style="font-size: 10px;">paddlepaddle</a> <a href="/tags/plugin/" style="font-size: 12.5px;">plugin</a> <a href="/tags/python/" style="font-size: 12.5px;">python</a> <a href="/tags/spark/" style="font-size: 10px;">spark</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/sql/" style="font-size: 10px;">sql</a> <a href="/tags/startup/" style="font-size: 20px;">startup</a> <a href="/tags/superset/" style="font-size: 10px;">superset</a> <a href="/tags/swagger2/" style="font-size: 10px;">swagger2</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/todo/" style="font-size: 15px;">todo</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/Others/NonTech/BulletJournal/">BulletJournal</a>
+          </li>
+        
+          <li>
+            <a href="/Reading/NonTech/ReadingList/">Books to Read</a>
+          </li>
+        
+          <li>
+            <a href="/Tech/AI/Paddlepaddle-Installation/">Paddlepaddle Installation</a>
+          </li>
+        
+          <li>
+            <a href="/Tech/BigData/Hive-SQL-Cheatsheet/">Hive SQL Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/Tech/Java/Google-protobuf-%E5%BC%80%E6%BA%90%E5%BA%8F%E5%88%97%E5%8C%96%E6%A1%86%E6%9E%B6/">Google protobuf - 开源序列化框架</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Alice<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  </div>
+</body>
+</html>

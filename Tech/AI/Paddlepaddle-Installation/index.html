@@ -1,23 +1,417 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Paddlepaddle Installation | Alice&#39;s Secret Base</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Introduction 官网：https:&#x2F;&#x2F;www.paddlepaddle.org.cn&#x2F;  源于产业实践的开源深度学习平台 Install paddlepaddle官方Dockerfile：https:&#x2F;&#x2F;github.com&#x2F;PaddlePaddle&#x2F;Paddle&#x2F;blob&#x2F;develop&#x2F;Dockerfile">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Paddlepaddle Installation">
+<meta property="og:url" content="http://aliceeee.github.io/Tech/AI/Paddlepaddle-Installation/index.html">
+<meta property="og:site_name" content="Alice&#39;s Secret Base">
+<meta property="og:description" content="Introduction 官网：https:&#x2F;&#x2F;www.paddlepaddle.org.cn&#x2F;  源于产业实践的开源深度学习平台 Install paddlepaddle官方Dockerfile：https:&#x2F;&#x2F;github.com&#x2F;PaddlePaddle&#x2F;Paddle&#x2F;blob&#x2F;develop&#x2F;Dockerfile">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-11T17:47:03.000Z">
+<meta property="article:modified_time" content="2023-01-28T10:33:25.926Z">
+<meta property="article:author" content="Alice">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="paddlepaddle">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Alice&#39;s Secret Base" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+  
 
-{% block page_class %}page-post-detail{% endblock %}
+<meta name="generator" content="Hexo 6.3.0"></head>
 
-{% block content %}
-
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Alice&#39;s Secret Base</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://aliceeee.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-AI/Paddlepaddle-Installation" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/Tech/AI/Paddlepaddle-Installation/" class="article-date">
+  <time datetime="2020-03-11T17:47:03.000Z" itemprop="datePublished">2020-03-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Tech/">Tech</a>
   </div>
 
-{% endblock %}
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Paddlepaddle Installation
+    </h1>
+  
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><blockquote>
+<p>官网：<a target="_blank" rel="noopener" href="https://www.paddlepaddle.org.cn/">https://www.paddlepaddle.org.cn/</a></p>
+</blockquote>
+<p>源于产业实践的开源深度学习平台</p>
+<h1 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h1><blockquote>
+<p>paddlepaddle官方Dockerfile：<a target="_blank" rel="noopener" href="https://github.com/PaddlePaddle/Paddle/blob/develop/Dockerfile">https://github.com/PaddlePaddle/Paddle/blob/develop/Dockerfile</a></p>
+</blockquote>
+<span id="more"></span>
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><blockquote>
+<p>CentOS下安装: <a target="_blank" rel="noopener" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/install/install_CentOS.html">https://www.paddlepaddle.org.cn/documentation/docs/zh/install/install_CentOS.html</a></p>
+</blockquote>
+<p>操作系统需满足CentOS 7 (64 bit)(GPU版本支持CUDA 9.0&#x2F;9.1&#x2F;9.2&#x2F;10.0&#x2F;10.1, 其中CUDA 9.1仅支持单卡)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># uname -m &amp;&amp; cat /etc/*release</span><br></pre></td></tr></table></figure>
+
+<p>Python安装，略</p>
+<p>检查Python（参考 Python Installation &amp; Python - pip）<br>检查Python 版本 2.7.15+&#x2F;3.5.1+&#x2F;3.6&#x2F;3.7 (64 bit)<br>检查pip 或 pip3 版本 9.0.1+ (64 bit)<br>确认Python和pip是64bit，并且处理器架构是x86_64<br>建议python2&#x2F;3命令分开，运行时采用<code>python -m pip xxxx</code>的格式指定pip</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python --version</span><br><span class="line">python -m pip --version</span><br><span class="line">python -c <span class="string">&quot;import platform;print(platform.architecture()[0]);print(platform.machine())&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>更新pip如果安装时报pip版本不够</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m pip install --upgrade pip -i http://pypi.douban.com/simple --trusted-host pypi.douban.com</span><br></pre></td></tr></table></figure>
+
+<h2 id="CentOS-CPU版-pip安装"><a href="#CentOS-CPU版-pip安装" class="headerlink" title="CentOS CPU版 pip安装"></a>CentOS CPU版 pip安装</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.paddlepaddle.org.cn/install/doc/centos">https://www.paddlepaddle.org.cn/install/doc/centos</a></p>
+</blockquote>
+<ul>
+<li>环境</li>
+</ul>
+<p>按照上面检查CentOS、python</p>
+<ul>
+<li>安装</li>
+</ul>
+<p>一定要使用baidu的源</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m pip install paddlepaddle -i https://mirror.baidu.com/pypi/simple</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>验证</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python</span><br><span class="line">&gt;&gt;&gt; import paddle.fluid as fluid</span><br><span class="line">&gt;&gt;&gt; fluid.install_check.run_check()</span><br><span class="line">...Your Paddle Fluid is installed successfully!..</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>卸载</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m pip uninstall paddlepaddle</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果报： error in nltk setup command: ‘install_requires’ must be a string or list of strings containing valid project&#x2F;version requirement specifiers<br>运行以下命令更新setuptools 再重试</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install setuptools -U</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="CentOS-CPU版-Docker安装"><a href="#CentOS-CPU版-Docker安装" class="headerlink" title="CentOS CPU版 Docker安装"></a>CentOS CPU版 Docker安装</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.paddlepaddle.org.cn/install/doc/docker">https://www.paddlepaddle.org.cn/install/doc/docker</a></p>
+</blockquote>
+<ul>
+<li>环境</li>
+</ul>
+<p>按照上面检查CentOS</p>
+<p>安装Docker</p>
+<ul>
+<li><p>pull images</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull hub.baidubce.com/paddlepaddle/paddle:1.6.3</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>run</p>
+</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name paddle -it -v <span class="variable">$PWD</span>:/paddle hub.baidubce.com/paddlepaddle/paddle:1.6.3 /bin/bash</span><br></pre></td></tr></table></figure>
+<p>验证方法同上</p>
+<h2 id="CentOS-CPU版-源码编译"><a href="#CentOS-CPU版-源码编译" class="headerlink" title="CentOS CPU版 源码编译"></a>CentOS CPU版 源码编译</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.sslVerify <span class="literal">false</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/PaddlePaddle/Paddle.git</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> Paddle</span><br><span class="line"></span><br><span class="line">docker run --name paddle-test -v <span class="variable">$PWD</span>:/paddle --network=host -it hub.baidubce.com/paddlepaddle/paddle:latest-dev /bin/bash</span><br></pre></td></tr></table></figure>
+
+<h2 id="Kubernetes-CentOS-GPU版-自定义docker镜像"><a href="#Kubernetes-CentOS-GPU版-自定义docker镜像" class="headerlink" title="Kubernetes + CentOS GPU版 自定义docker镜像"></a>Kubernetes + CentOS GPU版 自定义docker镜像</h2><blockquote>
+<p>Install paddlepaddle-gpu：<a target="_blank" rel="noopener" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/install/install_CentOS.html#cpu-gpu">https://www.paddlepaddle.org.cn/documentation/docs/zh/install/install_CentOS.html#cpu-gpu</a></p>
+</blockquote>
+<p>Kubernates+docker,调度GPU资源，业务通过镜像发布</p>
+<ul>
+<li>安装<ul>
+<li>Kubernetes:<ul>
+<li>Enable NVIDIA device plugin for Kubernetes， 可以支持发布时配置gpu资源</li>
+</ul>
+</li>
+<li>Kubernetes GPU node：<ul>
+<li>按照上面检查基本环境</li>
+<li>Install Docker  略</li>
+<li>Install nvidia driver 硬件驱动</li>
+<li>Install nvidia-docker-plugin，为了方便的run映射了gpu设备的容器</li>
+</ul>
+</li>
+<li>Docker container：<ul>
+<li>按照上面基本环境和python</li>
+<li>Install cuda+cudnn 提供高性能的GPU应用开发环境</li>
+<li>Install paddlepaddle-gpu</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Kubernetes-Enable-NVIDIA-device-plugin-for-Kubernetes"><a href="#Kubernetes-Enable-NVIDIA-device-plugin-for-Kubernetes" class="headerlink" title="[Kubernetes] Enable NVIDIA device plugin for Kubernetes"></a>[Kubernetes] Enable NVIDIA device plugin for Kubernetes</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/k8s-device-plugin#prerequisites">https://github.com/NVIDIA/k8s-device-plugin#prerequisites</a></p>
+</blockquote>
+<p>Kubernetes version &gt;&#x3D; 1.10</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/1.0.0-beta4/nvidia-device-plugin.yml</span><br></pre></td></tr></table></figure>
+
+<h3 id="GPU-Node-Install-Nvidia-driver"><a href="#GPU-Node-Install-Nvidia-driver" class="headerlink" title="[GPU Node] Install Nvidia driver"></a>[GPU Node] Install Nvidia driver</h3><blockquote>
+<p>nvidia driver下载：<a target="_blank" rel="noopener" href="https://www.nvidia.com/Download/Find.aspx?lang=en-us">https://www.nvidia.com/Download/Find.aspx?lang=en-us</a></p>
+</blockquote>
+<p>验证：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/driver/nvidia/version</span><br></pre></td></tr></table></figure>
+
+<h3 id="GPU-Node-Install-nvidia-docker"><a href="#GPU-Node-Install-nvidia-docker" class="headerlink" title="[GPU Node] Install nvidia-docker"></a>[GPU Node] Install nvidia-docker</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/nvidia-container-runtime">https://github.com/NVIDIA/nvidia-container-runtime</a></p>
+</blockquote>
+<h3 id="Docker-container-Install-dependencies"><a href="#Docker-container-Install-dependencies" class="headerlink" title="[Docker container] Install dependencies"></a>[Docker container] Install dependencies</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y wget <span class="built_in">which</span> perl kernel-devel gcc gcc-c++ kernel-devel-$(<span class="built_in">uname</span> -r) kernel-headers-$(<span class="built_in">uname</span> -r)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Docker-container-Install-CUDA-Toolkit"><a href="#Docker-container-Install-CUDA-Toolkit" class="headerlink" title="[Docker container] Install CUDA Toolkit"></a>[Docker container] Install CUDA Toolkit</h3><ul>
+<li>决定CUDA Toolkit版本<blockquote>
+<p>cuda toolkit和Driver Version版本兼容关系：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html</a></p>
+</blockquote>
+</li>
+</ul>
+<p>安装页面可以看到完整安装文件名</p>
+<p>CUDA安装文件第二个下划线后面是驱动版本号，两个一致、或者driver version大于CUDA toolkit</p>
+<ul>
+<li>安装CUDA Toolkit（使用runfile安装）</li>
+</ul>
+<blockquote>
+<p>CUDA安装步骤：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#runfile">https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#runfile</a></p>
+</blockquote>
+<blockquote>
+<p>CUDA下载页，需先选择环境：<a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-10.1-download-archive-update2?target_os=Linux&target_arch=x86_64&target_distro=CentOS&target_version=7&target_type=runfilelocal">https://developer.nvidia.com/cuda-10.1-download-archive-update2?target_os=Linux&amp;target_arch=x86_64&amp;target_distro=CentOS&amp;target_version=7&amp;target_type=runfilelocal</a></p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget http://developer.download.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.243_418.87.00_linux.run</span><br><span class="line"><span class="built_in">chmod</span> +x cuda_10.*</span><br><span class="line">cuda_10.* --toolkit --silent</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;export PATH=<span class="variable">$PATH</span>:/usr/local/cuda/bin:/usr/local/cuda/NsightCompute-1.0&quot;</span> &gt;&gt; /etc/profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;export LD_LIBRARY_PATH=<span class="variable">$LD_LIBRARY_PATH</span>:/usr/local/cuda/lib64&quot;</span> &gt;&gt; /etc/profile</span><br></pre></td></tr></table></figure>
+<p>验证CUDA Toolkit</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看版本</span></span><br><span class="line">nvcc --version</span><br><span class="line"><span class="built_in">cat</span> /usr/local/cuda/version.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行sample</span></span><br><span class="line"><span class="built_in">cd</span> /usr/local/cuda/samples/1_Utilities/deviceQuery &amp;&amp; make</span><br><span class="line">./deviceQuery</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /usr/local/cuda/samples/1_Utilities/bandwidthTest &amp;&amp; make</span><br><span class="line">./bandwidthTest</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /usr/local/cuda/samples/1_Utilities/deviceQueryDrv &amp;&amp; make</span><br><span class="line">./deviceQueryDrv</span><br></pre></td></tr></table></figure>
+
+<p>如果运行<code>./deviceQueryDrv</code>报：.&#x2F;deviceQueryDrv: error while loading shared libraries: libcuda.so.1: cannot open shared object file: No such file or directory<br>解决：查看依赖<code>ldd ./deviceQueryDrv</code>……各种查资料和尝试后最后发现因为启动容器的时候没有加参数<code>NVIDIA_DRIVER_CAPABILITIES</code>，导致没有mount进来</p>
+<h3 id="Docker-container-Install-cuDNN"><a href="#Docker-container-Install-cuDNN" class="headerlink" title="[Docker container]  Install cuDNN"></a>[Docker container]  Install cuDNN</h3><ul>
+<li>决定cudnn版本</li>
+</ul>
+<p>目前一般都是安装版本v7，搭配cuda 9或10</p>
+<ul>
+<li>安装cuDNN并验证</li>
+</ul>
+<blockquote>
+<p>cuDNN安装步骤：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/sdk/cudnn-install/#install-linux">https://docs.nvidia.com/deeplearning/sdk/cudnn-install/#install-linux</a></p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tar -xzvf cudnn-*.tgz</span><br><span class="line"><span class="built_in">cp</span> cuda/include/cudnn.h /usr/local/cuda/include</span><br><span class="line"><span class="built_in">cp</span> cuda/lib64/libcudnn* /usr/local/cuda/lib64</span><br><span class="line"><span class="built_in">chmod</span> 755 /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn*</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证版本是：CUDNN_MAJOR 7,CUDNN_MINOR 6</span></span><br><span class="line"><span class="built_in">cat</span> /usr/local/cuda/include/cudnn.h | grep CUDNN_MAJOR -A 2</span><br></pre></td></tr></table></figure>
+
+<h3 id="Docker-container-Install-paddlepaddle-gpu"><a href="#Docker-container-Install-paddlepaddle-gpu" class="headerlink" title="[Docker container] Install paddlepaddle-gpu"></a>[Docker container] Install paddlepaddle-gpu</h3><ul>
+<li>决定paddlepaddle-gpu版本</li>
+</ul>
+<blockquote>
+<p>paddlepaddle-gpu包版本：<a target="_blank" rel="noopener" href="https://pypi.org/project/paddlepaddle-gpu/#history">https://pypi.org/project/paddlepaddle-gpu/#history</a></p>
+</blockquote>
+<blockquote>
+<p>paddlepaddle与CUDA,cuDNN版本的对应关系请见： <a target="_blank" rel="noopener" href="https://www.paddlepaddle.org.cn/documentation/docs/zh/install/Tables.html#whls">https://www.paddlepaddle.org.cn/documentation/docs/zh/install/Tables.html#whls</a></p>
+</blockquote>
+<p>因为paddlepaddle-gpu&#x3D;&#x3D;[版本号].postXX 例如 paddlepaddle-gpu&#x3D;&#x3D;1.7.0.post97 支持CUDA 9.0和cuDNN 7的对应PaddlePaddle版本的安装包。</p>
+<ul>
+<li>安装paddlepaddle-gpu</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对于Python 2：</span></span><br><span class="line">python -m pip install paddlepaddle-gpu -i https://mirror.baidu.com/pypi/simple</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对于Python 3：</span></span><br><span class="line">python3 -m pip install paddlepaddle-gpu -i https://mirror.baidu.com/pypi/simple</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>验证</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">python</span><br><span class="line">&gt;&gt;&gt; import paddle.fluid as fluid</span><br><span class="line">&gt;&gt;&gt; fluid.install_check.run_check()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证CUDAPlace函数： https://www.paddlepaddle.org.cn/documentation/docs/zh/1.6/api_cn/fluid_cn/CUDAPlace_cn.html</span></span><br><span class="line">&gt;&gt;&gt; gpu_place = fluid.CUDAPlace(0)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><ul>
+<li><p>docker运行容器测试<br>类似</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --runtime=nvidia -e NVIDIA_DRIVER_CAPABILITIES=all -e NVIDIA_VISIBLE_DEVICES=all -it &lt;image&gt; /bin/bash</span><br></pre></td></tr></table></figure>
+<p>按照上面各项验证</p>
+</li>
+<li><p>k8s测试<br>请求资源类似</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">resources:</span><br><span class="line">    limits:</span><br><span class="line">        nvidia.com/gpu: 2 # requesting 2 GPUs</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://aliceeee.github.io/Tech/AI/Paddlepaddle-Installation/" data-id="cldftfdn2000cdgonhr2m6yy1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paddlepaddle/" rel="tag">paddlepaddle</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/Reading/NonTech/ReadingList/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Books to Read
+        
+      </div>
+    </a>
+  
+  
+    <a href="/Tech/BigData/Hive-SQL-Cheatsheet/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hive SQL Cheatsheet</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Others/">Others</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Reading/">Reading</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/apache/" rel="tag">apache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bi/" rel="tag">bi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cheatsheet/" rel="tag">cheatsheet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/client/" rel="tag">client</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/configuration/" rel="tag">configuration</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/druid/" rel="tag">druid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flink/" rel="tag">flink</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git-cheatsheet/" rel="tag">git cheatsheet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grafana/" rel="tag">grafana</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hdfs/" rel="tag">hdfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hive/" rel="tag">hive</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/index/" rel="tag">index</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/journal/" rel="tag">journal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/junit/" rel="tag">junit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/" rel="tag">kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/" rel="tag">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maven/" rel="tag">maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/" rel="tag">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/" rel="tag">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paddlepaddle/" rel="tag">paddlepaddle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/plugin/" rel="tag">plugin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spark/" rel="tag">spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/" rel="tag">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/" rel="tag">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/startup/" rel="tag">startup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/superset/" rel="tag">superset</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swagger2/" rel="tag">swagger2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/todo/" rel="tag">todo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/apache/" style="font-size: 12.5px;">apache</a> <a href="/tags/bi/" style="font-size: 10px;">bi</a> <a href="/tags/cheatsheet/" style="font-size: 17.5px;">cheatsheet</a> <a href="/tags/client/" style="font-size: 10px;">client</a> <a href="/tags/configuration/" style="font-size: 10px;">configuration</a> <a href="/tags/docker/" style="font-size: 12.5px;">docker</a> <a href="/tags/druid/" style="font-size: 12.5px;">druid</a> <a href="/tags/flink/" style="font-size: 10px;">flink</a> <a href="/tags/git-cheatsheet/" style="font-size: 10px;">git cheatsheet</a> <a href="/tags/grafana/" style="font-size: 12.5px;">grafana</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/hdfs/" style="font-size: 10px;">hdfs</a> <a href="/tags/hive/" style="font-size: 10px;">hive</a> <a href="/tags/index/" style="font-size: 10px;">index</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/journal/" style="font-size: 10px;">journal</a> <a href="/tags/junit/" style="font-size: 10px;">junit</a> <a href="/tags/kafka/" style="font-size: 12.5px;">kafka</a> <a href="/tags/kubernetes/" style="font-size: 10px;">kubernetes</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mvc/" style="font-size: 10px;">mvc</a> <a href="/tags/mysql/" style="font-size: 12.5px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/paddlepaddle/" style="font-size: 10px;">paddlepaddle</a> <a href="/tags/plugin/" style="font-size: 12.5px;">plugin</a> <a href="/tags/python/" style="font-size: 12.5px;">python</a> <a href="/tags/spark/" style="font-size: 10px;">spark</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/sql/" style="font-size: 10px;">sql</a> <a href="/tags/startup/" style="font-size: 20px;">startup</a> <a href="/tags/superset/" style="font-size: 10px;">superset</a> <a href="/tags/swagger2/" style="font-size: 10px;">swagger2</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/todo/" style="font-size: 15px;">todo</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/Others/NonTech/BulletJournal/">BulletJournal</a>
+          </li>
+        
+          <li>
+            <a href="/Reading/NonTech/ReadingList/">Books to Read</a>
+          </li>
+        
+          <li>
+            <a href="/Tech/AI/Paddlepaddle-Installation/">Paddlepaddle Installation</a>
+          </li>
+        
+          <li>
+            <a href="/Tech/BigData/Hive-SQL-Cheatsheet/">Hive SQL Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/Tech/Java/Google-protobuf-%E5%BC%80%E6%BA%90%E5%BA%8F%E5%88%97%E5%8C%96%E6%A1%86%E6%9E%B6/">Google protobuf - 开源序列化框架</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Alice<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  </div>
+</body>
+</html>

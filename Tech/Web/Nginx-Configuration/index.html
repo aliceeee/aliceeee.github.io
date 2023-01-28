@@ -1,23 +1,329 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Nginx Configuration | Alice&#39;s Secret Base</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Introduction官方：http:&#x2F;&#x2F;nginx.org&#x2F;en&#x2F;docs&#x2F;beginners_guide.html Nginx VS. Nginx Plus: https:&#x2F;&#x2F;www.nginx.com&#x2F;products&#x2F;nginx&#x2F;#compare-versions">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx Configuration">
+<meta property="og:url" content="http://aliceeee.github.io/Tech/Web/Nginx-Configuration/index.html">
+<meta property="og:site_name" content="Alice&#39;s Secret Base">
+<meta property="og:description" content="Introduction官方：http:&#x2F;&#x2F;nginx.org&#x2F;en&#x2F;docs&#x2F;beginners_guide.html Nginx VS. Nginx Plus: https:&#x2F;&#x2F;www.nginx.com&#x2F;products&#x2F;nginx&#x2F;#compare-versions">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-04-12T16:19:20.000Z">
+<meta property="article:modified_time" content="2023-01-28T10:33:25.926Z">
+<meta property="article:author" content="Alice">
+<meta property="article:tag" content="nginx">
+<meta property="article:tag" content="configuration">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Alice&#39;s Secret Base" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
 
-{% block title %}{{ page.title }} | {{ title }}{% endblock %}
+  
 
-{% block page_class %}page-post-detail{% endblock %}
+<meta name="generator" content="Hexo 6.3.0"></head>
 
-{% block content %}
-
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Alice&#39;s Secret Base</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://aliceeee.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Web/Nginx-Configuration" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/Tech/Web/Nginx-Configuration/" class="article-date">
+  <time datetime="2019-04-12T16:19:20.000Z" itemprop="datePublished">2019-04-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Tech/">Tech</a>
   </div>
 
-{% endblock %}
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Nginx Configuration
+    </h1>
+  
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>官方：<a target="_blank" rel="noopener" href="http://nginx.org/en/docs/beginners_guide.html">http://nginx.org/en/docs/beginners_guide.html</a></p>
+<p>Nginx VS. Nginx Plus: <a target="_blank" rel="noopener" href="https://www.nginx.com/products/nginx/#compare-versions">https://www.nginx.com/products/nginx/#compare-versions</a></p>
+<span id="more"></span>
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+<h2 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h2><ul>
+<li>Directives: Simple (single‑line) directives; Block directives</li>
+<li>Contexts: A few top‑level directives, referred to as contexts, group together the directives that apply to different traffic types. Directives placed outside of these contexts are said to be in the main context.<ul>
+<li>events – General connection processing</li>
+<li>http – HTTP traffic</li>
+<li>mail – Mail traffic</li>
+<li>stream – TCP and UDP traffic</li>
+</ul>
+</li>
+<li>Virtual Servers: <code>server</code> blocks</li>
+<li>Inheritance: <ul>
+<li><blockquote>
+<p>See <a target="_blank" rel="noopener" href="http://blog.martinfjordvald.com/2012/08/understanding-the-nginx-configuration-inheritance-model/">UNDERSTANDING THE NGINX CONFIGURATION INHERITANCE MODEL</a></p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Configuration-File"><a href="#Configuration-File" class="headerlink" title="Configuration File"></a>Configuration File</h2><p>Configuration file is typically one of &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;conf, &#x2F;etc&#x2F;nginx, or &#x2F;usr&#x2F;local&#x2F;etc&#x2F;nginx.</p>
+<p>文件最后一般有includes，例如：include &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;conf&#x2F;vhost&#x2F;*.conf;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">user nobody; # a directive in the &#x27;main&#x27; context</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    # configuration of connection processing</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    # Configuration specific to HTTP and affecting all virtual servers  </span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        # configuration of HTTP virtual server 1       </span><br><span class="line">        location /one &#123;</span><br><span class="line">            # configuration for processing URIs starting with &#x27;/one&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">        location /two &#123;</span><br><span class="line">            # configuration for processing URIs starting with &#x27;/two&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">    server &#123;</span><br><span class="line">        # configuration of HTTP virtual server 2</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">stream &#123;</span><br><span class="line">    # Configuration specific to TCP/UDP and affecting all virtual servers</span><br><span class="line">    server &#123;</span><br><span class="line">        # configuration of TCP virtual server 1 </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>See <a target="_blank" rel="noopener" href="https://docs.nginx.com/nginx/admin-guide/basic-functionality/managing-configuration-files/#sample-configuration-file-with-multiple-contexts">Sample Configuration File with Multiple Contexts</a></p>
+</blockquote>
+<h2 id="Debug-Nginx-Configuration"><a href="#Debug-Nginx-Configuration" class="headerlink" title="Debug Nginx Configuration"></a>Debug Nginx Configuration</h2><p>error_log 默认<code>[notice]</code>级别</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error_log    /var/logs/nginx/error.log debug;</span><br></pre></td></tr></table></figure>
+
+<p>仅收集rewrite错误</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    error_log    /var/logs/nginx/error.log;</span><br><span class="line">    rewrite_log on;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>仅调试&#x2F;admin&#x2F;部分</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    #other config</span><br><span class="line">    error_log    /var/logs/nginx/example.com.error.log;</span><br><span class="line">    location /admin/ &#123; </span><br><span class="line">        error_log /var/logs/nginx/admin-error.log debug; </span><br><span class="line">    &#125;         </span><br><span class="line">    #other config</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Nginx 记录仅仅来自于你的 IP 的错误日志</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">events &#123;</span><br><span class="line">        debug_connection 1.2.3.4;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Virtual-Servers"><a href="#Virtual-Servers" class="headerlink" title="Virtual Servers"></a>Virtual Servers</h2><p>One or more server blocks define virtual servers</p>
+<h2 id="Serving-Static-Content"><a href="#Serving-Static-Content" class="headerlink" title="Serving Static Content"></a>Serving Static Content</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    location / &#123;</span><br><span class="line">        root /data/www;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location /images/ &#123;</span><br><span class="line">        root /data;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reverse-Proxy"><a href="#Reverse-Proxy" class="headerlink" title="Reverse Proxy"></a>Reverse Proxy</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">upstream tomcats &#123;</span><br><span class="line">    server 127.0.0.1:9001;</span><br><span class="line">    server 127.0.0.1:9002;</span><br><span class="line">&#125;</span><br><span class="line">location / &#123;</span><br><span class="line">    proxy_pass_header Server;</span><br><span class="line">    proxy_set_header Host $http_host;</span><br><span class="line">    proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">    proxy_pass http://tomcats;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>See <a target="_blank" rel="noopener" href="https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/">NGINX Reverse Proxy</a><br>See <a target="_blank" rel="noopener" href="http://nginx.org/en/docs/http/ngx_http_upstream_module.html#upstream">nginx http upstream module</a></p>
+</blockquote>
+<h3 id="Custom-Error-Page"><a href="#Custom-Error-Page" class="headerlink" title="Custom Error Page"></a>Custom Error Page</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">        proxy_pass http://example/;</span><br><span class="line">        proxy_set_header  X-Real-IP  $remote_addr;</span><br><span class="line">        proxy_set_header  X-Forwarded-For  $remote_addr;</span><br><span class="line">        error_page 502 503 504 = /maintainance.html;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location = /maintainance.html &#123;</span><br><span class="line">        root /path/to/html/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">500 502 503 504 @jump_to_error;</span><br><span class="line">location @jump_to_error &#123;    </span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Websocket-Support"><a href="#Websocket-Support" class="headerlink" title="Websocket Support"></a>Websocket Support</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">location ~ /ws &#123;</span><br><span class="line">  proxy_pass http://127.0.0.1:8888;</span><br><span class="line">  proxy_http_version 1.1;</span><br><span class="line">  proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">  proxy_set_header Connection &quot;upgrade&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Nginx-Error-Code"><a href="#Nginx-Error-Code" class="headerlink" title="Nginx Error Code"></a>Nginx Error Code</h2><blockquote>
+<p>See <a target="_blank" rel="noopener" href="https://www.nginx.com/resources/wiki/extending/api/http/#http-return-codes">HTTP Return Codes</a></p>
+</blockquote>
+<h3 id="403-x2F-Forbidden-errors"><a href="#403-x2F-Forbidden-errors" class="headerlink" title="403 &#x2F; Forbidden errors"></a>403 &#x2F; Forbidden errors</h3><p>对于Nginx代理spring boot项目websocket出现403，修改配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># Pass the csrf token (see https://de.wikipedia.org/wiki/Cross-Site-Request-Forgery)</span><br><span class="line"># Default in Spring Boot and required. Without it nginx suppresses the value</span><br><span class="line">proxy_pass_header X-XSRF-TOKEN;</span><br><span class="line"></span><br><span class="line"># Set origin to the real instance, otherwise a of Spring security check will fail</span><br><span class="line"># Same value as defined in proxy_pass</span><br><span class="line">proxy_set_header Origin &quot;http://testsysten:8080&quot;;  </span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>See <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/34136630/nginx-reverse-proxy-websocket-authentication-http-403">Nginx Reverse Proxy Websocket Authentication - HTTP 403
+</a></p>
+</blockquote>
+<h3 id="499-x2F-ClientClosed-Request"><a href="#499-x2F-ClientClosed-Request" class="headerlink" title="499 &#x2F; ClientClosed Request"></a>499 &#x2F; ClientClosed Request</h3><blockquote>
+<p>499 &#x2F; ClientClosed Request</p>
+<p>   An Nginx HTTP server extension. This codeis introduced to log the case when the connection is closed by client whileHTTP server is processing its request, making server unable to send the HTTP header back</p>
+</blockquote>
+<p>Solution</p>
+<ul>
+<li>解决server响应慢问题，在client close请求前返回</li>
+<li>nginx增加配置，不要主动关闭客户端的连接<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxy_ignore_client_abort  on; </span><br></pre></td></tr></table></figure></li>
+</ul>
+<blockquote>
+<p>See <a target="_blank" rel="noopener" href="https://blog.51cto.com/yucanghai/1713803">服务器排障 之 nginx 499 错误的解决</a></p>
+</blockquote>
+<h3 id="504-x2F-Gateway-Timeout-error"><a href="#504-x2F-Gateway-Timeout-error" class="headerlink" title="504 &#x2F; Gateway Timeout error"></a>504 &#x2F; Gateway Timeout error</h3><p>For Nginx as Proxy for Apache web server, this is what you have to try to fix the 504 Gateway Timeout error:</p>
+<p>Add these variables to nginx.conf file:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">proxy_connect_timeout       300;</span><br><span class="line">proxy_send_timeout          300;</span><br><span class="line">proxy_read_timeout          300;</span><br><span class="line">send_timeout                300;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>See <a target="_blank" rel="noopener" href="https://www.scalescale.com/tips/nginx/504-gateway-time-out-using-nginx/">How to Fix 504 Gateway Timeout using Nginx</a></p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://aliceeee.github.io/Tech/Web/Nginx-Configuration/" data-id="cldftfdnu002edgon5i02dvau" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/configuration/" rel="tag">configuration</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/" rel="tag">nginx</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/Tech/Cloud/Kubernetes-Cheatsheet/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Kubernetes Cheatsheet
+        
+      </div>
+    </a>
+  
+  
+    <a href="/Tech/Engineering/Git-Cheatsheet/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Git Cheatsheet</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Others/">Others</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Reading/">Reading</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/apache/" rel="tag">apache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bi/" rel="tag">bi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cheatsheet/" rel="tag">cheatsheet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/client/" rel="tag">client</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/configuration/" rel="tag">configuration</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/druid/" rel="tag">druid</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flink/" rel="tag">flink</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git-cheatsheet/" rel="tag">git cheatsheet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grafana/" rel="tag">grafana</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hdfs/" rel="tag">hdfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hive/" rel="tag">hive</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/index/" rel="tag">index</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/journal/" rel="tag">journal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/junit/" rel="tag">junit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/" rel="tag">kafka</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/" rel="tag">kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/maven/" rel="tag">maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mvc/" rel="tag">mvc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/" rel="tag">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paddlepaddle/" rel="tag">paddlepaddle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/plugin/" rel="tag">plugin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spark/" rel="tag">spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/" rel="tag">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sql/" rel="tag">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/startup/" rel="tag">startup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/superset/" rel="tag">superset</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swagger2/" rel="tag">swagger2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/todo/" rel="tag">todo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/apache/" style="font-size: 12.5px;">apache</a> <a href="/tags/bi/" style="font-size: 10px;">bi</a> <a href="/tags/cheatsheet/" style="font-size: 17.5px;">cheatsheet</a> <a href="/tags/client/" style="font-size: 10px;">client</a> <a href="/tags/configuration/" style="font-size: 10px;">configuration</a> <a href="/tags/docker/" style="font-size: 12.5px;">docker</a> <a href="/tags/druid/" style="font-size: 12.5px;">druid</a> <a href="/tags/flink/" style="font-size: 10px;">flink</a> <a href="/tags/git-cheatsheet/" style="font-size: 10px;">git cheatsheet</a> <a href="/tags/grafana/" style="font-size: 12.5px;">grafana</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/hdfs/" style="font-size: 10px;">hdfs</a> <a href="/tags/hive/" style="font-size: 10px;">hive</a> <a href="/tags/index/" style="font-size: 10px;">index</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/journal/" style="font-size: 10px;">journal</a> <a href="/tags/junit/" style="font-size: 10px;">junit</a> <a href="/tags/kafka/" style="font-size: 12.5px;">kafka</a> <a href="/tags/kubernetes/" style="font-size: 10px;">kubernetes</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mvc/" style="font-size: 10px;">mvc</a> <a href="/tags/mysql/" style="font-size: 12.5px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/paddlepaddle/" style="font-size: 10px;">paddlepaddle</a> <a href="/tags/plugin/" style="font-size: 12.5px;">plugin</a> <a href="/tags/python/" style="font-size: 12.5px;">python</a> <a href="/tags/spark/" style="font-size: 10px;">spark</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/sql/" style="font-size: 10px;">sql</a> <a href="/tags/startup/" style="font-size: 20px;">startup</a> <a href="/tags/superset/" style="font-size: 10px;">superset</a> <a href="/tags/swagger2/" style="font-size: 10px;">swagger2</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/todo/" style="font-size: 15px;">todo</a> <a href="/tags/zookeeper/" style="font-size: 10px;">zookeeper</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/Others/NonTech/BulletJournal/">BulletJournal</a>
+          </li>
+        
+          <li>
+            <a href="/Reading/NonTech/ReadingList/">Books to Read</a>
+          </li>
+        
+          <li>
+            <a href="/Tech/AI/Paddlepaddle-Installation/">Paddlepaddle Installation</a>
+          </li>
+        
+          <li>
+            <a href="/Tech/BigData/Hive-SQL-Cheatsheet/">Hive SQL Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/Tech/Java/Google-protobuf-%E5%BC%80%E6%BA%90%E5%BA%8F%E5%88%97%E5%8C%96%E6%A1%86%E6%9E%B6/">Google protobuf - 开源序列化框架</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Alice<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  </div>
+</body>
+</html>
