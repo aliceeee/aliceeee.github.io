@@ -25,6 +25,7 @@ jobs:
         run: |
           npm install -g npm@9
           npm install -g hexo-cli
+          npm install -g hexo-deployer-git 
           
       # Build static files to public directory and cache files
       - name: Build 
