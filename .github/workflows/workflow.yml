@@ -3,6 +3,7 @@ on:
   push:
     branches:
       -  hexo_version  
+      -  hexo_version_test
 jobs:
   pages:
     runs-on: ubuntu-latest
