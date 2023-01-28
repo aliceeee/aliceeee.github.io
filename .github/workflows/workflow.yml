@@ -29,9 +29,7 @@ jobs:
           
       # Build static files to public directory and cache files
       - name: Build 
-        run: |
-          hexo clean
-          hexo generate
+        run: npm run build          
           
       # https://github.com/peaceiris/actions-gh-pages    
       - name: Deploy public directory to 
