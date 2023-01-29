@@ -27,6 +27,7 @@ jobs:
           npm install -g hexo-cli
           npm install -g hexo-deployer-git
           npm install hexo-generator-searchdb --save
+          npm install hexo-symbols-count-time
           npm install
           
       # Build static files to public directory and cache files
