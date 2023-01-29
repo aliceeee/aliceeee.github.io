@@ -57,12 +57,18 @@ default_category: uncategorized
 category_map:
 tag_map:
 
+# Metadata elements
+## https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
+meta_generator: true
+
 # Date / Time format
 ## Hexo uses Moment.js to parse and display date
 ## You can customize the date format as defined in
 ## http://momentjs.com/docs/#/displaying/format/
 date_format: YYYY-MM-DD
 time_format: HH:mm:ss
+## updated_option supports 'mtime', 'date', 'empty'
+updated_option: 'mtime'
 
 # Pagination
 ## Set per_page to 0 to disable pagination
@@ -89,6 +95,7 @@ search:
   limit: 10000
 
 # Dependencies: https://github.com/theme-next/hexo-symbols-count-time
+# npm install hexo-symbols-count-time
 symbols_count_time:
     symbols: true
     time: true
