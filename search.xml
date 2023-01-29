@@ -1,0 +1,1446 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Paddlepaddle Installation</title>
+    <url>/Tech/AI/Paddlepaddle-Installation/</url>
+    <content><![CDATA[<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><blockquote>
+<p>官网：<a href="https://www.paddlepaddle.org.cn/">https://www.paddlepaddle.org.cn/</a></p>
+</blockquote>
+<p>源于产业实践的开源深度学习平台</p>
+<h1 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h1><blockquote>
+<p>paddlepaddle官方Dockerfile：<a href="https://github.com/PaddlePaddle/Paddle/blob/develop/Dockerfile">https://github.com/PaddlePaddle/Paddle/blob/develop/Dockerfile</a></p>
+</blockquote>
+<span id="more"></span>
+
+
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><blockquote>
+<p>CentOS下安装: <a href="https://www.paddlepaddle.org.cn/documentation/docs/zh/install/install_CentOS.html">https://www.paddlepaddle.org.cn/documentation/docs/zh/install/install_CentOS.html</a></p>
+</blockquote>
+<p>操作系统需满足CentOS 7 (64 bit)(GPU版本支持CUDA 9.0&#x2F;9.1&#x2F;9.2&#x2F;10.0&#x2F;10.1, 其中CUDA 9.1仅支持单卡)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># uname -m &amp;&amp; cat /etc/*release</span><br></pre></td></tr></table></figure>
+
+<p>Python安装，略</p>
+<p>检查Python（参考 Python Installation &amp; Python - pip）<br>检查Python 版本 2.7.15+&#x2F;3.5.1+&#x2F;3.6&#x2F;3.7 (64 bit)<br>检查pip 或 pip3 版本 9.0.1+ (64 bit)<br>确认Python和pip是64bit，并且处理器架构是x86_64<br>建议python2&#x2F;3命令分开，运行时采用<code>python -m pip xxxx</code>的格式指定pip</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">python --version</span><br><span class="line">python -m pip --version</span><br><span class="line">python -c <span class="string">&quot;import platform;print(platform.architecture()[0]);print(platform.machine())&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>更新pip如果安装时报pip版本不够</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python -m pip install --upgrade pip -i http://pypi.douban.com/simple --trusted-host pypi.douban.com</span><br></pre></td></tr></table></figure>
+
+<h2 id="CentOS-CPU版-pip安装"><a href="#CentOS-CPU版-pip安装" class="headerlink" title="CentOS CPU版 pip安装"></a>CentOS CPU版 pip安装</h2><blockquote>
+<p><a href="https://www.paddlepaddle.org.cn/install/doc/centos">https://www.paddlepaddle.org.cn/install/doc/centos</a></p>
+</blockquote>
+<ul>
+<li>环境</li>
+</ul>
+<p>按照上面检查CentOS、python</p>
+<ul>
+<li>安装</li>
+</ul>
+<p>一定要使用baidu的源</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">python -m pip install paddlepaddle -i https://mirror.baidu.com/pypi/simple</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>验证</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">python</span><br><span class="line">&gt;&gt;&gt; import paddle.fluid as fluid</span><br><span class="line">&gt;&gt;&gt; fluid.install_check.run_check()</span><br><span class="line">...Your Paddle Fluid is installed successfully!..</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>卸载</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">python -m pip uninstall paddlepaddle</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果报： error in nltk setup command: ‘install_requires’ must be a string or list of strings containing valid project&#x2F;version requirement specifiers<br>运行以下命令更新setuptools 再重试</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip install setuptools -U</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="CentOS-CPU版-Docker安装"><a href="#CentOS-CPU版-Docker安装" class="headerlink" title="CentOS CPU版 Docker安装"></a>CentOS CPU版 Docker安装</h2><blockquote>
+<p><a href="https://www.paddlepaddle.org.cn/install/doc/docker">https://www.paddlepaddle.org.cn/install/doc/docker</a></p>
+</blockquote>
+<ul>
+<li>环境</li>
+</ul>
+<p>按照上面检查CentOS</p>
+<p>安装Docker</p>
+<ul>
+<li><p>pull images</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker pull hub.baidubce.com/paddlepaddle/paddle:1.6.3</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>run</p>
+</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker run --name paddle -it -v <span class="variable">$PWD</span>:/paddle hub.baidubce.com/paddlepaddle/paddle:1.6.3 /bin/bash</span><br></pre></td></tr></table></figure>
+<p>验证方法同上</p>
+<h2 id="CentOS-CPU版-源码编译"><a href="#CentOS-CPU版-源码编译" class="headerlink" title="CentOS CPU版 源码编译"></a>CentOS CPU版 源码编译</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git config --global http.sslVerify <span class="literal">false</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/PaddlePaddle/Paddle.git</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> Paddle</span><br><span class="line"></span><br><span class="line">docker run --name paddle-test -v <span class="variable">$PWD</span>:/paddle --network=host -it hub.baidubce.com/paddlepaddle/paddle:latest-dev /bin/bash</span><br></pre></td></tr></table></figure>
+
+<h2 id="Kubernetes-CentOS-GPU版-自定义docker镜像"><a href="#Kubernetes-CentOS-GPU版-自定义docker镜像" class="headerlink" title="Kubernetes + CentOS GPU版 自定义docker镜像"></a>Kubernetes + CentOS GPU版 自定义docker镜像</h2><blockquote>
+<p>Install paddlepaddle-gpu：<a href="https://www.paddlepaddle.org.cn/documentation/docs/zh/install/install_CentOS.html#cpu-gpu">https://www.paddlepaddle.org.cn/documentation/docs/zh/install/install_CentOS.html#cpu-gpu</a></p>
+</blockquote>
+<p>Kubernates+docker,调度GPU资源，业务通过镜像发布</p>
+<ul>
+<li>安装<ul>
+<li>Kubernetes:<ul>
+<li>Enable NVIDIA device plugin for Kubernetes， 可以支持发布时配置gpu资源</li>
+</ul>
+</li>
+<li>Kubernetes GPU node：<ul>
+<li>按照上面检查基本环境</li>
+<li>Install Docker  略</li>
+<li>Install nvidia driver 硬件驱动</li>
+<li>Install nvidia-docker-plugin，为了方便的run映射了gpu设备的容器</li>
+</ul>
+</li>
+<li>Docker container：<ul>
+<li>按照上面基本环境和python</li>
+<li>Install cuda+cudnn 提供高性能的GPU应用开发环境</li>
+<li>Install paddlepaddle-gpu</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Kubernetes-Enable-NVIDIA-device-plugin-for-Kubernetes"><a href="#Kubernetes-Enable-NVIDIA-device-plugin-for-Kubernetes" class="headerlink" title="[Kubernetes] Enable NVIDIA device plugin for Kubernetes"></a>[Kubernetes] Enable NVIDIA device plugin for Kubernetes</h3><blockquote>
+<p><a href="https://github.com/NVIDIA/k8s-device-plugin#prerequisites">https://github.com/NVIDIA/k8s-device-plugin#prerequisites</a></p>
+</blockquote>
+<p>Kubernetes version &gt;&#x3D; 1.10</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">kubectl create -f https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/1.0.0-beta4/nvidia-device-plugin.yml</span><br></pre></td></tr></table></figure>
+
+<h3 id="GPU-Node-Install-Nvidia-driver"><a href="#GPU-Node-Install-Nvidia-driver" class="headerlink" title="[GPU Node] Install Nvidia driver"></a>[GPU Node] Install Nvidia driver</h3><blockquote>
+<p>nvidia driver下载：<a href="https://www.nvidia.com/Download/Find.aspx?lang=en-us">https://www.nvidia.com/Download/Find.aspx?lang=en-us</a></p>
+</blockquote>
+<p>验证：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat /proc/driver/nvidia/version</span><br></pre></td></tr></table></figure>
+
+<h3 id="GPU-Node-Install-nvidia-docker"><a href="#GPU-Node-Install-nvidia-docker" class="headerlink" title="[GPU Node] Install nvidia-docker"></a>[GPU Node] Install nvidia-docker</h3><blockquote>
+<p><a href="https://github.com/NVIDIA/nvidia-container-runtime">https://github.com/NVIDIA/nvidia-container-runtime</a></p>
+</blockquote>
+<h3 id="Docker-container-Install-dependencies"><a href="#Docker-container-Install-dependencies" class="headerlink" title="[Docker container] Install dependencies"></a>[Docker container] Install dependencies</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">yum install -y wget <span class="built_in">which</span> perl kernel-devel gcc gcc-c++ kernel-devel-$(<span class="built_in">uname</span> -r) kernel-headers-$(<span class="built_in">uname</span> -r)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Docker-container-Install-CUDA-Toolkit"><a href="#Docker-container-Install-CUDA-Toolkit" class="headerlink" title="[Docker container] Install CUDA Toolkit"></a>[Docker container] Install CUDA Toolkit</h3><ul>
+<li>决定CUDA Toolkit版本<blockquote>
+<p>cuda toolkit和Driver Version版本兼容关系：<a href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html">https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html</a></p>
+</blockquote>
+</li>
+</ul>
+<p>安装页面可以看到完整安装文件名</p>
+<p>CUDA安装文件第二个下划线后面是驱动版本号，两个一致、或者driver version大于CUDA toolkit</p>
+<ul>
+<li>安装CUDA Toolkit（使用runfile安装）</li>
+</ul>
+<blockquote>
+<p>CUDA安装步骤：<a href="https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#runfile">https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#runfile</a></p>
+</blockquote>
+<blockquote>
+<p>CUDA下载页，需先选择环境：<a href="https://developer.nvidia.com/cuda-10.1-download-archive-update2?target_os=Linux&target_arch=x86_64&target_distro=CentOS&target_version=7&target_type=runfilelocal">https://developer.nvidia.com/cuda-10.1-download-archive-update2?target_os=Linux&amp;target_arch=x86_64&amp;target_distro=CentOS&amp;target_version=7&amp;target_type=runfilelocal</a></p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">wget http://developer.download.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.243_418.87.00_linux.run</span><br><span class="line"><span class="built_in">chmod</span> +x cuda_10.*</span><br><span class="line">cuda_10.* --toolkit --silent</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;export PATH=<span class="variable">$PATH</span>:/usr/local/cuda/bin:/usr/local/cuda/NsightCompute-1.0&quot;</span> &gt;&gt; /etc/profile</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;export LD_LIBRARY_PATH=<span class="variable">$LD_LIBRARY_PATH</span>:/usr/local/cuda/lib64&quot;</span> &gt;&gt; /etc/profile</span><br></pre></td></tr></table></figure>
+<p>验证CUDA Toolkit</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看版本</span></span><br><span class="line">nvcc --version</span><br><span class="line"><span class="built_in">cat</span> /usr/local/cuda/version.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行sample</span></span><br><span class="line"><span class="built_in">cd</span> /usr/local/cuda/samples/1_Utilities/deviceQuery &amp;&amp; make</span><br><span class="line">./deviceQuery</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /usr/local/cuda/samples/1_Utilities/bandwidthTest &amp;&amp; make</span><br><span class="line">./bandwidthTest</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /usr/local/cuda/samples/1_Utilities/deviceQueryDrv &amp;&amp; make</span><br><span class="line">./deviceQueryDrv</span><br></pre></td></tr></table></figure>
+
+<p>如果运行<code>./deviceQueryDrv</code>报：.&#x2F;deviceQueryDrv: error while loading shared libraries: libcuda.so.1: cannot open shared object file: No such file or directory<br>解决：查看依赖<code>ldd ./deviceQueryDrv</code>……各种查资料和尝试后最后发现因为启动容器的时候没有加参数<code>NVIDIA_DRIVER_CAPABILITIES</code>，导致没有mount进来</p>
+<h3 id="Docker-container-Install-cuDNN"><a href="#Docker-container-Install-cuDNN" class="headerlink" title="[Docker container]  Install cuDNN"></a>[Docker container]  Install cuDNN</h3><ul>
+<li>决定cudnn版本</li>
+</ul>
+<p>目前一般都是安装版本v7，搭配cuda 9或10</p>
+<ul>
+<li>安装cuDNN并验证</li>
+</ul>
+<blockquote>
+<p>cuDNN安装步骤：<a href="https://docs.nvidia.com/deeplearning/sdk/cudnn-install/#install-linux">https://docs.nvidia.com/deeplearning/sdk/cudnn-install/#install-linux</a></p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">tar -xzvf cudnn-*.tgz</span><br><span class="line"><span class="built_in">cp</span> cuda/include/cudnn.h /usr/local/cuda/include</span><br><span class="line"><span class="built_in">cp</span> cuda/lib64/libcudnn* /usr/local/cuda/lib64</span><br><span class="line"><span class="built_in">chmod</span> 755 /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn*</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证版本是：CUDNN_MAJOR 7,CUDNN_MINOR 6</span></span><br><span class="line"><span class="built_in">cat</span> /usr/local/cuda/include/cudnn.h | grep CUDNN_MAJOR -A 2</span><br></pre></td></tr></table></figure>
+
+<h3 id="Docker-container-Install-paddlepaddle-gpu"><a href="#Docker-container-Install-paddlepaddle-gpu" class="headerlink" title="[Docker container] Install paddlepaddle-gpu"></a>[Docker container] Install paddlepaddle-gpu</h3><ul>
+<li>决定paddlepaddle-gpu版本</li>
+</ul>
+<blockquote>
+<p>paddlepaddle-gpu包版本：<a href="https://pypi.org/project/paddlepaddle-gpu/#history">https://pypi.org/project/paddlepaddle-gpu/#history</a></p>
+</blockquote>
+<blockquote>
+<p>paddlepaddle与CUDA,cuDNN版本的对应关系请见： <a href="https://www.paddlepaddle.org.cn/documentation/docs/zh/install/Tables.html#whls">https://www.paddlepaddle.org.cn/documentation/docs/zh/install/Tables.html#whls</a></p>
+</blockquote>
+<p>因为paddlepaddle-gpu&#x3D;&#x3D;[版本号].postXX 例如 paddlepaddle-gpu&#x3D;&#x3D;1.7.0.post97 支持CUDA 9.0和cuDNN 7的对应PaddlePaddle版本的安装包。</p>
+<ul>
+<li>安装paddlepaddle-gpu</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 对于Python 2：</span></span><br><span class="line">python -m pip install paddlepaddle-gpu -i https://mirror.baidu.com/pypi/simple</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对于Python 3：</span></span><br><span class="line">python3 -m pip install paddlepaddle-gpu -i https://mirror.baidu.com/pypi/simple</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>验证</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">python</span><br><span class="line">&gt;&gt;&gt; import paddle.fluid as fluid</span><br><span class="line">&gt;&gt;&gt; fluid.install_check.run_check()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证CUDAPlace函数： https://www.paddlepaddle.org.cn/documentation/docs/zh/1.6/api_cn/fluid_cn/CUDAPlace_cn.html</span></span><br><span class="line">&gt;&gt;&gt; gpu_place = fluid.CUDAPlace(0)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><ul>
+<li><p>docker运行容器测试<br>类似</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run --runtime=nvidia -e NVIDIA_DRIVER_CAPABILITIES=all -e NVIDIA_VISIBLE_DEVICES=all -it &lt;image&gt; /bin/bash</span><br></pre></td></tr></table></figure>
+<p>按照上面各项验证</p>
+</li>
+<li><p>k8s测试<br>请求资源类似</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">resources:</span><br><span class="line">    limits:</span><br><span class="line">        nvidia.com/gpu: 2 # requesting 2 GPUs</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>paddlepaddle</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Flink Startup</title>
+    <url>/Tech/BigData/Flink-Startup/</url>
+    <content><![CDATA[<h1 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h1><h2 id="Local-Setup-Flink-1-7-on-Linux"><a href="#Local-Setup-Flink-1-7-on-Linux" class="headerlink" title="Local Setup Flink 1.7 on Linux"></a>Local Setup Flink 1.7 on Linux</h2><blockquote>
+<p>See <a href="https://ci.apache.org/projects/flink/flink-docs-release-1.7/tutorials/local_setup.html">https://ci.apache.org/projects/flink/flink-docs-release-1.7/tutorials/local_setup.html</a></p>
+</blockquote>
+<span id="more"></span>
+
+<p>Pre-install<br>jdk 8</p>
+<p>Download<br><a href="https://flink.apache.org/downloads.html">https://flink.apache.org/downloads.html</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget http://mirror.bit.edu.cn/apache/flink/flink-1.7.2/flink-1.7.2-bin-scala_2.11.tgz</span><br><span class="line">tar xzf flink-*.tgz</span><br><span class="line">cd flink-1.7.2</span><br><span class="line"></span><br><span class="line">./bin/start-cluster.sh</span><br></pre></td></tr></table></figure>
+
+<p>浏览器访问：<a href="http://localhost:8081/">http://localhost:8081</a><br>组件</p>
+<ul>
+<li>TaskManagerRunner:28634&#x2F;32732和本地13076</li>
+<li>StandaloneSessionClusterEntrypoint:6123&#x2F;8081&#x2F;4767&#x2F;22889</li>
+</ul>
+<h2 id="Local-Setup-on-Windows"><a href="#Local-Setup-on-Windows" class="headerlink" title="Local Setup on Windows"></a>Local Setup on Windows</h2><blockquote>
+<p>See <a href="https://ci.apache.org/projects/flink/flink-docs-release-1.7/tutorials/flink_on_windows.html">https://ci.apache.org/projects/flink/flink-docs-release-1.7/tutorials/flink_on_windows.html</a></p>
+</blockquote>
+<p>Download 同上 &amp; 解压</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd D:\flink-1.7.2\bin</span><br><span class="line">start-cluster.bat</span><br></pre></td></tr></table></figure>
+<p>浏览器访问：<a href="http://localhost:8081/">http://localhost:8081</a></p>
+<h1 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h1><p>flink-1.7.2&#x2F;conf&#x2F;flink-conf.yaml</p>
+<h1 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h1><h2 id="Streaming-Example：SocketWindowWordCount"><a href="#Streaming-Example：SocketWindowWordCount" class="headerlink" title="Streaming Example：SocketWindowWordCount"></a>Streaming Example：SocketWindowWordCount</h2><p>Java代码：<a href="https://github.com/apache/flink/blob/master/flink-examples/flink-examples-streaming/src/main/java/org/apache/flink/streaming/examples/socket/SocketWindowWordCount.java">https://github.com/apache/flink/blob/master/flink-examples/flink-examples-streaming/src/main/java/org/apache/flink/streaming/examples/socket/SocketWindowWordCount.java</a></p>
+<p>打好的包在安装目录下examples下都有</p>
+<p>会话1，本地启动server监听9009</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nc -l 9009</span><br></pre></td></tr></table></figure>
+<p>会话2，运行example</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="variable">$FLINK_HOME</span></span><br><span class="line"></span><br><span class="line">./bin/flink run examples/streaming/SocketWindowWordCount.jar --port 9009</span><br></pre></td></tr></table></figure>
+<p>会话3，查看结果</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">tail</span> -f flink-*-taskexecutor-*.out</span><br></pre></td></tr></table></figure>
+<p>在会话1中输入一些什么，按回车提交</p>
+<p>这个例子功能是：每5s统计输入（会话1）的单词出现次数</p>
+<h2 id="Batch-Examples-WordCount"><a href="#Batch-Examples-WordCount" class="headerlink" title="Batch Examples: WordCount"></a>Batch Examples: WordCount</h2><blockquote>
+<p><a href="https://ci.apache.org/projects/flink/flink-docs-release-1.8/dev/batch/examples.html#word-count">https://ci.apache.org/projects/flink/flink-docs-release-1.8/dev/batch/examples.html#word-count</a><br>代码 <a href="https://github.com/apache/flink/blob/master//flink-examples/flink-examples-batch/src/main/java/org/apache/flink/examples/java/wordcount/WordCount.java">https://github.com/apache/flink/blob/master//flink-examples/flink-examples-batch/src/main/java/org/apache/flink/examples/java/wordcount/WordCount.java</a></p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">./bin/flink run examples/streaming/WordCount.jar --input a.log --output result.log</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>flink</tag>
+        <tag>startup</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hadoop HDFS Startup</title>
+    <url>/Tech/BigData/Hadoop-HDFS-Startup/</url>
+    <content><![CDATA[<p>The Hadoop Distributed File System (HDFS) is a distributed file system designed to run on commodity hardware. </p>
+<blockquote>
+<p>User Guide：<a href="http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsUserGuide.html">http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsUserGuide.html</a></p>
+</blockquote>
+<span id="more"></span>
+
+<h1 id="Web-Interface"><a href="#Web-Interface" class="headerlink" title="Web Interface"></a>Web Interface</h1><p>With the default configuration, the NameNode front page is at <a href="http://namenode-name:50070/">http://namenode-name:50070/</a></p>
+<h1 id="Shell-Commands"><a href="#Shell-Commands" class="headerlink" title="Shell Commands"></a>Shell Commands</h1><blockquote>
+<p>See <a href="http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html">http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/FileSystemShell.html</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>startup</tag>
+        <tag>hadoop</tag>
+        <tag>hdfs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hive SQL Cheatsheet</title>
+    <url>/Tech/BigData/Hive-SQL-Cheatsheet/</url>
+    <content><![CDATA[<h1 id="database"><a href="#database" class="headerlink" title="database"></a>database</h1><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> databases;</span><br><span class="line"></span><br><span class="line"><span class="keyword">show</span> tables <span class="keyword">in</span> <span class="keyword">default</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 使用默认库</span></span><br><span class="line">use <span class="keyword">default</span> ;  </span><br></pre></td></tr></table></figure>
+
+<h1 id="Table信息"><a href="#Table信息" class="headerlink" title="Table信息"></a>Table信息</h1><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">desc</span> tmp_table;</span><br><span class="line"></span><br><span class="line"><span class="keyword">show</span> <span class="keyword">create</span> <span class="keyword">table</span> tmp_namespace.tmp_table;</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h1 id="DDL"><a href="#DDL" class="headerlink" title="DDL"></a>DDL</h1><p>删除表</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> if <span class="keyword">exists</span> tmp_table;</span><br></pre></td></tr></table></figure>
+
+<p>创建表</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> tmp_table(</span><br><span class="line">	name string,</span><br><span class="line">	hobby <span class="keyword">array</span><span class="operator">&lt;</span>string<span class="operator">&gt;</span>,</span><br><span class="line">	<span class="keyword">add</span> map<span class="operator">&lt;</span>String,string<span class="operator">&gt;</span></span><br><span class="line">)</span><br><span class="line">partitioned <span class="keyword">by</span> (dt string comment <span class="string">&#x27;date&#x27;</span>, hm string comment <span class="string">&#x27;hour and minut&#x27;</span>)</span><br><span class="line"><span class="type">ROW</span> FORMAT DELIMITED FIELDS TERMINATED <span class="keyword">BY</span> <span class="string">&#x27;,&#x27;</span></span><br><span class="line">collection items terminated <span class="keyword">by</span> <span class="string">&#x27;-&#x27;</span></span><br><span class="line">map keys terminated <span class="keyword">by</span> <span class="string">&#x27;:&#x27;</span></span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<p>创建分区</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> tmp_table <span class="keyword">add</span> <span class="keyword">partition</span>(dt<span class="operator">=</span><span class="string">&#x27;20190101&#x27;</span>, hm<span class="operator">=</span><span class="string">&#x27;0000&#x27;</span>) <span class="keyword">partition</span>(dt<span class="operator">=</span><span class="string">&#x27;20190101&#x27;</span>, hm<span class="operator">=</span><span class="string">&#x27;0100&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>插入数据</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> <span class="keyword">table</span> tmp_table <span class="keyword">partition</span>(dt<span class="operator">=</span><span class="string">&#x27;20190101&#x27;</span>, hm<span class="operator">=</span><span class="string">&#x27;0000&#x27;</span>)  </span><br><span class="line"><span class="keyword">select</span> <span class="string">&#x27;a&#x27;</span>, <span class="keyword">array</span>(<span class="string">&#x27;sing,dance&#x27;</span>),  str_to_map(<span class="string">&#x27;a:1,b:2&#x27;</span>) ;</span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line">查看</span><br><span class="line">```<span class="keyword">sql</span></span><br><span class="line"><span class="keyword">desc</span> tmp_table;</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">create</span> <span class="keyword">table</span>  tmp_table;</span><br><span class="line"><span class="keyword">show</span> partitions  tmp_table;</span><br></pre></td></tr></table></figure>
+
+<h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><p>替换</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> regexp_replace(<span class="string">&#x27;[a,b,c]&#x27;</span>,<span class="string">&#x27;\\[|\\]&#x27;</span>,<span class="string">&#x27;&#x27;</span>) <span class="comment">-- 把方括号替换</span></span><br></pre></td></tr></table></figure>
+
+<p>多行拼接</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- slow, why?</span></span><br><span class="line"><span class="keyword">select</span> concat_ws(<span class="string">&#x27;,&#x27;</span>,collect_set(val)) <span class="keyword">from</span> </span><br><span class="line">	dual</span><br><span class="line">	<span class="keyword">lateral</span> <span class="keyword">view</span>  explode(<span class="keyword">array</span>(<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;a&#x27;</span>)) tmp_table <span class="keyword">as</span> val; </span><br></pre></td></tr></table></figure>
+
+<h1 id="日期"><a href="#日期" class="headerlink" title="日期"></a>日期</h1><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> unix_timestamp();  <span class="comment">-- 当前时间戳：1572425940</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">current_timestamp</span>();  <span class="comment">-- 当前日期：2019-10-30 16:59:24.24</span></span><br><span class="line"><span class="keyword">select</span> date_add(<span class="string">&#x27;2019-10-31&#x27;</span>, <span class="number">1</span>); <span class="comment">-- tomorrow</span></span><br><span class="line"><span class="keyword">select</span> date_sub(<span class="string">&#x27;2019-10-31&#x27;</span>, <span class="number">1</span>); <span class="comment">-- yesterday</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> unix_timestamp(<span class="string">&#x27;2018-06-29 00:00:00&#x27;</span>); <span class="comment">-- string to timestamp: 1530201600</span></span><br><span class="line"><span class="keyword">select</span> unix_timestamp(<span class="string">&#x27;2018/06/29 09&#x27;</span>, <span class="string">&#x27;yyyy/MM/dd HH&#x27;</span>); <span class="comment">-- string to timestamp: 1530234000</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> from_unixtime(<span class="number">1356768454</span>, <span class="string">&#x27;yyyy-MM-dd HH:mm:ss&#x27;</span>); <span class="comment">-- timestamp to string</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="内置UDTF"><a href="#内置UDTF" class="headerlink" title="内置UDTF"></a>内置UDTF</h1><p>查看Function&#x2F;UDF</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> FUNCTIONS;</span><br><span class="line"><span class="keyword">DESCRIBE</span> <span class="keyword">FUNCTION</span> <span class="operator">&lt;</span>function_name<span class="operator">&gt;</span>;</span><br><span class="line"><span class="keyword">DESCRIBE</span> <span class="keyword">FUNCTION</span> EXTENDED <span class="operator">&lt;</span>function_name<span class="operator">&gt;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>数组转表</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span>  explode(<span class="keyword">array</span>(<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c&#x27;</span>)) <span class="keyword">as</span> col;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> table_b.col </span><br><span class="line"><span class="keyword">from</span> dual </span><br><span class="line"><span class="keyword">lateral</span> <span class="keyword">view</span> explode(<span class="keyword">array</span>(<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;a&#x27;</span>)) table_b <span class="keyword">as</span> col; <span class="comment">-- UDTF cannot be used in select</span></span><br></pre></td></tr></table></figure>
+
+<p>JSON转表</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> get_json_object(<span class="string">&#x27;&#123;&quot;a&quot;:1,&quot;b&quot;:2&#125;&#x27;</span>,<span class="string">&#x27;$.a&#x27;</span>) <span class="keyword">as</span> col;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> get_json_object(<span class="string">&#x27;&#123;&quot;list&quot;:[&#123;&quot;a&quot;:1&#125;,&#123;&quot;a&quot;:11&#125;,&#123;&quot;a&quot;:111&#125;]&#125;&#x27;</span>,<span class="string">&#x27;$.list.a&#x27;</span>) ;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> </span><br><span class="line"><span class="keyword">from</span> tmp_table </span><br><span class="line"><span class="keyword">lateral</span> <span class="keyword">view</span> json_tuple(<span class="string">&#x27;&#123;&quot;a&quot;:1,&quot;b&quot;:2&#125;&#x27;</span>,<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>) tmp_json <span class="keyword">as</span> col_a, col_b;</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>cheatsheet</tag>
+        <tag>hive</tag>
+        <tag>sql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kafka Client</title>
+    <url>/Tech/BigData/Kafka-Client/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<h1 id="Java-Client"><a href="#Java-Client" class="headerlink" title="Java Client"></a>Java Client</h1><h2 id="apache-kafka-client"><a href="#apache-kafka-client" class="headerlink" title="apache kafka-client"></a>apache kafka-client</h2><blockquote>
+<p>官方文档：<a href="https://kafka.apache.org/11/documentation.html#producerapi">https://kafka.apache.org/11/documentation.html#producerapi</a></p>
+<p>官方java doc: <a href="https://kafka.apache.org/11/javadoc/overview-summary.html">https://kafka.apache.org/11/javadoc/overview-summary.html</a></p>
+<p><a href="http://cloudurable.com/blog/kafka-tutorial-kafka-producer/index.html">Kafka Tutorial: Writing a Kafka Producer in Java</a></p>
+<p><a href="http://atbug.com/kafka-producer-config/">Kafka Producer配置解读</a></p>
+</blockquote>
+<h3 id="Example-Simple-Producer-Demo"><a href="#Example-Simple-Producer-Demo" class="headerlink" title="Example: Simple Producer Demo"></a>Example: Simple Producer Demo</h3><p>pom.xml</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.kafka<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>kafka-clients<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">KafkaProducerExample</span> &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Producer&lt;Long, String&gt; <span class="title function_">createProducer</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">Properties</span> <span class="variable">props</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Properties</span>();</span><br><span class="line">        <span class="comment">// ProducerConfig: https://kafka.apache.org/11/javadoc/index.html?org/apache/kafka/clients/producer/ProducerConfig.html</span></span><br><span class="line">        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,</span><br><span class="line">                                            BOOTSTRAP_SERVERS);</span><br><span class="line">        props.put(ProducerConfig.CLIENT_ID_CONFIG, <span class="string">&quot;KafkaExampleProducer&quot;</span>);</span><br><span class="line">        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,</span><br><span class="line">                                        LongSerializer.class.getName());</span><br><span class="line">        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,</span><br><span class="line">                                    StringSerializer.class.getName());</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// KafkaProducer： https://kafka.apache.org/11/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">KafkaProducer</span>&lt;&gt;(props);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">runProducer</span><span class="params">(<span class="keyword">final</span> <span class="type">int</span> sendMessageCount)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">      <span class="keyword">final</span> Producer&lt;Long, String&gt; producer = createProducer();</span><br><span class="line">      <span class="type">long</span> <span class="variable">time</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          <span class="keyword">for</span> (<span class="type">long</span> <span class="variable">index</span> <span class="operator">=</span> time; index &lt; time + sendMessageCount; index++) &#123;</span><br><span class="line">              <span class="keyword">final</span> ProducerRecord&lt;Long, String&gt; record =</span><br><span class="line">                      <span class="keyword">new</span> <span class="title class_">ProducerRecord</span>&lt;&gt;(TOPIC, index,</span><br><span class="line">                                  <span class="string">&quot;Hello Mom &quot;</span> + index);</span><br><span class="line"></span><br><span class="line">              <span class="type">RecordMetadata</span> <span class="variable">metadata</span> <span class="operator">=</span> producer.send(record).get();</span><br><span class="line"></span><br><span class="line">              <span class="type">long</span> <span class="variable">elapsedTime</span> <span class="operator">=</span> System.currentTimeMillis() - time;</span><br><span class="line">              System.out.printf(<span class="string">&quot;sent record(key=%s value=%s) &quot;</span> +</span><br><span class="line">                              <span class="string">&quot;meta(partition=%d, offset=%d) time=%d\n&quot;</span>,</span><br><span class="line">                      record.key(), record.value(), metadata.partition(),</span><br><span class="line">                      metadata.offset(), elapsedTime);</span><br><span class="line"></span><br><span class="line">          &#125;</span><br><span class="line">      &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">          producer.flush();</span><br><span class="line">          producer.close();</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>kafka</tag>
+        <tag>client</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kafka Startup</title>
+    <url>/Tech/BigData/Kafka-Startup/</url>
+    <content><![CDATA[<h1 id="Installation-kafka-2-11"><a href="#Installation-kafka-2-11" class="headerlink" title="Installation kafka 2.11"></a>Installation kafka 2.11</h1><blockquote>
+<p>See <a href="https://kafka.apache.org/11/documentation.html#quickstart">https://kafka.apache.org/11/documentation.html#quickstart</a></p>
+</blockquote>
+<h2 id="单节点"><a href="#单节点" class="headerlink" title="单节点"></a>单节点</h2><p>Download &amp; install</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget http://mirrors.shu.edu.cn/apache/kafka/2.1.1/kafka_2.11-2.1.1.tgz</span><br><span class="line">tar -zxf kafka_2.11-2.1.1.tgz</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+
+<p>Start server</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 因为依赖ZK，所以需要启动ZK</span></span><br><span class="line"><span class="comment"># 如果没有安装，也可以运行kafka自带的</span></span><br><span class="line">bin/zookeeper-server-start.sh config/zookeeper.properties</span><br><span class="line"><span class="comment"># 启动kafak</span></span><br><span class="line">bin/kafka-server-start.sh config/server.properties</span><br></pre></td></tr></table></figure>
+
+<h3 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h3><p>Create topic (on zk)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bin/kafka-topics.sh --create \</span><br><span class="line">    --zookeeper 127.0.0.1:2181 \</span><br><span class="line">    --replication-factor 1 \</span><br><span class="line">    --partitions 1 \</span><br><span class="line">    --topic mytopic</span><br></pre></td></tr></table></figure>
+
+<p>List topic (on zk)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bin/kafka-topics.sh --list --zookeeper localhost:2181</span><br></pre></td></tr></table></figure>
+
+<p>Send message</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bin/kafka-console-producer.sh --broker-list localhost:9092 --topic mytopic</span><br><span class="line">输入一些字</span><br></pre></td></tr></table></figure>
+
+<p>Consume message<br>同时能看到上面的输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># &gt;=2.11-2.1.1</span></span><br><span class="line">bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 \</span><br><span class="line">    --topic mytopic \</span><br><span class="line">    --from-beginning</span><br><span class="line"></span><br><span class="line"><span class="comment"># older version</span></span><br><span class="line">bin/kafka-console-consumer.sh --zookeeper localhost:2181 \</span><br><span class="line">    --topic mytopic \</span><br><span class="line">    --from-beginning</span><br></pre></td></tr></table></figure>
+
+<h2 id="多节点"><a href="#多节点" class="headerlink" title="多节点"></a>多节点</h2><p>Let’s expand our cluster to three nodes (still all on our local machine).</p>
+<p>First we make a config file for each of the brokers </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cp config/server.properties config/server-1.properties</span><br><span class="line">cp config/server.properties config/server-2.properties</span><br></pre></td></tr></table></figure>
+
+<p>Update config file</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">config/server-1.properties:</span><br><span class="line">    broker.id=1</span><br><span class="line">    listeners=PLAINTEXT://:9093</span><br><span class="line">    log.dir=/tmp/kafka-logs-1</span><br><span class="line"> </span><br><span class="line">config/server-2.properties:</span><br><span class="line">    broker.id=2</span><br><span class="line">    listeners=PLAINTEXT://:9094</span><br><span class="line">    log.dir=/tmp/kafka-logs-2</span><br></pre></td></tr></table></figure>
+
+<p>We already have Zookeeper and our single node started, so we just need to start the two new nodes:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bin/kafka-server-start.sh config/server-1.properties &amp;</span><br><span class="line">bin/kafka-server-start.sh config/server-2.properties &amp;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Demo-1"><a href="#Demo-1" class="headerlink" title="Demo"></a>Demo</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 3 --partitions 1 --topic my-replicated-topic</span><br><span class="line"></span><br><span class="line">bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic my-replicated-topic</span><br></pre></td></tr></table></figure>
+
+<h1 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h1><p>通常在 kafka&#x2F;config&#x2F;server.properties</p>
+<blockquote>
+<p>See <a href="https://kafka.apache.org/11/documentation.html#configuration">https://kafka.apache.org/11/documentation.html#configuration</a></p>
+</blockquote>
+<h2 id="Producer"><a href="#Producer" class="headerlink" title="Producer"></a>Producer</h2><ul>
+<li>request.timeout.ms<br>配置控制客户端等待请求响应的最长时间。 如果在超时之前未收到响应，客户端将在必要时重新发送请求，如果重试耗尽，则该请求将失败。<br>这应该大于replica.lag.time.max.ms(broker配置)，以减少由于不必要的生产者重试引起的消息重复的可能性。</li>
+</ul>
+<h2 id="Change-Port"><a href="#Change-Port" class="headerlink" title="Change Port"></a>Change Port</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">listeners = PLAINTEXT://&lt;ip&gt;:9093</span><br><span class="line">advertised.listeners=PLAINTEXT://&lt;ip&gt;:9093</span><br></pre></td></tr></table></figure>
+
+<h2 id="Java-参数"><a href="#Java-参数" class="headerlink" title="Java 参数"></a>Java 参数</h2><p>设置环境变量：KAFKA_HEAP_OPTS&#x3D;”-Xms512m -Xmx1g”<br>或者启动脚本</p>
+<h2 id="清理数据"><a href="#清理数据" class="headerlink" title="清理数据"></a>清理数据</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">log.retention.hours=168 //保留7d</span><br><span class="line">log.retention.check.interval.ms=300000 //5min检查一次segment是否过期</span><br><span class="line">log.segment.bytes=1073741824 //1G，超过生成一个新的</span><br></pre></td></tr></table></figure>
+
+<h1 id="Commands"><a href="#Commands" class="headerlink" title="Commands"></a>Commands</h1><h2 id="Topic"><a href="#Topic" class="headerlink" title="Topic"></a>Topic</h2><p>查看topic信息</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">bin/kafka-topics.sh --zookeeper 127.0.0.1:2181 --topic <span class="string">&quot;test-topic&quot;</span> --describe</span><br></pre></td></tr></table></figure>
+<ul>
+<li>“leader” is the node responsible for all reads and writes for the given partition. Each node will be the leader for a randomly selected portion of the partitions.</li>
+<li>“replicas” is the list of nodes that replicate the log for this partition regardless of whether they are the leader or even if they are currently alive.</li>
+<li>“isr” is the set of “in-sync” replicas. This is the subset of the replicas list that is currently alive and caught-up to the leader.</li>
+</ul>
+<p>查看指定group信息</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">bin/kafka-topics.sh --new-consumer --bootstrap-server 127.0.0.1:9092 --group test-group --describe</span><br></pre></td></tr></table></figure>
+
+<h2 id="Balancing-leadership"><a href="#Balancing-leadership" class="headerlink" title="Balancing leadership"></a>Balancing leadership</h2><p>重平衡</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bin/kafka-preferred-replica-election.sh --zookeeper 127.0.0.1:2181</span><br></pre></td></tr></table></figure>
+
+<h2 id="Consumer"><a href="#Consumer" class="headerlink" title="Consumer"></a>Consumer</h2><p>查看消费组</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># list</span></span><br><span class="line">bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --list</span><br><span class="line"></span><br><span class="line"><span class="comment"># describe group </span></span><br><span class="line">bin/kafka-consumer-groups.sh  --bootstrap-server localhost:9092 --group xxx --describe</span><br><span class="line"><span class="comment"># describe group - expired</span></span><br><span class="line">bin/kafka-topics.sh --new-consumer --bootstrap-server 127.0.0.1:9092 --group test-group --describe</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>cheatsheet</tag>
+        <tag>startup</tag>
+        <tag>kafka</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spark Startup</title>
+    <url>/Tech/BigData/Spark-Startup/</url>
+    <content><![CDATA[<h1 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h1><h2 id="Spark-2-4-0-Standalone-Monde"><a href="#Spark-2-4-0-Standalone-Monde" class="headerlink" title="Spark 2.4.0 Standalone Monde"></a>Spark 2.4.0 Standalone Monde</h2><blockquote>
+<p>See <a href="https://spark.apache.org/docs/latest/spark-standalone.html">https://spark.apache.org/docs/latest/spark-standalone.html</a></p>
+</blockquote>
+<span id="more"></span>
+
+<p>Pre-install<br>jdk 8</p>
+<p>Download<br><a href="https://spark.apache.org/downloads.html">https://spark.apache.org/downloads.html</a></p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">wget http://mirror.bit.edu.cn/apache/spark/spark-2.4.0/spark-2.4.0-bin-hadoop2.7.tgz</span><br><span class="line">tar -zxf spark-2.4.0-bin-hadoop2.7.tgz</span><br><span class="line"><span class="built_in">cd</span> spark-2.4.0-bin-hadoop2.7</span><br></pre></td></tr></table></figure>
+
+<p>Start server</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">./sbin/start-master.sh</span><br></pre></td></tr></table></figure>
+
+<p>启动后</p>
+<ul>
+<li>WebUI: <a href="http://ip_address:8080/">http://ip_address:8080/</a></li>
+<li>Spark服务：7077</li>
+</ul>
+<h2 id="Starting-a-Cluster-Manually"><a href="#Starting-a-Cluster-Manually" class="headerlink" title="Starting a Cluster Manually"></a>Starting a Cluster Manually</h2><blockquote>
+<p>See <a href="https://spark.apache.org/docs/latest/spark-standalone.html#starting-a-cluster-manually">https://spark.apache.org/docs/latest/spark-standalone.html#starting-a-cluster-manually</a></p>
+</blockquote>
+<p>使用命令手动启动整个集群。类似上面，启动更多worker并关联到mater</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./sbin/start-slave.sh &lt;master-spark-URL&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Cluster-Launch-Scripts"><a href="#Cluster-Launch-Scripts" class="headerlink" title="Cluster Launch Scripts"></a>Cluster Launch Scripts</h2><p>使用脚本启动集群</p>
+<blockquote>
+<p>See <a href="https://spark.apache.org/docs/latest/spark-standalone.html#cluster-launch-scripts">https://spark.apache.org/docs/latest/spark-standalone.html#cluster-launch-scripts</a></p>
+</blockquote>
+<p>创建配置 <SPARK_HOME>&#x2F;conf&#x2F;slaves，内容是所有worker的主机名，一行一个。<br>如果不存在conf&#x2F;slaves即单机模式。<br>master和worker通过ssh</p>
+<h1 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h1><blockquote>
+<p><a href="https://spark.apache.org/docs/latest/configuration.html">https://spark.apache.org/docs/latest/configuration.html</a></p>
+</blockquote>
+<h2 id="Environment-variables"><a href="#Environment-variables" class="headerlink" title="Environment variables"></a>Environment variables</h2><p>scripts启动可以复制conf&#x2F;spark-env.sh.template创建配置： conf&#x2F;spark-env.sh</p>
+<h1 id="Startup"><a href="#Startup" class="headerlink" title="Startup"></a>Startup</h1><h2 id="Running-the-Examples-and-Shell"><a href="#Running-the-Examples-and-Shell" class="headerlink" title="Running the Examples and Shell"></a>Running the Examples and Shell</h2><p><a href="https://spark.apache.org/docs/latest/#running-the-examples-and-shell">https://spark.apache.org/docs/latest/#running-the-examples-and-shell</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd &lt;SPARK_HOME&gt;</span><br><span class="line"># bin/run-example &lt;class&gt; [params]</span><br><span class="line">./bin/run-example SparkPi 10</span><br></pre></td></tr></table></figure>
+
+<h2 id="Launching-Spark-Applications"><a href="#Launching-Spark-Applications" class="headerlink" title="Launching Spark Applications"></a>Launching Spark Applications</h2><p>使用spark-submit</p>
+<blockquote>
+<p>See <a href="https://spark.apache.org/docs/latest/submitting-applications.html">https://spark.apache.org/docs/latest/submitting-applications.html</a></p>
+</blockquote>
+<p>分析上面命令 bin&#x2F;run-example，可以得到运行测试任务SparkPi 的实际命令是</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./bin/spark-submit run-example SparkPi 10</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>startup</tag>
+        <tag>spark</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Zookeeper Startup</title>
+    <url>/Tech/BigData/Zookeeper-Startup/</url>
+    <content><![CDATA[<p>ZooKeeper: A Distributed Coordination Service for Distributed Applications</p>
+<blockquote>
+<p>See <a href="https://zookeeper.apache.org/doc/current/zookeeperOver.html">https://zookeeper.apache.org/doc/current/zookeeperOver.html</a></p>
+</blockquote>
+<span id="more"></span>
+
+
+<h1 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h1><h2 id="Standalone-Mode-on-CentOS7"><a href="#Standalone-Mode-on-CentOS7" class="headerlink" title="Standalone Mode on CentOS7"></a>Standalone Mode on CentOS7</h2><blockquote>
+<p>Download: <a href="http://www.apache.org/dyn/closer.cgi/zookeeper/">http://www.apache.org/dyn/closer.cgi/zookeeper/</a></p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://mirrors.tuna.tsinghua.edu.cn/apache/zookeeper/stable/zookeeper-3.4.14.tar.gz</span><br><span class="line">tar -zxf zookeeper-3.4.14.tar.gz </span><br><span class="line">cd zookeeper-3.4.14</span><br></pre></td></tr></table></figure>
+
+<p>创建文件conf&#x2F;zoo.cfg</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tickTime=2000</span><br><span class="line">dataDir=/var/lib/zookeeper</span><br><span class="line">clientPort=2181</span><br></pre></td></tr></table></figure>
+
+<p>Start zk</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bin/zkServer.sh start</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Replicated-ZooKeeper"><a href="#Replicated-ZooKeeper" class="headerlink" title="Replicated ZooKeeper"></a>Replicated ZooKeeper</h2><p>至少三台，建议奇数台server，每台安装zk</p>
+<p>新建文件dataDir&#x2F;myid，内容是server number, in ASCII</p>
+<p>conf&#x2F;zoo.cfg </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tickTime=2000</span><br><span class="line">dataDir=/var/lib/zookeeper</span><br><span class="line">clientPort=2181</span><br><span class="line">initLimit=5</span><br><span class="line">syncLimit=2</span><br><span class="line">server.1=zoo1:2888:3888</span><br><span class="line">server.2=zoo2:2888:3888</span><br><span class="line">server.3=zoo3:2888:3888</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Startup"><a href="#Startup" class="headerlink" title="Startup"></a>Startup</h1><p>进入控制台</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># bin/zkCli.sh -server 127.0.0.1:2181</span><br><span class="line">Connecting to 127.0.0.1:2181</span><br><span class="line"></span><br><span class="line">[zk: 127.0.0.1:2181(CONNECTED) 1] ls /</span><br><span class="line">[zookeeper]</span><br></pre></td></tr></table></figure>
+
+<p>简单例子</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 进入控制台以后</span><br><span class="line">create /zk_test my_data</span><br><span class="line">ls /</span><br><span class="line">get /zk_test</span><br><span class="line">set /zk_test junk</span><br><span class="line">delete /zk_test</span><br><span class="line">ls /</span><br></pre></td></tr></table></figure>
+
+<p>查看kafka的topic<br>ls &#x2F;brokers&#x2F;topics</p>
+<p>检查状态<br><a href="http://zookeeper.apache.org/doc/r3.1.2/zookeeperAdmin.html#sc_zkCommands">http://zookeeper.apache.org/doc/r3.1.2/zookeeperAdmin.html#sc_zkCommands</a><br>$ echo stat | nc 127.0.0.1 2181</p>
+<h1 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h1>]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>startup</tag>
+        <tag>zookeeper</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker Cheatsheet</title>
+    <url>/Tech/Cloud/Docker-Cheatsheet/</url>
+    <content><![CDATA[<p>参考：<a href="https://docs.docker.com/engine/reference/commandline/cli/">Use the Docker command line</a></p>
+<span id="more"></span>
+
+<h1 id="Common"><a href="#Common" class="headerlink" title="Common"></a>Common</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker version</span><br><span class="line"></span><br><span class="line">docker --help</span><br><span class="line">docker attach --help</span><br></pre></td></tr></table></figure>
+
+<h1 id="Images"><a href="#Images" class="headerlink" title="Images"></a>Images</h1><p>Pull an image or a repository from a registry</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull debian:jessie</span><br></pre></td></tr></table></figure>
+
+<p>Build an image from a Dockerfile</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker build -t vieux/apache:2.0 .</span><br><span class="line">docker build -f Dockerfile.debug .</span><br></pre></td></tr></table></figure>
+
+<p>To see which images are present locally</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">docker pull xxx:v1</span><br><span class="line"></span><br><span class="line">docker search xxx</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># create image from container</span><br><span class="line">docker commit -m &quot;comments&quot; -a &quot;&quot; &lt;md5&gt; xxx:v1</span><br><span class="line"></span><br><span class="line"># Remove image</span><br><span class="line">docker rmi xxx:v1</span><br><span class="line"># Clean dangling images</span><br><span class="line">docker images|grep \&lt;none\&gt;|awk &#x27;&#123;print $3&#125;&#x27;|xargs docker rmi</span><br><span class="line">docker rmi $(docker images -f &quot;dangling=true&quot; -q)</span><br><span class="line"></span><br><span class="line">docker history xxx:v1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="Containers"><a href="#Containers" class="headerlink" title="Containers"></a>Containers</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker ps -a</span><br><span class="line"></span><br><span class="line">docker run ubuntu /bin/echo &#x27;Hello world&#x27;</span><br><span class="line"></span><br><span class="line">docker run --name mynginx -d nginx:latest</span><br><span class="line"></span><br><span class="line"># -t flag assigns a pseudo-tty or terminal inside our new container</span><br><span class="line"># -i flag allows us to make an interactive connection by grabbing the standard in (STDIN) of the container</span><br><span class="line">docker run -t -i ubuntu /bin/bash</span><br><span class="line"># -d flag tells Docker to run the container and put it in the background, to daemonize it</span><br><span class="line">docker run -d ubuntu /bin/sh -c &quot;while true; do echo hello world; sleep 1; done&quot;</span><br><span class="line">docker run -it nginx:latest /bin/bash</span><br><span class="line"># -P flag is new and tells Docker to map any required network ports inside our container to our host</span><br><span class="line"># -p 80:5000 map port 5000 inside our container to port 80 on our local host</span><br><span class="line">docker run -p 127.0.0.1:80:8080/tcp ubuntu bash</span><br><span class="line">docker run -p 80:80 -v /data:/data -d nginx:latest</span><br><span class="line">docker run -P -d nginx:latest</span><br><span class="line"></span><br><span class="line">docker logs 2b6333eb87ea</span><br><span class="line">docker logs -f elegant_colden</span><br><span class="line"></span><br><span class="line">docker top elegant_colden</span><br><span class="line"></span><br><span class="line">docker inspect elegant_colden</span><br><span class="line"></span><br><span class="line">docker inspect -f &#x27;&#123;&#123; .NetworkSettings.IPAddress&#125;&#125;&#x27; elegant_colden</span><br><span class="line"></span><br><span class="line">docker stop 2b6333eb87ea</span><br><span class="line"></span><br><span class="line">docker restart elegant_colden</span><br><span class="line"></span><br><span class="line">docker rm elegant_colden</span><br><span class="line">docker rm `docker ps --no-trunc -aq`</span><br><span class="line">docker rm $(docker ps -a -q)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="Save-amp-Load"><a href="#Save-amp-Load" class="headerlink" title="Save &amp; Load"></a>Save &amp; Load</h1><p>Save running container</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker save -o xxx.tar.gz 2b6333eb87ea</span><br></pre></td></tr></table></figure>
+
+<p>Save one or more images to a tar archive (streamed to STDOUT by default)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker save busybox-1 &gt; /home/save.tar</span><br></pre></td></tr></table></figure>
+
+<p>Load saved container</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker load -i xxx.tgz</span><br><span class="line">docker load &lt; xxx.tgz</span><br></pre></td></tr></table></figure>
+
+<p>Export命令用于持久化容器（不是镜像）: Export a container’s filesystem as a tar archive</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker export &lt;CONTAINER ID&gt; &gt; /home/export.tar</span><br><span class="line">docker export --output=&quot;latest.tar&quot; red_panda</span><br></pre></td></tr></table></figure>
+
+<h1 id="Monitor"><a href="#Monitor" class="headerlink" title="Monitor"></a>Monitor</h1><p>A live data stream for running containers</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker stats [OPTIONS] [CONTAINER...]</span><br></pre></td></tr></table></figure>
+
+<h1 id="Volumn"><a href="#Volumn" class="headerlink" title="Volumn"></a>Volumn</h1><p>Create data volumn</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker create -v /tools/ --name tools centos:6.6 /bin/true</span><br></pre></td></tr></table></figure>
+
+<p>Start a container with a new data volumn </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -i -t -v /tools centos:6.6 /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>Mount a host directory as a data volume</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -i -t -v /tmp/tools:/tools centos:6.6 /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>A read-only data volumn</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -i -t -v /tmp/tools:/tools:ro centos:6.6 /bin/bash</span><br></pre></td></tr></table></figure>
+<p>两个参数是:主机绝对路径or一个name:容器绝对路径:只读</p>
+<p>Mount a host file as a data volume</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run --rm -it -v ~/.bash_history:/root/.bash_history ubuntu /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>Remove a volumn</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker rm -v </span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>cheatsheet</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kubernetes Cheatsheet</title>
+    <url>/Tech/Cloud/Kubernetes-Cheatsheet/</url>
+    <content><![CDATA[<h1 id="Cluster"><a href="#Cluster" class="headerlink" title="Cluster"></a>Cluster</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl cluster-info</span><br><span class="line">kubectl get nodes</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>cheatsheet</tag>
+        <tag>kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Apache Druid</title>
+    <url>/Tech/Database/Apache-Druid/</url>
+    <content><![CDATA[<p>Apache Druid (incubating) is a data store designed for high-performance slice-and-dice analytics (“OLAP”-style) on large data sets. </p>
+<blockquote>
+<p>See <a href="http://druid.io/docs/latest/design/index.html#what-is-druid">http://druid.io/docs/latest/design/index.html#what-is-druid</a></p>
+</blockquote>
+<blockquote>
+<p>Druid GitHub地址：<a href="https://github.com/apache/incubator-druid">https://github.com/apache/incubator-druid</a></p>
+</blockquote>
+<span id="more"></span>
+
+
+<h1 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h1><blockquote>
+<p>See <a href="http://druid.io/docs/0.14.0-incubating/design/index.html#architecture">http://druid.io/docs/0.14.0-incubating/design/index.html#architecture</a></p>
+<p>See <a href="https://www.jianshu.com/p/2347abf563df">Druid基础介绍和系统架构</a></p>
+</blockquote>
+<p><img src="http://druid.io/docs/img/druid-architecture.png" alt="Druid Architecture" title="Druid Architecture"></p>
+<h2 id="Processes-and-Servers"><a href="#Processes-and-Servers" class="headerlink" title="Processes and Servers"></a>Processes and Servers</h2><p>每个Druid process type可以独立配置、扩缩容</p>
+<p>Pprocess types</p>
+<ul>
+<li>Coordinator processes manage data availability on the cluster.</li>
+<li>Overlord processes control the assignment of data ingestion workloads.</li>
+<li>Broker processes handle queries from external clients.</li>
+<li>Router processes are optional processes that can route requests to Brokers, Coordinators, and Overlords.</li>
+<li>Historical processes store queryable data.</li>
+<li>MiddleManager processes are responsible for ingesting data.</li>
+</ul>
+<p>推荐部署方案</p>
+<ul>
+<li>Master: Runs Coordinator and Overlord processes, manages data availability and ingestion.</li>
+<li>Query: Runs Broker and optional Router processes, handles queries from external clients.</li>
+<li>Data: Runs Historical and MiddleManager processes, executes ingestion workloads and stores all queryable data.</li>
+</ul>
+<h2 id="External-dependencies"><a href="#External-dependencies" class="headerlink" title="External dependencies"></a>External dependencies</h2><p>深度存储(Deep Storage)，比如HDFS、S3等<br>元数据存储(Metadata Storage)，比如Mysql、PostgreSQL<br>Zookeeper，用于管理集群状态</p>
+<h1 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h1><blockquote>
+<p>See <a href="http://druid.io/docs/0.14.0-incubating/tutorials/index.html">http://druid.io/docs/0.14.0-incubating/tutorials/index.html</a><br>See <a href="https://www.jianshu.com/p/a4b8bf4c82b9">Druid系统安装与配置</a></p>
+</blockquote>
+<h2 id="Standalone"><a href="#Standalone" class="headerlink" title="Standalone"></a>Standalone</h2><h3 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h3><p>CentOs7, 8G of RAM, 2 vCPUs<br>Java 8</p>
+<h3 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h3><blockquote>
+<p>See <a href="https://www.apache.org/dyn/closer.cgi?path=/incubator/druid/0.14.0-incubating/apache-druid-0.14.0-incubating-bin.tar.gz">https://www.apache.org/dyn/closer.cgi?path=/incubator/druid/0.14.0-incubating/apache-druid-0.14.0-incubating-bin.tar.gz</a></p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">wget http://mirrors.tuna.tsinghua.edu.cn/apache/incubator/druid/0.14.0-incubating/apache-druid-0.14.0-incubating-bin.tar.gz</span><br><span class="line">tar -xzf apache-druid-0.14.0-incubating-bin.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> apache-druid-0.14.0-incubating</span><br><span class="line"></span><br><span class="line"><span class="comment"># tutorial 启动脚本要求的zk位置</span></span><br><span class="line"><span class="built_in">ln</span> -s ../zookeeper-3.4.14 zk</span><br><span class="line"></span><br><span class="line"><span class="comment"># start server</span></span><br><span class="line">bin/supervise -c quickstart/tutorial/conf/tutorial-cluster.conf</span><br></pre></td></tr></table></figure>
+
+<p>访问：<br>Druid Overlord Console: <a href="http://localhost:8090/console.html">http://localhost:8090/console.html</a><br>Druid Unified Console: <a href="http://localhost:8888/unified-console.html">http://localhost:8888/unified-console.html</a><br>CoordinatorConsole: <a href="http://localhost:8081/">http://localhost:8081</a></p>
+<p>启动后，</p>
+<ul>
+<li>持久化数据在（深度存储和元数据存储）：${DRUID_HOME}&#x2F;var目录下<ul>
+<li>zk:2181，数据文件var&#x2F;zk</li>
+</ul>
+</li>
+<li>日志：${DRUID_HOME}&#x2F;var&#x2F;sv&#x2F;*.log</li>
+<li>Resetting cluster state: 删除${DRUID_HOME}&#x2F;var目录</li>
+<li>Resetting Kafka: 删除&#x2F;tmp&#x2F;kafka-logs</li>
+<li>组件进程和端口映射<ul>
+<li>zk:2181</li>
+<li>coordinator:8081</li>
+<li>broker:8082</li>
+<li>historical:8083</li>
+<li>router:8888</li>
+<li>overlord:8090</li>
+<li>middleManager:8091</li>
+</ul>
+</li>
+</ul>
+<p>如果出现启动报错， zk.log出现：Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain，检查zk引用是否正确。</p>
+<h2 id="Clustering"><a href="#Clustering" class="headerlink" title="Clustering"></a>Clustering</h2><blockquote>
+<p>See <a href="http://druid.io/docs/0.14.0-incubating/tutorials/cluster.html">http://druid.io/docs/0.14.0-incubating/tutorials/cluster.html</a></p>
+</blockquote>
+<h1 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h1><h2 id="Tutorial-Loading-a-file"><a href="#Tutorial-Loading-a-file" class="headerlink" title="Tutorial: Loading a file"></a>Tutorial: Loading a file</h2><p>使用 Apache Druid (incubating)’s native batch ingestion，提交一个ingestion task（quickstart&#x2F;tutorial&#x2F;wikipedia-index.json），加载数据（quickstart&#x2F;tutorial&#x2F;wikiticker-2015-09-12-sampled.json.gz）</p>
+<ol>
+<li>提交task</li>
+</ol>
+<blockquote>
+<p>See <a href="http://druid.io/docs/0.14.0-incubating/tutorials/tutorial-batch.html">http://druid.io/docs/0.14.0-incubating/tutorials/tutorial-batch.html</a></p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment">## 方法一，使用脚本，但是python报错：httplib.BadStatusLine: &#x27;&#x27;（TODO）</span></span><br><span class="line"><span class="comment"># bin/post-index-task --file quickstart/tutorial/wikipedia-index.json </span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 方法二</span></span><br><span class="line">curl -X <span class="string">&#x27;POST&#x27;</span> -H <span class="string">&#x27;Content-Type:application/json&#x27;</span> -d @quickstart/tutorial/wikipedia-index.json http://localhost:8090/druid/indexer/v1/task <span class="comment"># 使用ip</span></span><br></pre></td></tr></table></figure>
+<p>成功后返回task id</p>
+<ol start="2">
+<li>查询task</li>
+</ol>
+<blockquote>
+<p>See <a href="http://druid.io/docs/0.14.0-incubating/tutorials/tutorial-query.html">http://druid.io/docs/0.14.0-incubating/tutorials/tutorial-query.html</a></p>
+</blockquote>
+<ul>
+<li><p>使用Native JSON queries</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -X <span class="string">&#x27;POST&#x27;</span> -H <span class="string">&#x27;Content-Type:application/json&#x27;</span> -d @quickstart/tutorial/wikipedia-top-pages.json http://localhost:8082/druid/v2?pretty <span class="comment"># 使用ip</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用Druid SQL queries</p>
+</li>
+</ul>
+<p>http请求</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -X <span class="string">&#x27;POST&#x27;</span> -H <span class="string">&#x27;Content-Type:application/json&#x27;</span> -d @quickstart/tutorial/wikipedia-top-pages-sql.json http://localhost:8082/druid/v2/sql <span class="comment"># 使用ip</span></span><br></pre></td></tr></table></figure>
+
+<p>或者dsql client （同样python报错：httplib.BadStatusLine: ‘’）（TODO）</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ bin/dsql</span><br><span class="line">Welcome to dsql, the command-line client <span class="keyword">for</span> Druid SQL.</span><br><span class="line">Connected to [http://localhost:8082/].</span><br><span class="line"></span><br><span class="line">Type <span class="string">&quot;\h&quot;</span> <span class="keyword">for</span> <span class="built_in">help</span>.</span><br><span class="line">dsql&gt; SELECT page, COUNT(*) AS Edits FROM wikipedia WHERE <span class="string">&quot;__time&quot;</span> BETWEEN TIMESTAMP <span class="string">&#x27;2015-09-12 00:00:00&#x27;</span> AND TIMESTAMP <span class="string">&#x27;2015-09-13 00:00:00&#x27;</span> GROUP BY page ORDER BY Edits DESC LIMIT 10;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>访问页面<br><a href="http://localhost:8888/unified-console.html#tasks">http://localhost:8888/unified-console.html#tasks</a> 看到task状态SUCCESS<br><a href="http://localhost:8888/unified-console.html#datasources">http://localhost:8888/unified-console.html#datasources</a> 查看Datasources状态 Fully available<br><a href="http://localhost:8888/unified-console.html#sql">http://localhost:8888/unified-console.html#sql</a> 运行SQL</li>
+</ul>
+<h2 id="Tutorial-Roll-up"><a href="#Tutorial-Roll-up" class="headerlink" title="Tutorial: Roll-up"></a>Tutorial: Roll-up</h2><blockquote>
+<p><a href="http://druid.io/docs/latest/tutorials/tutorial-rollup.html">http://druid.io/docs/latest/tutorials/tutorial-rollup.html</a></p>
+</blockquote>
+<p>Roll-up是导入数据时做的初步聚合操作，可以减少存储数据</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">bin/post-index-task --file quickstart/tutorial/rollup-index.json </span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">curl -X <span class="string">&#x27;POST&#x27;</span> -H <span class="string">&#x27;Content-Type:application/json&#x27;</span> -d @quickstart/tutorial/rollup-index.json http://localhost:8090/druid/indexer/v1/task <span class="comment"># 使用ip</span></span><br></pre></td></tr></table></figure>
+<p>查看sql</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> &quot;rollup-tutorial&quot;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Tutorial-Updating-existing-data"><a href="#Tutorial-Updating-existing-data" class="headerlink" title="Tutorial: Updating existing data"></a>Tutorial: Updating existing data</h2><h1 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h1><blockquote>
+<p><a href="http://druid.io/docs/latest/querying/sql.html">http://druid.io/docs/latest/querying/sql.html</a></p>
+</blockquote>
+<h1 id="Data-Ingestion"><a href="#Data-Ingestion" class="headerlink" title="Data Ingestion"></a>Data Ingestion</h1><h2 id="Kafka-Indexing-Service-Stream-Pull"><a href="#Kafka-Indexing-Service-Stream-Pull" class="headerlink" title="Kafka Indexing Service (Stream Pull)"></a>Kafka Indexing Service (Stream Pull)</h2><blockquote>
+<p><a href="http://druid.io/docs/0.14.0-incubating/development/extensions-core/kafka-ingestion.html">http://druid.io/docs/0.14.0-incubating/development/extensions-core/kafka-ingestion.html</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>startup</tag>
+        <tag>druid</tag>
+        <tag>apache</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mysql Basis</title>
+    <url>/Tech/Database/Mysql-Basis/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<h1 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h1><h2 id="distinct"><a href="#distinct" class="headerlink" title="distinct"></a>distinct</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span>(gender) <span class="keyword">FROM</span> employees;</span><br><span class="line"></span><br><span class="line">gender  </span><br><span class="line"><span class="comment">--------</span></span><br><span class="line">M       </span><br><span class="line">F     </span><br></pre></td></tr></table></figure>
+
+<p>但是以下情况失效。这时适合用group by</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span>(gender), emp_no <span class="keyword">FROM</span> employees;</span><br><span class="line"><span class="keyword">SELECT</span> gender, emp_no <span class="keyword">FROM</span> employees <span class="keyword">GROUP</span> <span class="keyword">BY</span> gender;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+        <tag>todo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mysql Index</title>
+    <url>/Tech/Database/Mysql-Index/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<h1 id="创建官方测试库"><a href="#创建官方测试库" class="headerlink" title="创建官方测试库"></a>创建官方测试库</h1><blockquote>
+<p>官方 <a href="https://dev.mysql.com/doc/employee/en/">Employees Sample Database</a><br>Git: <a href="https://github.com/datacharmer/test_db">https://github.com/datacharmer/test_db</a></p>
+</blockquote>
+<ol>
+<li><p>MySQL 5.5+</p>
+</li>
+<li><p>Download the repository</p>
+</li>
+<li><p>Change directory to the repository<br>Then run</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysql &lt; employees.sql</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h1><blockquote>
+<p>See <a href="https://www.runoob.com/mysql/mysql-index.html">https://www.runoob.com/mysql/mysql-index.html</a></p>
+</blockquote>
+<p>修改表结构(添加索引)</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tbl_name <span class="keyword">ADD</span> <span class="keyword">PRIMARY</span> KEY (column_list); <span class="comment">-- 该语句添加一个主键，这意味着索引值必须是唯一的，且不能为NULL。</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tbl_name <span class="keyword">ADD</span> <span class="keyword">UNIQUE</span> index_name (column_list); <span class="comment">--  这条语句创建索引的值必须是唯一的（除了NULL外，NULL可能会出现多次）。</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tbl_name <span class="keyword">ADD</span> INDEX index_name (column_list); <span class="comment">--  添加普通索引，索引值可出现多次。</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tbl_name <span class="keyword">ADD</span> FULLTEXT index_name (column_list); <span class="comment">-- 该语句指定了索引为 FULLTEXT ，用于全文索引。</span></span><br></pre></td></tr></table></figure>
+
+<p>创建表的时候直接指定</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> mytable(  </span><br><span class="line">    ID <span class="type">INT</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>,   </span><br><span class="line">    username1 <span class="type">VARCHAR</span>(<span class="number">16</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,  </span><br><span class="line">    username2 <span class="type">VARCHAR</span>(<span class="number">16</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,  </span><br><span class="line">    INDEX [indexName] (username1(length))  ,</span><br><span class="line">    <span class="keyword">UNIQUE</span> [indexName] (username2(length))  </span><br><span class="line">);  </span><br></pre></td></tr></table></figure>
+
+<p>删除索引的语法</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">DROP</span> INDEX [indexName] <span class="keyword">ON</span> mytable; </span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tbl_name <span class="keyword">DROP</span> INDEX index_name;</span><br></pre></td></tr></table></figure>
+
+<p>查看索引</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> INDEX <span class="keyword">FROM</span> table_name;</span><br></pre></td></tr></table></figure>
+
+<p>查看索引大小</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">USE `information_schema`;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> CONCAT(ROUND(<span class="built_in">SUM</span>(index_length)<span class="operator">/</span>(<span class="number">1024</span><span class="operator">*</span><span class="number">1024</span>), <span class="number">2</span>), <span class="string">&#x27; MB&#x27;</span>) <span class="keyword">AS</span> <span class="string">&#x27;Total Index Size&#x27;</span> <span class="keyword">FROM</span> `TABLES` <span class="keyword">WHERE</span> table_name <span class="operator">=</span> <span class="string">&#x27;dept_emp&#x27;</span>; </span><br></pre></td></tr></table></figure>
+
+
+<h1 id="Index-Type"><a href="#Index-Type" class="headerlink" title="Index Type"></a>Index Type</h1><h2 id="const"><a href="#const" class="headerlink" title="const"></a>const</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">EXPLAIN SELECT * FROM employees.titles WHERE emp_no=&#x27;10001&#x27; AND title=&#x27;Senior Engineer&#x27; AND from_date=&#x27;1986-06-26&#x27;;</span><br><span class="line">+----+-------------+--------+-------+---------------+---------+---------+-------------------+------+-------+</span><br><span class="line">| id | select_type | table  | type  | possible_keys | key     | key_len | ref               | rows | Extra |</span><br><span class="line">+----+-------------+--------+-------+---------------+---------+---------+-------------------+------+-------+</span><br><span class="line">|  1 | SIMPLE      | titles | const | PRIMARY       | PRIMARY | 59      | const,const,const |    1 |       |</span><br><span class="line">+----+-------------+--------+-------+---------------+---------+---------+-------------------+------+-------+</span><br></pre></td></tr></table></figure>
+
+<p>理论上索引对顺序是敏感的，但是由于MySQL的查询优化器会自动调整where子句的条件顺序以使用适合的索引</p>
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+        <tag>todo</tag>
+        <tag>index</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Git Cheatsheet</title>
+    <url>/Tech/Engineering/Git-Cheatsheet/</url>
+    <content><![CDATA[<blockquote>
+<p>See <a href="https://git-scm.com/docs">Official Manual</a></p>
+</blockquote>
+<h1 id="信息查看"><a href="#信息查看" class="headerlink" title="信息查看"></a>信息查看</h1><h2 id="Branch"><a href="#Branch" class="headerlink" title="Branch"></a>Branch</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git symbolic-ref --short HEAD</span><br><span class="line">git rev-parse --abbrev-ref HEAD</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h1 id="Clone"><a href="#Clone" class="headerlink" title="Clone"></a>Clone</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone xxx</span><br><span class="line">git clone xxx --depth=1</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="Commit"><a href="#Commit" class="headerlink" title="Commit"></a>Commit</h1><h2 id="回退commit"><a href="#回退commit" class="headerlink" title="回退commit"></a>回退commit</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 保留修改</span><br><span class="line">git reset HEAD~1 --soft</span><br><span class="line"></span><br><span class="line"># 不保留本地修改，！危险！</span><br><span class="line">git reset HEAD~1 --hard</span><br></pre></td></tr></table></figure>
+
+<h2 id="回退git-add（从暂存区删除）"><a href="#回退git-add（从暂存区删除）" class="headerlink" title="回退git add（从暂存区删除）"></a>回退git add（从暂存区删除）</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git reset HEAD --</span><br><span class="line">git reset HEAD -&lt;directoryName&gt;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="设置本地文件不提交到远程-例如本地的-project等"><a href="#设置本地文件不提交到远程-例如本地的-project等" class="headerlink" title="设置本地文件不提交到远程(例如本地的.project等)"></a>设置本地文件不提交到远程(例如本地的.project等)</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ git update-index --assume-unchanged /path/to/file       #忽略跟踪</span><br><span class="line">$ git update-index --no-assume-unchanged /path/to/file  #恢复跟踪</span><br></pre></td></tr></table></figure>
+<p>查看忽略跟踪的文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git ls-files -v | grep &quot;^[[:lower:]]&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Git合并两次commit为一个commit"><a href="#Git合并两次commit为一个commit" class="headerlink" title="Git合并两次commit为一个commit"></a>Git合并两次commit为一个commit</h2><p><a href="https://stackoverflow.com/questions/2563632/how-can-i-merge-two-commits-into-one">https://stackoverflow.com/questions/2563632/how-can-i-merge-two-commits-into-one</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ git log --pretty=oneline</span><br><span class="line">a931ac7c808e2471b22b5bd20f0cad046b1c5d0d c</span><br><span class="line">b76d157d507e819d7511132bdb5a80dd421d854f b</span><br><span class="line">df239176e1a2ffac927d8b496ea00d5488481db5 a</span><br><span class="line"></span><br><span class="line">$ git rebase --interactive HEAD~2</span><br></pre></td></tr></table></figure>
+<p>出现编辑</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pick b76d157 b</span><br><span class="line">pick a931ac7 c</span><br><span class="line"></span><br><span class="line"># Rebase df23917..a931ac7 onto df23917</span><br><span class="line">#</span><br><span class="line"># Commands:</span><br><span class="line">#  p, pick = use commit</span><br><span class="line">#  r, reword = use commit, but edit the commit message</span><br><span class="line">#  e, edit = use commit, but stop for amending</span><br><span class="line">#  s, squash = use commit, but meld into previous commit</span><br><span class="line">#  f, fixup = like &quot;squash&quot;, but discard this commit&#x27;s log message</span><br><span class="line">#</span><br><span class="line"># If you remove a line here THAT COMMIT WILL BE LOST.</span><br><span class="line"># However, if you remove everything, the rebase will be aborted.</span><br><span class="line">#</span><br></pre></td></tr></table></figure>
+<p>改为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pick b76d157 b</span><br><span class="line">squash a931ac7 c</span><br></pre></td></tr></table></figure>
+<p>保存后修改comment即可</p>
+<h2 id="Git修改上一次commit人"><a href="#Git修改上一次commit人" class="headerlink" title="Git修改上一次commit人"></a>Git修改上一次commit人</h2><blockquote>
+<p><a href="https://www.jianshu.com/p/7def4f387e9f">https://www.jianshu.com/p/7def4f387e9f</a></p>
+</blockquote>
+<p>修改最近一次</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git commit --amend --author=<span class="string">&quot;userName &lt;userEmail&gt;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>批量修改</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git filter-branch --env-filter <span class="string">&#x27;</span></span><br><span class="line"><span class="string">if [ &quot;$GIT_AUTHOR_NAME&quot; = &quot;oldName&quot; ]</span></span><br><span class="line"><span class="string">then</span></span><br><span class="line"><span class="string">export GIT_AUTHOR_NAME=&quot;newName&quot;</span></span><br><span class="line"><span class="string">export GIT_AUTHOR_EMAIL=&quot;newEmail&quot;</span></span><br><span class="line"><span class="string">fi</span></span><br><span class="line"><span class="string">&#x27;</span> ref..HEAD</span><br><span class="line"></span><br><span class="line">git filter-branch --env-filter <span class="string">&#x27;</span></span><br><span class="line"><span class="string">if [ &quot;$GIT_COMMITTER_NAME&quot; = &quot;oldName&quot; ]</span></span><br><span class="line"><span class="string">then</span></span><br><span class="line"><span class="string">export GIT_COMMITTER_NAME=&quot;newName&quot;</span></span><br><span class="line"><span class="string">export GIT_COMMITTER_EMAIL=&quot;newEmail&quot;</span></span><br><span class="line"><span class="string">fi</span></span><br><span class="line"><span class="string">&#x27;</span> ref..HEAD</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="Git-gc"><a href="#Git-gc" class="headerlink" title="Git gc"></a>Git gc</h1><p>控制git repo大小</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git gc</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="Patch"><a href="#Patch" class="headerlink" title="Patch"></a>Patch</h1><p>Git create&#x2F;apply patch</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 标准patch</span><br><span class="line">git diff master &gt; patch</span><br><span class="line">git apply patch</span><br><span class="line"></span><br><span class="line"># git专用patch</span><br><span class="line">git format-patch -M master</span><br><span class="line">git am 0001-Fix1.patch</span><br></pre></td></tr></table></figure>
+
+<h1 id="Git-clean"><a href="#Git-clean" class="headerlink" title="Git clean"></a>Git clean</h1><p><a href="https://git-scm.com/docs/git-clean">https://git-scm.com/docs/git-clean</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 一次clean的演习</span><br><span class="line">git clean -n</span><br><span class="line"></span><br><span class="line">// 删除当前目录下所有没有track过的文件. 他不会删除.gitignore文件里面指定的文件夹和文件, 不管这些文件有没有被track过.</span><br><span class="line">git clean -f</span><br><span class="line"></span><br><span class="line">// 删除指定路径下的没有被track过的文件</span><br><span class="line">git clean -f &lt;path&gt;</span><br><span class="line"></span><br><span class="line">// 删除当前目录下没有被track过的文件和文件夹.</span><br><span class="line">git clean -df</span><br><span class="line"></span><br><span class="line">// 删除当前目录下所有没有track过的文件. 不管他是否是.gitignore文件里面指定的文件夹和文件</span><br><span class="line">git clean -xf</span><br><span class="line"></span><br><span class="line">git reset --hard和git clean -f是一对好基友. 结合使用他们能让你的工作目录完全回退到最近一次commit的时候.</span><br><span class="line"></span><br><span class="line">git clean对于刚编译过的项目也非常有用. 如, 他能轻易删除掉编译后生成的.o和.exe等文件. 这个在打包要发布一个release的时候非常有用.</span><br></pre></td></tr></table></figure>
+
+<h1 id="Git-merge"><a href="#Git-merge" class="headerlink" title="Git merge"></a>Git merge</h1><p><a href="https://git-scm.com/docs/git-merge">https://git-scm.com/docs/git-merge</a></p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git merge dev              <span class="comment"># =--ff，即fast-forward，当merge是fast-forward时，只更新指针（如果删除分支，则会丢失分支信息）</span></span><br><span class="line"></span><br><span class="line">git merge --no-ff         <span class="comment">#  即使fast-forward也创建 merge commit</span></span><br><span class="line"></span><br><span class="line">git merge --squash      <span class="comment"># 使用squash方式合并，把多次分支commit历史压缩为一次</span></span><br></pre></td></tr></table></figure>
+<p>–squash：是用来把一些不必要commit进行压缩，比如说，你的feature在开发的时候写的commit很乱，那么我们合并的时候不希望把这些历史commit带过来，于是使用–squash进行合并，此时文件已经同合并后一样了，但不移动HEAD，不提交。需要进行一次额外的commit来“总结”一下，然后完成最终的合并。</p>
+<p>Git去掉某个merge<br><a href="https://segmentfault.com/q/1010000000140446">https://segmentfault.com/q/1010000000140446</a><br><a href="https://git-scm.com/blog/2010/03/02/undoing-merges.html">https://git-scm.com/blog/2010/03/02/undoing-merges.html</a><br><a href="http://schacon.github.io/git/git-revert.html">http://schacon.github.io/git/git-revert.html</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git revert -m 1 00519a</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>git cheatsheet</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Google protobuf - 开源序列化框架</title>
+    <url>/Tech/Java/Google-protobuf-%E5%BC%80%E6%BA%90%E5%BA%8F%E5%88%97%E5%8C%96%E6%A1%86%E6%9E%B6/</url>
+    <content><![CDATA[<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><blockquote>
+<p>官方文档：<a href="https://developers.google.com/protocol-buffers/?hl=zh-CN">https://developers.google.com/protocol-buffers/?hl=zh-CN</a></p>
+</blockquote>
+<blockquote>
+<p>官方代码：<a href="https://github.com/protocolbuffers/protobuf">https://github.com/protocolbuffers/protobuf</a></p>
+</blockquote>
+<blockquote>
+<p>Google Protocol Buffer 的使用和原理： <a href="https://www.ibm.com/developerworks/cn/linux/l-cn-gpb/index.html">https://www.ibm.com/developerworks/cn/linux/l-cn-gpb/index.html</a></p>
+</blockquote>
+<blockquote>
+<p>Protobuf 有没有比 JSON 快 5 倍？： <a href="https://www.infoq.cn/article/json-is-5-times-faster-than-protobuf">https://www.infoq.cn/article/json-is-5-times-faster-than-protobuf</a></p>
+</blockquote>
+<p>Protocol buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data.</p>
+<span id="more"></span>
+
+<h1 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h1><h2 id="IntellJ-Plugin"><a href="#IntellJ-Plugin" class="headerlink" title="IntellJ Plugin"></a>IntellJ Plugin</h2><p>插件 Protobuf Support</p>
+<h2 id="Java-maven-project"><a href="#Java-maven-project" class="headerlink" title="Java maven project"></a>Java maven project</h2><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">protobuf.version</span>&gt;</span>2.5.0<span class="tag">&lt;/<span class="name">protobuf.version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.google.protobuf<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>protobuf-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;protobuf.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.googlecode.protobuf-java-format<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>protobuf-java-format<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.os72<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>protoc-jar-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.5.1.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">phase</span>&gt;</span>generate-sources<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">goal</span>&gt;</span>run<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">protocVersion</span>&gt;</span>$&#123;protobuf.version&#125;<span class="tag">&lt;/<span class="name">protocVersion</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">inputDirectories</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">include</span>&gt;</span>src/main/proto<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">inputDirectories</span>&gt;</span></span><br><span class="line">                        <span class="comment">&lt;!-- &lt;outputTargets&gt;</span></span><br><span class="line"><span class="comment">                            &lt;outputTarget&gt;</span></span><br><span class="line"><span class="comment">                                &lt;type&gt;java&lt;/type&gt;</span></span><br><span class="line"><span class="comment">                                &lt;addSources&gt;none&lt;/addSources&gt;</span></span><br><span class="line"><span class="comment">                                &lt;outputDirectory&gt;target/generated-sources/java&lt;/outputDirectory&gt;</span></span><br><span class="line"><span class="comment">                            &lt;/outputTarget&gt;</span></span><br><span class="line"><span class="comment">                        &lt;/outputTargets&gt; --&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Manual-2-5"><a href="#Manual-2-5" class="headerlink" title="Manual 2.5"></a>Manual 2.5</h1><blockquote>
+<p>官方java版：<a href="https://developers.google.com/protocol-buffers/docs/javatutorial?hl=zh-CN">https://developers.google.com/protocol-buffers/docs/javatutorial?hl=zh-CN</a></p>
+</blockquote>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><ul>
+<li><p>写proto文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">syntax = &quot;proto2&quot;;</span><br><span class="line"></span><br><span class="line">package tutorial;</span><br><span class="line"></span><br><span class="line">option java_package = &quot;com.example.tutorial&quot;;</span><br><span class="line">option java_outer_classname = &quot;AddressBookProtos&quot;;</span><br><span class="line"></span><br><span class="line">message Person &#123;</span><br><span class="line">required string name = 1;</span><br><span class="line">required int32 id = 2;</span><br><span class="line">optional string email = 3;</span><br><span class="line"></span><br><span class="line">enum PhoneType &#123;</span><br><span class="line">MOBILE = 0;</span><br><span class="line">HOME = 1;</span><br><span class="line">WORK = 2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">message PhoneNumber &#123;</span><br><span class="line">required string number = 1;</span><br><span class="line">optional PhoneType type = 2 [default = HOME];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">repeated PhoneNumber phones = 4;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">message AddressBook &#123;</span><br><span class="line">repeated Person people = 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下载编译器 Download Protocol Buffers</p>
+<blockquote>
+<p><a href="https://github.com/protocolbuffers/protobuf/releases/tag/v2.5.0">https://github.com/protocolbuffers/protobuf/releases/tag/v2.5.0</a><br>可以用windows版本：protoc-2.5.0-win32</p>
+</blockquote>
+</li>
+<li><p>编译1：手动编译<br>项目根目录下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">protoc.exe --version</span><br><span class="line">protoc.exe -I src\main\proto\ --java_out=src\main\java\ src\main\proto\Person.proto</span><br></pre></td></tr></table></figure>
+<p>得到java类，注意包名</p>
+</li>
+<li><p>编译2：maven编译<br>配置如上面pom，target对应目录上会生成java文件，所在文件夹设为java source即可</p>
+<blockquote>
+<p>参考：<a href="https://www.cnblogs.com/crazymakercircle/p/10093385.html">https://www.cnblogs.com/crazymakercircle/p/10093385.html</a></p>
+</blockquote>
+</li>
+</ul>
+<p>问题：编译失败</p>
+<ul>
+<li>使用<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Person</span>  <span class="variable">p</span> <span class="operator">=</span> Person .newBuilder().setName(ByteString.copyFromUtf8(<span class="string">&quot;somename&quot;</span>)).build();</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="Protobuf-to-String"><a href="#Protobuf-to-String" class="headerlink" title="Protobuf to String"></a>Protobuf to String</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Person</span>  <span class="variable">p</span> <span class="operator">=</span> Person .newBuilder().setName(ByteString.copyFromUtf8(<span class="string">&quot;somename&quot;</span>)).build();</span><br><span class="line"><span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> TextFormat.printToUnicodeString(p);</span><br></pre></td></tr></table></figure>
+<p>逐一输出所有字段，和proto文件格式类似</p>
+<h2 id="Protobuf-to-JSON"><a href="#Protobuf-to-JSON" class="headerlink" title="Protobuf to JSON"></a>Protobuf to JSON</h2><p>使用fastjson等失败，需要用</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.googlecode.protobuf-java-format<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>protobuf-java-format<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>1.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>使用</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">byte</span>[] content = xxx;</span><br><span class="line"><span class="type">UserBaseInfo</span> <span class="variable">user</span> <span class="operator">=</span> UserBaseInfo.parseFrom(content);</span><br><span class="line"><span class="type">String</span> <span class="variable">json</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JsonFormat</span>().printToString(user );</span><br></pre></td></tr></table></figure>
+
+<p>如果对象中有字段是中文，看保存字段类型，如果是bytestring，那么会出现编码问题。如果string可能没问题。</p>
+<h2 id="JSON-to-Protobuf"><a href="#JSON-to-Protobuf" class="headerlink" title="JSON to Protobuf"></a>JSON to Protobuf</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">UserPurposeSumInfo.<span class="type">Builder</span> <span class="variable">builder</span> <span class="operator">=</span> UserPurposeSumInfo.newBuilder();</span><br><span class="line"><span class="keyword">new</span> <span class="title class_">JsonFormat</span>().merge(<span class="keyword">new</span> <span class="title class_">ByteArrayInputStream</span>(jsonStr.getBytes()), builder);</span><br><span class="line"></span><br><span class="line"><span class="type">UserPurposeSumInfo</span> <span class="variable">info</span> <span class="operator">=</span> builder.build();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="String-to-ByteString"><a href="#String-to-ByteString" class="headerlink" title="String to ByteString"></a>String to ByteString</h2><p>类赋值的时候需要类型转换</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> ByteString <span class="title function_">toByteString</span><span class="params">(String value)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> ByteString.copyFromUtf8(value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>startup</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Log4j 2 Startup</title>
+    <url>/Tech/Java/Log4j-2-Startup/</url>
+    <content><![CDATA[<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><blockquote>
+<p>官网：<a href="http://logging.apache.org/log4j/2.x/">http://logging.apache.org/log4j/2.x/</a></p>
+</blockquote>
+<span id="more"></span>
+
+<h1 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h1><h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><blockquote>
+<p> See <a href="http://logging.apache.org/log4j/2.x/maven-artifacts.html">http://logging.apache.org/log4j/2.x/maven-artifacts.html</a><br>Maven pom.xml</p>
+</blockquote>
+<figure class="highlight xml"><figcaption><span>pom.xml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.logging.log4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>log4j-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.11.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.logging.log4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>log4j-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.11.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Install-Log4j-with-Slf4j"><a href="#Install-Log4j-with-Slf4j" class="headerlink" title="Install Log4j with Slf4j"></a>Install Log4j with Slf4j</h2><blockquote>
+<p><a href="https://www.slf4j.org/manual.html">https://www.slf4j.org/manual.html</a></p>
+</blockquote>
+<p>pom.xml</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span> </span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.slf4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>slf4j-log4j12<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.8.0-beta4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这会同时包含slf4j-api和log4j-1依赖</p>
+<h1 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h1><blockquote>
+<p><a href="http://logging.apache.org/log4j/2.x/manual/configuration.html">http://logging.apache.org/log4j/2.x/manual/configuration.html</a></p>
+</blockquote>
+<p>Configuration of Log4j 2 can be accomplished in 1 of 4 ways:</p>
+<ul>
+<li>Through a configuration file written in XML, JSON, or YAML.</li>
+<li>Programmatically, by creating a ConfigurationFactory and Configuration implementation.</li>
+<li>Programmatically, by calling the APIs exposed in the Configuration interface to add components to the default configuration.</li>
+<li>Programmatically, by calling methods on the internal Logger class.</li>
+</ul>
+<h1 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h1><h2 id="日志到标准输出"><a href="#日志到标准输出" class="headerlink" title="日志到标准输出"></a>日志到标准输出</h2><p>log4j.properties</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">log4j.rootLogger</span>=<span class="string">info, STDOUT</span></span><br><span class="line"></span><br><span class="line"><span class="attr">log4j.appender.STDOUT</span>=<span class="string">org.apache.log4j.ConsoleAppender</span></span><br><span class="line"><span class="comment">#log4j.appender.STDOUT.Target=System.out</span></span><br><span class="line"><span class="attr">log4j.appender.STDOUT.layout</span>=<span class="string">org.apache.log4j.PatternLayout</span></span><br><span class="line"><span class="attr">log4j.appender.STDOUT.layout.ConversionPattern</span>=<span class="string">[%-5p] %d&#123;yyyy-MM-dd HH:mm:ss,SSS&#125; method:%l%n%m%n</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="日志到文件"><a href="#日志到文件" class="headerlink" title="日志到文件"></a>日志到文件</h2><p>log4j.properties</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">log4j.appender.LOGFILE</span>=<span class="string">org.apache.log4j.RollingFileAppender</span></span><br><span class="line"><span class="attr">log4j.appender.LOGFILE.MaxFileSize</span>=<span class="string">100MB</span></span><br><span class="line"><span class="attr">log4j.appender.LOGFILE.MaxBackupIndex</span>=<span class="string">10</span></span><br><span class="line"><span class="attr">log4j.appender.LOGFILE.File</span>=<span class="string">/tmp/xxx.log</span></span><br><span class="line"><span class="attr">log4j.appender.LOGFILE.layout</span>=<span class="string">org.apache.log4j.PatternLayout</span></span><br><span class="line"><span class="attr">log4j.appender.LOGFILE.layout.ConversionPattern</span>=<span class="string">%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125; %p [metric-detection] [%t] %c %x - %m%n</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="指定某些包-x2F-类的日志"><a href="#指定某些包-x2F-类的日志" class="headerlink" title="指定某些包&#x2F;类的日志"></a>指定某些包&#x2F;类的日志</h2><p>log4j.properties</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">log4j.logger.org.test</span>=<span class="string">debug,console</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 默认情况下 子Logger 会继承 父Logger 的appender，也就是说 子Logger 会在 父Logger 的appender里输出。</span></span><br><span class="line"><span class="comment"># 若是additivity设为false，则 子Logger 只会在自己的appender里输出，而不会在 父Logger 的appender里输出。</span></span><br><span class="line"><span class="attr">log4j.additivity.org.test</span>=<span class="string">false</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>startup</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BulletJournal</title>
+    <url>/Others/NonTech/BulletJournal/</url>
+    <content><![CDATA[<h1 id="What-is-Bullet-Journal"><a href="#What-is-Bullet-Journal" class="headerlink" title="What is Bullet Journal"></a>What is Bullet Journal</h1><blockquote>
+<p><a href="https://bulletjournal.com/pages/learn">https://bulletjournal.com/pages/learn</a></p>
+</blockquote>
+<span id="more"></span>
+
+<h1 id="Tasks-Events-or-Notes"><a href="#Tasks-Events-or-Notes" class="headerlink" title="Tasks, Events, or Notes"></a>Tasks, Events, or Notes</h1><p>Examples:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.1 Wed.</span><br><span class="line"></span><br><span class="line">• Tasks: things you have to do </span><br><span class="line">    X Task completed</span><br><span class="line">    &gt; Task migrated to collection</span><br><span class="line">    &lt; Task scheduled in feture log</span><br><span class="line">    * • Important</span><br><span class="line"></span><br><span class="line">- Notes: things you don&#x27;t want to forget</span><br><span class="line">    ! - Great ideas, personal mantras, and genius insights</span><br><span class="line"></span><br><span class="line">o Events: Noteworth moments in time</span><br></pre></td></tr></table></figure>
+
+<h1 id="Index"><a href="#Index" class="headerlink" title="Index"></a>Index</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Index</span><br><span class="line"></span><br><span class="line">Janruary: 1-9</span><br><span class="line">February: 10-30</span><br><span class="line">Furure: </span><br><span class="line">    Reading: 30-40</span><br></pre></td></tr></table></figure>
+
+<h1 id="The-Future-Log"><a href="#The-Future-Log" class="headerlink" title="The Future Log"></a>The Future Log</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Future Log</span><br><span class="line"></span><br><span class="line">APR</span><br><span class="line"> • 11: task 1 to do </span><br><span class="line"> • 21: task 2 to do</span><br><span class="line"></span><br><span class="line">---------------</span><br><span class="line"></span><br><span class="line">MAY</span><br><span class="line">*• 1: important task to do </span><br><span class="line"> • 21: another important task to do </span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Others</category>
+      </categories>
+      <tags>
+        <tag>journal</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Books to Read</title>
+    <url>/Reading/NonTech/ReadingList/</url>
+    <content><![CDATA[<h1 id="2020-Reading-Plan"><a href="#2020-Reading-Plan" class="headerlink" title="2020 Reading Plan"></a>2020 Reading Plan</h1><p>[] 月亮和六便士<br>[] 三体</p>
+<h1 id="More-Plan"><a href="#More-Plan" class="headerlink" title="More Plan"></a>More Plan</h1><p><a href="https://www.amazon.com/l/ref=mh_rd_l?node=8192263011">Amazon:100 Books to Read in a Lifetime</a></p>
+<p><a href="https://www.amazon.cn/b?ie=UTF8&node=1536586071">亚马逊编辑推荐-人生必读100本书</a></p>
+<p><a href="https://www.telegraph.co.uk/books/what-to-read/100-greatest-novels-time/">The 100 greatest novels of all time</a></p>
+]]></content>
+      <categories>
+        <category>Reading</category>
+      </categories>
+      <tags>
+        <tag>todo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux Shell Cheatsheet</title>
+    <url>/uncategorized/Others/Linux-Shell-Cheatsheet/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<h1 id="Shell"><a href="#Shell" class="headerlink" title="Shell"></a>Shell</h1><h2 id="Logic"><a href="#Logic" class="headerlink" title="Logic"></a>Logic</h2><h3 id="for"><a href="#for" class="headerlink" title="for"></a>for</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> ./*</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">test</span> -f <span class="variable">$file</span></span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="variable">$file</span> is file</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">test</span> -d <span class="variable">$file</span></span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="variable">$file</span> is dictionary</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h1><h2 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h2><p>DNS刷新缓存</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">service nscd restart</span><br><span class="line">service dnsmasq restart</span><br><span class="line">rndc restart</span><br></pre></td></tr></table></figure>
+
+<p>查看某个record 何时才能失效,假设你的默认dns server 不是authoritative server</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dig +nocmd +noall +answer www.google.com</span><br></pre></td></tr></table></figure>
+<p>查看某个record 从authoritative server 请求一个record 时被设置的ttl</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">dig @ns1.google.com +nocmd www.google.com +noall +answer</span><br></pre></td></tr></table></figure>
+
+<h2 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h2><p>&#x2F;etc&#x2F;profile</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export http_proxy=xxx</span><br><span class="line">export https_proxy=xxx</span><br></pre></td></tr></table></figure>
+
+<h2 id="tc"><a href="#tc" class="headerlink" title="tc"></a>tc</h2><blockquote>
+<p>See <a href="https://blog.csdn.net/weiweicao0429/article/details/17578011">linux 下使用 tc 模拟网络延迟和丢包</a></p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 将 eth0 网卡的传输设置为延迟 100 毫秒发送</span><br><span class="line">tc qdisc add dev eth0 root netem delay 100ms</span><br><span class="line"># 删除上面配置</span><br><span class="line">tc qdisc del dev eth0 root netem delay 100ms</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="Common"><a href="#Common" class="headerlink" title="Common"></a>Common</h1><h2 id="Date-amp-Time"><a href="#Date-amp-Time" class="headerlink" title="Date &amp; Time"></a>Date &amp; Time</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># date +%Y%m%d</span><br><span class="line">20190613</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+  </entry>
+  <entry>
+    <title>Windows Batch</title>
+    <url>/uncategorized/Others/Windows-Batch-Cheatsheet/</url>
+    <content><![CDATA[<h1 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h1><blockquote>
+<p><a href="https://www.tutorialspoint.com/batch_script/">Batch Script Tutorial</a></p>
+</blockquote>
+<h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><blockquote>
+<p><a href="https://stackoverflow.com/questions/13805187/how-to-set-a-variable-inside-a-loop-for-f">How to set a variable inside a loop for &#x2F;F</a></p>
+</blockquote>
+<span id="more"></span>
+
+<h1 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h1><h2 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h2><p>DNS刷新缓存</p>
+<figure class="highlight bat"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ipconfig</span> /flushdns</span><br></pre></td></tr></table></figure>
+<h2 id="Netstat"><a href="#Netstat" class="headerlink" title="Netstat"></a>Netstat</h2><p>端口占用和杀死占用端口进程</p>
+<figure class="highlight bat"><table><tr><td class="code"><pre><span class="line"># 端口占用</span><br><span class="line">netstat -aon|<span class="built_in">findstr</span> &quot;<span class="number">80</span>&quot;</span><br><span class="line"></span><br><span class="line"># 进程<span class="number">6604</span>情况</span><br><span class="line">tasklist|<span class="built_in">findstr</span> &quot;<span class="number">6604</span>&quot;</span><br><span class="line"></span><br><span class="line"># 杀死进程</span><br><span class="line"><span class="built_in">taskkill</span> /T /F /PID <span class="number">6604</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="File-amp-Directory"><a href="#File-amp-Directory" class="headerlink" title="File &amp; Directory"></a>File &amp; Directory</h1><h2 id="磁盘使用"><a href="#磁盘使用" class="headerlink" title="磁盘使用"></a>磁盘使用</h2><p><a href="https://docs.microsoft.com/zh-cn/sysinternals/downloads/du">https://docs.microsoft.com/zh-cn/sysinternals/downloads/du</a></p>
+<figure class="highlight bat"><table><tr><td class="code"><pre><span class="line">du.exe -h</span><br><span class="line"><span class="function">usage: <span class="title">du</span> [-<span class="title">c</span>[<span class="title">t</span>]] [-<span class="title">l</span> &lt;<span class="title">levels</span>&gt; | -<span class="title">n</span> | -<span class="title">v</span>] [-<span class="title">u</span>] [-<span class="title">q</span>] &lt;<span class="title">directory</span>&gt;</span></span><br><span class="line"><span class="function">   -<span class="title">c</span>     <span class="title">Print</span> <span class="title">output</span> <span class="title">as</span> <span class="title">CSV</span>. <span class="title">Use</span> -<span class="title">ct</span> <span class="title">for</span> <span class="title">tab</span> <span class="title">delimiting</span>.</span></span><br><span class="line"><span class="function">          <span class="title">Use</span> -<span class="title">nobanner</span> <span class="title">to</span> <span class="title">suppress</span> <span class="title">banner</span>.</span></span><br><span class="line"><span class="function">   -<span class="title">l</span>     <span class="title">Specify</span> <span class="title">subdirectory</span> <span class="title">depth</span> <span class="title">of</span> <span class="title">information</span> (<span class="title">default</span> <span class="title">is</span> <span class="title">one</span> <span class="title">level</span>).</span></span><br><span class="line"><span class="function">   -<span class="title">n</span>     <span class="title">Do</span> <span class="title">not</span> <span class="title">recurse</span>.</span></span><br><span class="line"><span class="function">   -<span class="title">q</span>     <span class="title">Quiet</span>.</span></span><br><span class="line"><span class="function">   -<span class="title">nobanner</span></span></span><br><span class="line"><span class="function">          <span class="title">Do</span> <span class="title">not</span> <span class="title">display</span> <span class="title">the</span> <span class="title">startup</span> <span class="title">banner</span> <span class="title">and</span> <span class="title">copyright</span> <span class="title">message</span>.</span></span><br><span class="line"><span class="function">   -<span class="title">u</span>     <span class="title">Count</span> <span class="title">each</span> <span class="title">instance</span> <span class="title">of</span> <span class="title">a</span> <span class="title">hardlinked</span> <span class="title">file</span>.</span></span><br><span class="line"><span class="function">   -<span class="title">v</span>     <span class="title">Show</span> <span class="title">size</span> (<span class="title">in</span> <span class="title">KB</span>) <span class="title">of</span> <span class="title">all</span> <span class="title">subdirectories</span>.</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
+<p><a href="https://www.cnblogs.com/xpwi/p/9626959.html">Windows批处理(cmd&#x2F;bat)常用命令教程</a></p>
+</blockquote>
+]]></content>
+  </entry>
+  <entry>
+    <title>Python Startup</title>
+    <url>/Tech/Python/Python-Startup/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<h1 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h1><h2 id="Installation-python"><a href="#Installation-python" class="headerlink" title="Installation python"></a>Installation python</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># install</span></span><br><span class="line">yum install python36</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果有旧版本，例如python2，修改默认python</span></span><br><span class="line"><span class="built_in">cd</span> /usr/bin</span><br><span class="line"><span class="built_in">rm</span> -rf python</span><br><span class="line"><span class="built_in">rm</span> -rf python2 <span class="comment"># 是否需要？</span></span><br><span class="line"><span class="built_in">ln</span> -s python3.4 python</span><br><span class="line"></span><br><span class="line"><span class="comment"># check</span></span><br><span class="line">python -V</span><br></pre></td></tr></table></figure>
+
+<h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><ul>
+<li>解决系统python软链接指向python2.7版本后，yum不能正常工作</li>
+</ul>
+<p>修改&#x2F;usr&#x2F;bin&#x2F;yum，将文件头部的</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/python</span></span><br></pre></td></tr></table></figure>
+<p>改成</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/python2.4.3</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>startup</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python Virtual Env</title>
+    <url>/Tech/Python/Python-Virtual-Env/</url>
+    <content><![CDATA[<p>Python 环境管理</p>
+<span id="more"></span>
+
+
+<h1 id="Virtualenv"><a href="#Virtualenv" class="headerlink" title="Virtualenv"></a>Virtualenv</h1><blockquote>
+<p>See <a href="https://virtualenv.pypa.io/en/stable/">https://virtualenv.pypa.io/en/stable/</a></p>
+</blockquote>
+<p>virtualenv is a tool to create isolated Python environments.</p>
+<h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><blockquote>
+<p><a href="https://virtualenv.pypa.io/en/stable/installation/">https://virtualenv.pypa.io/en/stable/installation/</a></p>
+</blockquote>
+<p>环境： CentOS 7, python34, pip</p>
+<p>安装</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">pip install virtualenv</span><br><span class="line"></span><br><span class="line">Successfully installed virtualenv-16.5.0</span><br></pre></td></tr></table></figure>
+
+<h2 id="Startup"><a href="#Startup" class="headerlink" title="Startup"></a>Startup</h2><p>初始化</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">virtualenv ENV27</span><br></pre></td></tr></table></figure>
+<p>新建ENV27目录（可改变）存放virtual environment.</p>
+<p>新增python</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">virtualenv -p /usr/bin/python3.6 ENV36</span><br></pre></td></tr></table></figure>
+
+<p>激活环境</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">source ENV/bin/activate　</span><br><span class="line"># or</span><br><span class="line">. ENV/bin/activate</span><br></pre></td></tr></table></figure>
+<p>之后提示符前面会一直显示当前环境名</p>
+<p>停用环境</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deactivate</span><br></pre></td></tr></table></figure>
+
+<p>删除环境</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rm -r /path/to/ENV</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="Anaconda"><a href="#Anaconda" class="headerlink" title="Anaconda"></a>Anaconda</h1><blockquote>
+<p>See <a href="https://www.anaconda.com/">https://www.anaconda.com/</a></p>
+</blockquote>
+<p>Anaconda是专注于数据分析的Python发行版本，包含了conda、Python等190多个科学包及其依赖项。</p>
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Junit5 Startup</title>
+    <url>/Tech/Testing/Junit5-Startup/</url>
+    <content><![CDATA[<span id="more"></span>
+
+
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>The new major version of the programmer-friendly testing framework for Java</p>
+<p>官网：<a href="https://junit.org/junit5/">https://junit.org/junit5/</a></p>
+<p>User Guide: <a href="https://junit.org/junit5/docs/current/user-guide/#overview">https://junit.org/junit5/docs/current/user-guide/#overview</a></p>
+<h1 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h1><p><a href="https://github.com/junit-team/junit5-samples/tree/r5.4.2/junit5-jupiter-starter-maven">https://github.com/junit-team/junit5-samples/tree/r5.4.2/junit5-jupiter-starter-maven</a></p>
+<!-- more -->
+
+<p>pom.xml</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line"></span><br><span class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;!-- omit --&gt;</span><br><span class="line"></span><br><span class="line">    &lt;properties&gt;</span><br><span class="line">        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;</span><br><span class="line">        &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;</span><br><span class="line">        &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;</span><br><span class="line">    &lt;/properties&gt;</span><br><span class="line"></span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.junit.jupiter&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;junit-jupiter&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;5.4.2&lt;/version&gt;</span><br><span class="line">            &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line"></span><br><span class="line">    &lt;build&gt;</span><br><span class="line">        &lt;pluginManagement&gt;</span><br><span class="line">            &lt;plugins&gt;</span><br><span class="line">                &lt;plugin&gt;</span><br><span class="line">                    &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;</span><br><span class="line">                    &lt;version&gt;2.22.1&lt;/version&gt;</span><br><span class="line">                &lt;/plugin&gt;</span><br><span class="line">            &lt;/plugins&gt;</span><br><span class="line">        &lt;/pluginManagement&gt;</span><br><span class="line">    &lt;/build&gt;</span><br><span class="line">&lt;/project&gt;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>junit</tag>
+        <tag>test</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Nginx Configuration</title>
+    <url>/Tech/Web/Nginx-Configuration/</url>
+    <content><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>官方：<a href="http://nginx.org/en/docs/beginners_guide.html">http://nginx.org/en/docs/beginners_guide.html</a></p>
+<p>Nginx VS. Nginx Plus: <a href="https://www.nginx.com/products/nginx/#compare-versions">https://www.nginx.com/products/nginx/#compare-versions</a></p>
+<span id="more"></span>
+
+<h2 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h2><ul>
+<li>Directives: Simple (single‑line) directives; Block directives</li>
+<li>Contexts: A few top‑level directives, referred to as contexts, group together the directives that apply to different traffic types. Directives placed outside of these contexts are said to be in the main context.<ul>
+<li>events – General connection processing</li>
+<li>http – HTTP traffic</li>
+<li>mail – Mail traffic</li>
+<li>stream – TCP and UDP traffic</li>
+</ul>
+</li>
+<li>Virtual Servers: <code>server</code> blocks</li>
+<li>Inheritance: <ul>
+<li><blockquote>
+<p>See <a href="http://blog.martinfjordvald.com/2012/08/understanding-the-nginx-configuration-inheritance-model/">UNDERSTANDING THE NGINX CONFIGURATION INHERITANCE MODEL</a></p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Configuration-File"><a href="#Configuration-File" class="headerlink" title="Configuration File"></a>Configuration File</h2><p>Configuration file is typically one of &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;conf, &#x2F;etc&#x2F;nginx, or &#x2F;usr&#x2F;local&#x2F;etc&#x2F;nginx.</p>
+<p>文件最后一般有includes，例如：include &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;conf&#x2F;vhost&#x2F;*.conf;</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">user nobody; # a directive in the &#x27;main&#x27; context</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    # configuration of connection processing</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    # Configuration specific to HTTP and affecting all virtual servers  </span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line">        # configuration of HTTP virtual server 1       </span><br><span class="line">        location /one &#123;</span><br><span class="line">            # configuration for processing URIs starting with &#x27;/one&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">        location /two &#123;</span><br><span class="line">            # configuration for processing URIs starting with &#x27;/two&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">    server &#123;</span><br><span class="line">        # configuration of HTTP virtual server 2</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">stream &#123;</span><br><span class="line">    # Configuration specific to TCP/UDP and affecting all virtual servers</span><br><span class="line">    server &#123;</span><br><span class="line">        # configuration of TCP virtual server 1 </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>See <a href="https://docs.nginx.com/nginx/admin-guide/basic-functionality/managing-configuration-files/#sample-configuration-file-with-multiple-contexts">Sample Configuration File with Multiple Contexts</a></p>
+</blockquote>
+<h2 id="Debug-Nginx-Configuration"><a href="#Debug-Nginx-Configuration" class="headerlink" title="Debug Nginx Configuration"></a>Debug Nginx Configuration</h2><p>error_log 默认<code>[notice]</code>级别</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">error_log    /var/logs/nginx/error.log debug;</span><br></pre></td></tr></table></figure>
+
+<p>仅收集rewrite错误</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    error_log    /var/logs/nginx/error.log;</span><br><span class="line">    rewrite_log on;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>仅调试&#x2F;admin&#x2F;部分</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    #other config</span><br><span class="line">    error_log    /var/logs/nginx/example.com.error.log;</span><br><span class="line">    location /admin/ &#123; </span><br><span class="line">        error_log /var/logs/nginx/admin-error.log debug; </span><br><span class="line">    &#125;         </span><br><span class="line">    #other config</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Nginx 记录仅仅来自于你的 IP 的错误日志</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">events &#123;</span><br><span class="line">        debug_connection 1.2.3.4;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Virtual-Servers"><a href="#Virtual-Servers" class="headerlink" title="Virtual Servers"></a>Virtual Servers</h2><p>One or more server blocks define virtual servers</p>
+<h2 id="Serving-Static-Content"><a href="#Serving-Static-Content" class="headerlink" title="Serving Static Content"></a>Serving Static Content</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    location / &#123;</span><br><span class="line">        root /data/www;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location /images/ &#123;</span><br><span class="line">        root /data;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reverse-Proxy"><a href="#Reverse-Proxy" class="headerlink" title="Reverse Proxy"></a>Reverse Proxy</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">upstream tomcats &#123;</span><br><span class="line">    server 127.0.0.1:9001;</span><br><span class="line">    server 127.0.0.1:9002;</span><br><span class="line">&#125;</span><br><span class="line">location / &#123;</span><br><span class="line">    proxy_pass_header Server;</span><br><span class="line">    proxy_set_header Host $http_host;</span><br><span class="line">    proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">    proxy_pass http://tomcats;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>See <a href="https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/">NGINX Reverse Proxy</a><br>See <a href="http://nginx.org/en/docs/http/ngx_http_upstream_module.html#upstream">nginx http upstream module</a></p>
+</blockquote>
+<h3 id="Custom-Error-Page"><a href="#Custom-Error-Page" class="headerlink" title="Custom Error Page"></a>Custom Error Page</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">        proxy_pass http://example/;</span><br><span class="line">        proxy_set_header  X-Real-IP  $remote_addr;</span><br><span class="line">        proxy_set_header  X-Forwarded-For  $remote_addr;</span><br><span class="line">        error_page 502 503 504 = /maintainance.html;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location = /maintainance.html &#123;</span><br><span class="line">        root /path/to/html/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">500 502 503 504 @jump_to_error;</span><br><span class="line">location @jump_to_error &#123;    </span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Websocket-Support"><a href="#Websocket-Support" class="headerlink" title="Websocket Support"></a>Websocket Support</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">location ~ /ws &#123;</span><br><span class="line">  proxy_pass http://127.0.0.1:8888;</span><br><span class="line">  proxy_http_version 1.1;</span><br><span class="line">  proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">  proxy_set_header Connection &quot;upgrade&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Nginx-Error-Code"><a href="#Nginx-Error-Code" class="headerlink" title="Nginx Error Code"></a>Nginx Error Code</h2><blockquote>
+<p>See <a href="https://www.nginx.com/resources/wiki/extending/api/http/#http-return-codes">HTTP Return Codes</a></p>
+</blockquote>
+<h3 id="403-x2F-Forbidden-errors"><a href="#403-x2F-Forbidden-errors" class="headerlink" title="403 &#x2F; Forbidden errors"></a>403 &#x2F; Forbidden errors</h3><p>对于Nginx代理spring boot项目websocket出现403，修改配置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Pass the csrf token (see https://de.wikipedia.org/wiki/Cross-Site-Request-Forgery)</span><br><span class="line"># Default in Spring Boot and required. Without it nginx suppresses the value</span><br><span class="line">proxy_pass_header X-XSRF-TOKEN;</span><br><span class="line"></span><br><span class="line"># Set origin to the real instance, otherwise a of Spring security check will fail</span><br><span class="line"># Same value as defined in proxy_pass</span><br><span class="line">proxy_set_header Origin &quot;http://testsysten:8080&quot;;  </span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>See <a href="https://stackoverflow.com/questions/34136630/nginx-reverse-proxy-websocket-authentication-http-403">Nginx Reverse Proxy Websocket Authentication - HTTP 403
+</a></p>
+</blockquote>
+<h3 id="499-x2F-ClientClosed-Request"><a href="#499-x2F-ClientClosed-Request" class="headerlink" title="499 &#x2F; ClientClosed Request"></a>499 &#x2F; ClientClosed Request</h3><blockquote>
+<p>499 &#x2F; ClientClosed Request</p>
+<p>   An Nginx HTTP server extension. This codeis introduced to log the case when the connection is closed by client whileHTTP server is processing its request, making server unable to send the HTTP header back</p>
+</blockquote>
+<p>Solution</p>
+<ul>
+<li>解决server响应慢问题，在client close请求前返回</li>
+<li>nginx增加配置，不要主动关闭客户端的连接<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">proxy_ignore_client_abort  on; </span><br></pre></td></tr></table></figure></li>
+</ul>
+<blockquote>
+<p>See <a href="https://blog.51cto.com/yucanghai/1713803">服务器排障 之 nginx 499 错误的解决</a></p>
+</blockquote>
+<h3 id="504-x2F-Gateway-Timeout-error"><a href="#504-x2F-Gateway-Timeout-error" class="headerlink" title="504 &#x2F; Gateway Timeout error"></a>504 &#x2F; Gateway Timeout error</h3><p>For Nginx as Proxy for Apache web server, this is what you have to try to fix the 504 Gateway Timeout error:</p>
+<p>Add these variables to nginx.conf file:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">proxy_connect_timeout       300;</span><br><span class="line">proxy_send_timeout          300;</span><br><span class="line">proxy_read_timeout          300;</span><br><span class="line">send_timeout                300;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>See <a href="https://www.scalescale.com/tips/nginx/504-gateway-time-out-using-nginx/">How to Fix 504 Gateway Timeout using Nginx</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>nginx</tag>
+        <tag>configuration</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Grafana Plugin - Druid</title>
+    <url>/Tech/BigData/Visualization/Grafana-Plugin-Druid/</url>
+    <content><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>Grafana从apache druid数据源获取数据。找到以下官方插件，但是很久不更新了。</p>
+<blockquote>
+<p>官方插件开发：<a href="https://github.com/grafana-druid-plugin/druidplugin">https://github.com/grafana-druid-plugin/druidplugin</a><br>维护者相关讨论：<a href="https://github.com/grafana-druid-plugin/druidplugin/issues/91">https://github.com/grafana-druid-plugin/druidplugin/issues/91</a> </p>
+</blockquote>
+<p>其中一个贡献者另外维护的的forked version</p>
+<blockquote>
+<p>forked version：<a href="https://github.com/GoshPosh/druidplugin">https://github.com/GoshPosh/druidplugin</a> </p>
+</blockquote>
+<span id="more"></span>
+
+<p>两者对比如下表</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>grafana-druid-plugin&#x2F;druidplugin</th>
+<th>GoshPosh&#x2F;druidplugin</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>代码维护</td>
+<td>较旧</td>
+<td>较新</td>
+</tr>
+<tr>
+<td>dashboard variable支持</td>
+<td>无</td>
+<td>无</td>
+</tr>
+<tr>
+<td>Alert支持</td>
+<td>无</td>
+<td>支持 <a href="https://github.com/grafana/grafana/issues/6841">Issue</a> <a href="https://github.com/GoshPosh/druidplugin/pull/20">Un-merged Commit</a></td>
+</tr>
+</tbody></table>
+<h1 id="Compile-package-and-deployment"><a href="#Compile-package-and-deployment" class="headerlink" title="Compile, package and deployment"></a>Compile, package and deployment</h1><p>Clone from<br><a href="mailto:&#x67;&#x69;&#x74;&#x40;&#103;&#x69;&#x74;&#x68;&#117;&#98;&#46;&#x63;&#x6f;&#x6d;">&#x67;&#x69;&#x74;&#x40;&#103;&#x69;&#x74;&#x68;&#117;&#98;&#46;&#x63;&#x6f;&#x6d;</a>:aliceeee&#x2F;druidplugin.git<br>OR<br><a href="mailto:&#103;&#x69;&#x74;&#64;&#103;&#105;&#116;&#x68;&#x75;&#98;&#x2e;&#99;&#x6f;&#x6d;">&#103;&#x69;&#x74;&#64;&#103;&#105;&#116;&#x68;&#x75;&#98;&#x2e;&#99;&#x6f;&#x6d;</a>:GoshPosh&#x2F;druidplugin.git</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm install</span><br><span class="line">grunt</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">zip druidplugin.zip druidplugin</span><br></pre></td></tr></table></figure>
+<p>把zip放到grafana的plugins目录下，重启grafana</p>
+<h1 id="二次开发"><a href="#二次开发" class="headerlink" title="二次开发"></a>二次开发</h1><h2 id="Fix-dashboard-template-variables（Based-on-grafana-druid-plugin-x2F-druidplugin）"><a href="#Fix-dashboard-template-variables（Based-on-grafana-druid-plugin-x2F-druidplugin）" class="headerlink" title="Fix dashboard template variables（Based on grafana-druid-plugin&#x2F;druidplugin）"></a>Fix dashboard template variables（Based on grafana-druid-plugin&#x2F;druidplugin）</h2><blockquote>
+<p>讨论：<a href="https://github.com/grafana-druid-plugin/druidplugin/issues/47">https://github.com/grafana-druid-plugin/druidplugin/issues/47</a></p>
+</blockquote>
+<p>参考以上讨论中的实现</p>
+<figure class="highlight js"><figcaption><span>src/datasource.ts</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="title function_">metricFindQuery</span>(<span class="params">query: any</span>) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> druidSqlQuery = &#123;</span><br><span class="line">    <span class="attr">query</span>: <span class="variable language_">this</span>.<span class="property">templateSrv</span>.<span class="title function_">replace</span>(query),  <span class="comment">// 为了实现variable相互引用，实现级联查询</span></span><br><span class="line">    <span class="attr">context</span>: &#123;</span><br><span class="line">      <span class="string">&quot;sqlTimeZone&quot;</span>: <span class="variable language_">this</span>.<span class="property">periodGranularity</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">_druidQuery</span>(druidSqlQuery, <span class="string">&quot;/druid/v2/sql&quot;</span>)</span><br><span class="line">      .<span class="title function_">then</span>(</span><br><span class="line">        <span class="function"><span class="params">result</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">let</span> variableData =</span><br><span class="line">            result.<span class="property">data</span></span><br><span class="line">              .<span class="title function_">map</span>(<span class="function"><span class="params">row</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">let</span> vals = []</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">let</span> property <span class="keyword">in</span> row) &#123;</span><br><span class="line">                  vals.<span class="title function_">push</span>(&#123; <span class="string">&quot;text&quot;</span>: row[property] &#125;)</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> vals;</span><br><span class="line">              &#125;)</span><br><span class="line">              .<span class="title function_">reduce</span>(<span class="function">(<span class="params">a, b</span>) =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> a.<span class="title function_">concat</span>(b)</span><br><span class="line">              &#125;)</span><br><span class="line"></span><br><span class="line">          <span class="title function_">resolve</span>(variableData)</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="variable language_">console</span>.<span class="title function_">log</span>(error.<span class="property">data</span>.<span class="property">errorMessage</span>)</span><br><span class="line">          <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(error.<span class="property">data</span>.<span class="property">errorMessage</span>))</span><br><span class="line">        &#125;</span><br><span class="line">      )</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">_druidQuery</span>(<span class="params">query, path = <span class="string">&quot;/druid/v2/&quot;</span></span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> options = &#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">    <span class="attr">url</span>: <span class="variable language_">this</span>.<span class="property">url</span> + path,</span><br><span class="line">    <span class="attr">data</span>: query</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Make http request&quot;</span>);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(options);</span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">backendSrv</span>.<span class="title function_">datasourceRequest</span>(options);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><blockquote>
+<p>官方插件开发指南：<a href="https://grafana.com/docs/plugins/developing/development/">https://grafana.com/docs/plugins/developing/development/</a><br>官方datasource插件开发：<a href="https://grafana.com/docs/plugins/developing/datasources/">https://grafana.com/docs/plugins/developing/datasources/</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>druid</tag>
+        <tag>apache</tag>
+        <tag>grafana</tag>
+        <tag>plugin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Grafana</title>
+    <url>/Tech/BigData/Visualization/Grafana/</url>
+    <content><![CDATA[<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>Grafana - UI of analytics and monitoring<br>The open platform for beautiful analytics and monitoring<br>No matter where your data is, or what kind of database it lives in, you can bring it together with Grafana. Beautifully.</p>
+<span id="more"></span>
+
+<h1 id="Installation-6-1-6-on-CentOS7"><a href="#Installation-6-1-6-on-CentOS7" class="headerlink" title="Installation 6.1.6 on CentOS7"></a>Installation 6.1.6 on CentOS7</h1><blockquote>
+<p>See <a href="http://docs.grafana.org/installation/rpm/">http://docs.grafana.org/installation/rpm/</a></p>
+</blockquote>
+<p>下载</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://dl.grafana.com/oss/release/grafana-6.1.6.linux-amd64.tar.gz</span><br><span class="line">tar -zxvf grafana-6.1.6.linux-amd64.tar.gz</span><br><span class="line">cd grafana-6.1.6</span><br></pre></td></tr></table></figure>
+
+<p>启动服务</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./bin/grafana-server web</span><br></pre></td></tr></table></figure>
+
+<p>启动后，</p>
+<ul>
+<li>日志: .&#x2F;data&#x2F;log&#x2F;</li>
+<li>sqlite3 数据库：.&#x2F;data&#x2F;grafana.db</li>
+<li>插件：.&#x2F;data&#x2F;plugins&#x2F;</li>
+</ul>
+<h1 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h1><blockquote>
+<p>See <a href="https://grafana.com/docs/installation/configuration/">https://grafana.com/docs/installation/configuration/</a></p>
+</blockquote>
+<p>Default configuration from <code>$WORKING_DIR/conf/defaults.ini</code><br>Custom configuration from <code>$WORKING_DIR/conf/custom.ini</code></p>
+<p>Example</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[database]</span><br><span class="line">url=mysql://user:pwd@ip:3306/grafana</span><br><span class="line">type=mysql</span><br><span class="line"></span><br><span class="line">[auth.anonymous]</span><br><span class="line">enabled = true</span><br><span class="line">org_role = Viewer</span><br><span class="line"></span><br><span class="line">[security]</span><br><span class="line"># set to true if you want to allow browsers to render Grafana in a &lt;frame&gt;, &lt;iframe&gt;, &lt;embed&gt; or &lt;object&gt;. default is false.</span><br><span class="line"># https://github.com/grafana/grafana/issues/14189</span><br><span class="line">allow_embedding = true</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义配置"><a href="#自定义配置" class="headerlink" title="自定义配置"></a>自定义配置</h2><p>会覆盖默认配置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">touch conf/custom.ini</span><br></pre></td></tr></table></figure>
+
+<h2 id="默认账号"><a href="#默认账号" class="headerlink" title="默认账号"></a>默认账号</h2><p>默认登录账号</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat conf/defaults.ini |grep admin</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h1><blockquote>
+<p>Install Plugins: <a href="http://docs.grafana.org/plugins/installation/">http://docs.grafana.org/plugins/installation/</a><br>Plugin Repo: <a href="https://grafana.com/plugins">https://grafana.com/plugins</a></p>
+</blockquote>
+<h2 id="手动安装插件"><a href="#手动安装插件" class="headerlink" title="手动安装插件"></a>手动安装插件</h2><p>下载插件的git代码，目录文件放到grafana.ini上面配置的plugin地址（例如：&#x2F;var&#x2F;lib&#x2F;grafana&#x2F;plugins），重启服务即可</p>
+<p>插件位置配置，例如&#x2F;etc&#x2F;grafana&#x2F;grafana.ini</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#################################### Paths ####################################</span><br><span class="line">[paths]</span><br><span class="line"></span><br><span class="line"># Directory where grafana will automatically scan and look for plugins</span><br><span class="line">plugins = /var/lib/grafana/plugins</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用grafana-cli安装插件"><a href="#使用grafana-cli安装插件" class="headerlink" title="使用grafana-cli安装插件"></a>使用grafana-cli安装插件</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">./bin/grafana-cli plugins install abhisant-druid-datasource</span><br></pre></td></tr></table></figure>
+
+<h2 id="插件：Pie-Chart"><a href="#插件：Pie-Chart" class="headerlink" title="插件：Pie Chart"></a>插件：Pie Chart</h2><blockquote>
+<p><a href="https://grafana.com/plugins/grafana-piechart-panel">https://grafana.com/plugins/grafana-piechart-panel</a></p>
+</blockquote>
+<p>提供饼图</p>
+<h2 id="插件：Druid"><a href="#插件：Druid" class="headerlink" title="插件：Druid"></a>插件：Druid</h2><blockquote>
+<p><a href="https://grafana.com/plugins/abhisant-druid-datasource">https://grafana.com/plugins/abhisant-druid-datasource</a><br>维护者：<a href="https://github.com/grafana-druid-plugin/druidplugin/issues/91">https://github.com/grafana-druid-plugin/druidplugin/issues/91</a></p>
+</blockquote>
+<p>使用druid作为datasource</p>
+<p>问题：<br>和dashboard的variable不能很好整合，方案讨论：<a href="https://github.com/grafana-druid-plugin/druidplugin/issues/47">https://github.com/grafana-druid-plugin/druidplugin/issues/47</a></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>官网： <a href="https://grafana.com/">https://grafana.com/</a><br>官网文档：<a href="http://docs.grafana.org/">http://docs.grafana.org/</a><br>Getting started: <a href="http://docs.grafana.org/guides/getting_started/">http://docs.grafana.org/guides/getting_started/</a><br>Alert配置：<a href="https://blog.csdn.net/Jailman/article/details/78920166">https://blog.csdn.net/Jailman/article/details/78920166</a></p>
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>startup</tag>
+        <tag>grafana</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Superset</title>
+    <url>/Tech/BigData/Visualization/Superset/</url>
+    <content><![CDATA[<p>Apache Superset (incubating) is a modern, enterprise-ready business intelligence web application</p>
+<blockquote>
+<p>See <a href="https://github.com/apache/incubator-superset">https://github.com/apache/incubator-superset</a></p>
+</blockquote>
+<span id="more"></span>
+
+
+<h1 id="Install-superset-0-28-1"><a href="#Install-superset-0-28-1" class="headerlink" title="Install superset 0.28.1"></a>Install superset 0.28.1</h1><p>环境<br>CentOS 7<br>python 3.6<br>virtualenv-16.5.0</p>
+<p>安装步骤</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">sudo yum upgrade python-setuptools</span><br><span class="line">sudo yum install gcc gcc-c++ libffi-devel python-devel python-pip python-wheel openssl-devel libsasl2-devel openldap-devel <span class="comment"># 或者python36-pip/python36-devel等，根据版本选择</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># install virtualenv(略)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># active virtualenv</span></span><br><span class="line"><span class="built_in">source</span> <span class="variable">$&#123;virtualenv&#125;</span>/bin/activate</span><br><span class="line"></span><br><span class="line">pip install --upgrade setuptools pip </span><br><span class="line"></span><br><span class="line"><span class="comment"># Install superset</span></span><br><span class="line">pip install superset</span><br><span class="line">superset version</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create an admin user (you will be prompted to set a username, first and last name before setting a password)</span></span><br><span class="line">fabmanager create-admin --app superset</span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize the database</span></span><br><span class="line">superset db upgrade</span><br><span class="line"></span><br><span class="line"><span class="comment"># Load some data to play with</span></span><br><span class="line">superset load_examples</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create default roles and permissions</span></span><br><span class="line">superset init</span><br><span class="line"></span><br><span class="line"><span class="comment"># To start a development web server on port 8088, use -p to bind to another port</span></span><br><span class="line">superset runserver -d</span><br></pre></td></tr></table></figure>
+
+<p>启动后，数据库sqlite:&#x2F;&#x2F;&#x2F;&#x2F;root&#x2F;.superset&#x2F;superset.db</p>
+<p>访问：<a href="http://ip_address:8088/">http://ip_address:8088</a></p>
+<h1 id="Startup"><a href="#Startup" class="headerlink" title="Startup"></a>Startup</h1><h2 id="创建Druid数据源"><a href="#创建Druid数据源" class="headerlink" title="创建Druid数据源"></a>创建Druid数据源</h2><ol>
+<li>Sources &gt; Druid Clusters &gt; add</li>
+<li>Sources &gt; Scan New DataSources</li>
+</ol>
+<h1 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h1><ul>
+<li>pip install superset 报错：pyconfig.h: No such file or directory</li>
+</ul>
+<p>需要安装python-devel</p>
+<ul>
+<li>fabmanager create-admin –app superset 报错：Was unable to import superset Error: cannot import name ‘_maybe_box_datetimelike’</li>
+</ul>
+<p>这是 pandas 库版本太高导致的，需要安装低版本的 pandas 库</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ pip list | grep pandas</span><br><span class="line">pandas                 0.24.2  </span><br><span class="line"></span><br><span class="line">$ pip install pandas==0.23.4</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>superset db upgrade 报错：sqlalchemy.exc.InvalidRequestError: Can’t determine which FROM clause to join from, there are multiple FROMS which can join to this entity.</li>
+</ul>
+<p>SQLAlchemy 库版本太高导致的，需要安装低版本的 SQLAlchemy 库</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">$ pip list | grep -i sqlalchemy</span><br><span class="line">Flask-SQLAlchemy       2.4.0   </span><br><span class="line">marshmallow-sqlalchemy 0.16.3  </span><br><span class="line">SQLAlchemy             1.3.3   </span><br><span class="line">SQLAlchemy-Utils       0.33.11 </span><br><span class="line"></span><br><span class="line">$ pip install SQLAlchemy==1.2.18</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>dashboard中使用filter组件筛选，会出现组件空白<br><a href="https://github.com/apache/incubator-superset/issues/6165">https://github.com/apache/incubator-superset/issues/6165</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>startup</tag>
+        <tag>superset</tag>
+        <tag>bi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Maven Plugin Most in Use</title>
+    <url>/Tech/Java/MavenGradle/Maven-Plugin-Most-in-Use/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<h1 id="maven-surefire-plugin"><a href="#maven-surefire-plugin" class="headerlink" title="maven-surefire-plugin"></a>maven-surefire-plugin</h1><blockquote>
+<p>See <a href="https://maven.apache.org/surefire/maven-surefire-plugin/index.html">https://maven.apache.org/surefire/maven-surefire-plugin/index.html</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>plugin</tag>
+        <tag>maven</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>XML-Based Swagger 2 Configuration With Spring MVC</title>
+    <url>/Tech/Java/Spring/XML-Based-Swagger-2-Configuration-With-Spring-MVC/</url>
+    <content><![CDATA[<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><blockquote>
+<p><a href="https://dzone.com/articles/xml-based-swagger-2-configuration-with-spring-mvc">XML-Based Swagger 2 Configuration With Spring MVC</a></p>
+</blockquote>
+<p>Below is the step-by-step guide to configuring Swagger 2 with Spring MVC using an XML-based configuration.</p>
+<span id="more"></span>
+
+<h1 id="Env"><a href="#Env" class="headerlink" title="Env"></a>Env</h1><p>spring version: 4.0.5.RELEASE</p>
+<p>servlet-api: 2.5</p>
+<p>Springfox-swagger: 2.6.1</p>
+<h1 id="Steps"><a href="#Steps" class="headerlink" title="Steps"></a>Steps</h1><figure class="highlight xml"><figcaption><span>pom.xml</span></figcaption><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">&lt;!--Dependency for swagger 2 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.springfox<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springfox-swagger2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.6.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--Dependency for swagger ui --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.springfox<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springfox-swagger-ui<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.6.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><figcaption><span>servlet-context.xml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--Here com.example.service is the base package for swagger configuration --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;com.example.service&quot;</span> <span class="attr">use-default-filters</span>=<span class="string">&quot;false&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">context:include-filter</span> <span class="attr">type</span>=<span class="string">&quot;annotation&quot;</span> <span class="attr">expression</span>=<span class="string">&quot;org.springframework.stereotype.Controller&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">context:include-filter</span> <span class="attr">type</span>=<span class="string">&quot;annotation&quot;</span> <span class="attr">expression</span>=<span class="string">&quot;org.springframework.web.bind.annotation.ControllerAdvice&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- for swagger --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;swagger2Config&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">class</span>=<span class="string">&quot;springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:resources</span> <span class="attr">order</span>=<span class="string">&quot;1&quot;</span> <span class="attr">location</span>=<span class="string">&quot;/resources/&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">mapping</span>=<span class="string">&quot;/resources/**&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:resources</span> <span class="attr">mapping</span>=<span class="string">&quot;swagger-ui.html&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">location</span>=<span class="string">&quot;classpath:/META-INF/resources/&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:resources</span> <span class="attr">mapping</span>=<span class="string">&quot;/webjars/**&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">location</span>=<span class="string">&quot;classpath:/META-INF/resources/webjars/&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">mvc:default-servlet-handler</span> /&gt;</span>                  </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><figcaption><span>web.xml</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>xxx<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:servlet-context.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Start server and visit <code>http://&lt;Your Host&gt;:&lt;Port&gt;/&lt;Context&gt;/Swagger-ui.html </code></p>
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+        <tag>mvc</tag>
+        <tag>swagger2</tag>
+      </tags>
+  </entry>
+</search>
