@@ -4,7 +4,6 @@ tags:
   - grafana
   - plugin
   - druid
-  - apache
 categories:
   - Tech
 date: 2019-05-22 15:12:25
@@ -16,6 +15,7 @@ date: 2019-05-22 15:12:25
 Grafana从apache druid数据源获取数据。找到以下官方插件，但是很久不更新了。
 
 > 官方插件开发：https://github.com/grafana-druid-plugin/druidplugin
+> 
 > 维护者相关讨论：https://github.com/grafana-druid-plugin/druidplugin/issues/91 
 
 其中一个贡献者另外维护的的forked version
