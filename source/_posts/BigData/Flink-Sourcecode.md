@@ -24,7 +24,7 @@ Flink源码编译
 
 Environment
 - jdk8
-- 机器内存最好>3G
+- 机器内存最好>3G，否则容易出现内存不足
 
 ```sh
 git clone https://github.com/apache/flink.git
