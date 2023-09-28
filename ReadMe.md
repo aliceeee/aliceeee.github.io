@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/aliceeee/aliceeee.github.io.svg?branch=hexo_version)](https://travis-ci.org/aliceeee/aliceeee.github.io)
+[![Deploy Status](https://github.com/aliceeee/aliceeee.github.io/actions/workflows/workflow.yml/badge.svg?branch=hexo_version)](https://github.com/aliceeee/aliceeee.github.io/actions/workflows/workflow.yml)
 
 # 1 Introduction
 
