@@ -213,10 +213,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2023-09-28 16:54:13 / Modified: 09:06:17" itemprop="dateCreated datePublished" datetime="2023-09-28T16:54:13+00:00">2023-09-28</time>
+              <time title="Created: 2023-09-28 16:54:13" itemprop="dateCreated datePublished" datetime="2023-09-28T16:54:13+00:00">2023-09-28</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-10-07 02:31:16" itemprop="dateModified" datetime="2023-10-07T02:31:16+00:00">2023-10-07</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -253,52 +259,14 @@
 
       
           <h1 id="常用Java性能工具"><a href="#常用Java性能工具" class="headerlink" title="常用Java性能工具"></a>常用Java性能工具</h1><h2 id="jps-JVM-Process-Status-Tool"><a href="#jps-JVM-Process-Status-Tool" class="headerlink" title="jps - JVM Process Status Tool"></a>jps - JVM Process Status Tool</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">jps </span><br><span class="line"></span><br><span class="line">jps -v  <span class="comment"># 列出jvm参数</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="jstat-查看gc"><a href="#jstat-查看gc" class="headerlink" title="jstat - 查看gc"></a>jstat - 查看gc</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ jstat -gcutil 451 1000 5 <span class="comment"># 进程451号，间隔1000ms，一共5次</span></span><br><span class="line">  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT   </span><br><span class="line">  0.00 100.00  93.96   7.54  94.57  92.19    573   16.549     0    0.000   16.549</span><br><span class="line">  0.00 100.00  93.96   7.54  94.57  92.19    573   16.549     0    0.000   16.549</span><br><span class="line">  0.00 100.00  93.96   7.54  94.57  92.19    573   16.549     0    0.000   16.549</span><br><span class="line">  0.00 100.00  93.96   7.54  94.57  92.19    573   16.549     0    0.000   16.549</span><br><span class="line">  0.00 100.00  94.12   7.54  94.57  92.19    573   16.549     0    0.000   16.549</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>S0: 新生代中Survivor space 0区已使用空间的百分比</li>
-<li>S1: 新生代中Survivor space 1区已使用空间的百分比</li>
-<li>E: 新生代已使用空间的百分比</li>
-<li>O: 老年代已使用空间的百分比</li>
-<li>P: 永久带已使用空间的百分比</li>
-<li>YGC: 从应用程序启动到当前，发生Yang GC 的次数</li>
-<li>YGCT: 从应用程序启动到当前，Yang GC所用的时间【单位秒】</li>
-<li>FGC: 从应用程序启动到当前，发生Full GC的次数</li>
-<li>FGCT: 从应用程序启动到当前，Full GC所用的时间</li>
-<li>GCT: 从应用程序启动到当前，用于垃圾回收的总时间【单位秒】</li>
-</ul>
-<h2 id="async-profiler"><a href="#async-profiler" class="headerlink" title="async-profiler"></a>async-profiler</h2><blockquote>
-<p>官网：<a target="_blank" rel="noopener" href="https://github.com/jvm-profiling-tools/async-profiler">https://github.com/jvm-profiling-tools/async-profiler</a></p>
-<p>This project is a low overhead sampling profiler for Java that does not suffer from Safepoint bias problem. It features HotSpot-specific APIs to collect stack traces and to track memory allocations. The profiler works with OpenJDK, Oracle JDK and other Java runtimes based on the HotSpot JVM.</p>
-</blockquote>
-<p>仅支持macOS、Linux</p>
-<h2 id="jmap-进程dump-x2F-对象统计"><a href="#jmap-进程dump-x2F-对象统计" class="headerlink" title="jmap - 进程dump&#x2F;对象统计"></a>jmap - 进程dump&#x2F;对象统计</h2><blockquote>
-<p>jvm 性能调优工具之 jmap:<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a4ad53179df3">https://www.jianshu.com/p/a4ad53179df3</a></p>
-</blockquote>
-<h3 id="查看进程的内存映像信息"><a href="#查看进程的内存映像信息" class="headerlink" title="查看进程的内存映像信息"></a>查看进程的内存映像信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ jmap 129</span><br><span class="line">Attaching to process ID 129, please wait...</span><br><span class="line">Debugger attached successfully.</span><br><span class="line">Server compiler detected.</span><br><span class="line">JVM version is 25.262-b10</span><br><span class="line">0x0000150b88612000      86K     /usr/lib64/libgcc_s-4.8.5-20150702.so.1</span><br><span class="line">0x0000150b88a76000      108K    /usr/lib64/libresolv-2.17.so</span><br><span class="line">0x0000150b88c90000      27K     /usr/lib64/libnss_dns-2.17.so</span><br><span class="line">略</span><br></pre></td></tr></table></figure>
-
-<h3 id="显示Java堆详细信息"><a href="#显示Java堆详细信息" class="headerlink" title="显示Java堆详细信息"></a>显示Java堆详细信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">$ jmap -heap 129</span><br><span class="line">Attaching to process ID 129, please wait...</span><br><span class="line">Debugger attached successfully.</span><br><span class="line">Server compiler detected.</span><br><span class="line">JVM version is 25.262-b10</span><br><span class="line"></span><br><span class="line">using thread-local object allocation.  </span><br><span class="line">Garbage-First (G1) GC with 4 thread(s) 使用的GC算法</span><br><span class="line"></span><br><span class="line">Heap Configuration: 堆配置</span><br><span class="line">   MinHeapFreeRatio         = 40</span><br><span class="line">   MaxHeapFreeRatio         = 70</span><br><span class="line">   MaxHeapSize              = 3623878656 (3456.0MB)</span><br><span class="line">   NewSize                  = 1363144 (1.2999954223632812MB)</span><br><span class="line">   MaxNewSize               = 2173698048 (2073.0MB)</span><br><span class="line">   OldSize                  = 5452592 (5.1999969482421875MB)</span><br><span class="line">   NewRatio                 = 2</span><br><span class="line">   SurvivorRatio            = 8</span><br><span class="line">   MetaspaceSize            = 21807104 (20.796875MB)</span><br><span class="line">   CompressedClassSpaceSize = 1065353216 (1016.0MB)</span><br><span class="line">   MaxMetaspaceSize         = 1073741824 (1024.0MB)</span><br><span class="line">   G1HeapRegionSize         = 1048576 (1.0MB)</span><br><span class="line"></span><br><span class="line">Heap Usage: 各内存区域内存使用</span><br><span class="line">G1 Heap:</span><br><span class="line">   regions  = 3456</span><br><span class="line">   capacity = 3623878656 (3456.0MB)</span><br><span class="line">   used     = 41143808 (39.23779296875MB)</span><br><span class="line">   free     = 3582734848 (3416.76220703125MB)</span><br><span class="line">   1.1353528058087383% used</span><br><span class="line">G1 Young Generation:</span><br><span class="line">Eden Space:</span><br><span class="line">   regions  = 9</span><br><span class="line">   capacity = 166723584 (159.0MB)</span><br><span class="line">   used     = 9437184 (9.0MB)</span><br><span class="line">   free     = 157286400 (150.0MB)</span><br><span class="line">   5.660377358490566% used</span><br><span class="line">Survivor Space:</span><br><span class="line">   regions  = 22</span><br><span class="line">   capacity = 23068672 (22.0MB)</span><br><span class="line">   used     = 23068672 (22.0MB)</span><br><span class="line">   free     = 0 (0.0MB)</span><br><span class="line">   100.0% used</span><br><span class="line">G1 Old Generation:</span><br><span class="line">   regions  = 9</span><br><span class="line">   capacity = 3434086400 (3275.0MB)</span><br><span class="line">   used     = 8637952 (8.23779296875MB)</span><br><span class="line">   free     = 3425448448 (3266.76220703125MB)</span><br><span class="line">   0.2515356631679389% used</span><br><span class="line"></span><br><span class="line">16840 interned Strings occupying 1780664 bytes.</span><br></pre></td></tr></table></figure>
-
-<h3 id="显示堆中对象的统计信息"><a href="#显示堆中对象的统计信息" class="headerlink" title="显示堆中对象的统计信息"></a>显示堆中对象的统计信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ jmap -histo:live  129</span><br><span class="line"></span><br><span class="line"> num     #instances         #bytes  class name</span><br><span class="line">----------------------------------------------</span><br><span class="line">   1:         36110        3324080  [C</span><br><span class="line">   2:         22965        1469760  java.nio.DirectByteBuffer</span><br><span class="line">   3:          2711        1429104  [B</span><br><span class="line">   4:         22937        1284472  org.apache.flink.core.memory.MemorySegment</span><br><span class="line">   5:          8940         992232  java.lang.Class</span><br><span class="line">   6:         22962         918480  sun.misc.Cleaner</span><br><span class="line">   7:            28         917952  [Ljava.util.concurrent.ForkJoinTask;</span><br><span class="line">   8:         36067         865608  java.lang.String</span><br><span class="line">   9:          8017         775248  [Ljava.lang.Object;</span><br><span class="line">  10:         22959         734688  java.nio.DirectByteBuffer$Deallocator</span><br><span class="line">略</span><br></pre></td></tr></table></figure>
-
-<h3 id="打印类加载器信息"><a href="#打印类加载器信息" class="headerlink" title="打印类加载器信息"></a>打印类加载器信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ jmap -finalizerinfo 129</span><br><span class="line">Attaching to process ID 129, please wait...</span><br><span class="line">Debugger attached successfully.</span><br><span class="line">Server compiler detected.</span><br><span class="line">JVM version is 25.262-b10</span><br><span class="line">Number of objects pending for finalization: 0  -- 说明当前F-QUEUE队列中并没有等待Fializer线程执行final</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="生成堆转储快照dump文件"><a href="#生成堆转储快照dump文件" class="headerlink" title="生成堆转储快照dump文件"></a>生成堆转储快照dump文件</h3><ul>
-<li>Java虚拟机的运行时快照</li>
-<li>heap如果比较大的话，就会导致这个过程比较耗时</li>
-<li>执行的过程中为了保证dump的信息是可靠的，所以会暂停应用， <strong>线上系统慎用</strong>。</li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">jmap -dump:format=b,file=heapdump.phrof 129</span><br><span class="line">jmap -dump:format=b,file=heapdump.phrof,live 129  <span class="comment"># 进活动线程</span></span><br><span class="line"></span><br><span class="line">jmap -dump:live,format=b,file=heap.bin 111</span><br><span class="line"></span><br><span class="line">jmap -dump:format=b,file=heapdump.bin &lt;app_pid&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="查看dump文件"><a href="#查看dump文件" class="headerlink" title="查看dump文件"></a>查看dump文件</h3><p>方案一：使用jvisualvm查看dump文件（文件&gt;加载，选中输出的dump文件）</p>
-<p>方案二：jhat查看dump文件(如果解析过程中出现内存不足，需要加大内存)。通过浏览器访问 <a target="_blank" rel="noopener" href="http://ip:7000/%E5%8D%B3%E5%8F%AF%E7%9C%8B%E5%88%B0%E5%88%86%E6%9E%90%E7%BB%93%E6%9E%9C">http://ip:7000/即可看到分析结果</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; jhat -J-mx512m heap.bin</span><br><span class="line">...</span><br><span class="line">.....Started HTTP server on port 7000</span><br><span class="line">Server is ready.</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="jstack-应用堆栈"><a href="#jstack-应用堆栈" class="headerlink" title="jstack - 应用堆栈"></a>jstack - 应用堆栈</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstack -l pid</span><br></pre></td></tr></table></figure>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Tech/Java/JavaPerformance/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -348,7 +316,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-09-28 09:06:17" itemprop="dateModified" datetime="2023-09-28T09:06:17+00:00">2023-09-28</time>
+                <time title="Modified: 2023-10-07 02:31:16" itemprop="dateModified" datetime="2023-10-07T02:31:16+00:00">2023-10-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -448,7 +416,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-09-28 09:06:17" itemprop="dateModified" datetime="2023-09-28T09:06:17+00:00">2023-09-28</time>
+                <time title="Modified: 2023-10-07 02:31:16" itemprop="dateModified" datetime="2023-10-07T02:31:16+00:00">2023-10-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -545,7 +513,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-09-28 09:06:17" itemprop="dateModified" datetime="2023-09-28T09:06:17+00:00">2023-09-28</time>
+                <time title="Modified: 2023-10-07 02:31:16" itemprop="dateModified" datetime="2023-10-07T02:31:16+00:00">2023-10-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -636,7 +604,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-09-28 09:06:17" itemprop="dateModified" datetime="2023-09-28T09:06:17+00:00">2023-09-28</time>
+                <time title="Modified: 2023-10-07 02:31:16" itemprop="dateModified" datetime="2023-10-07T02:31:16+00:00">2023-10-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -737,7 +705,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-09-28 09:06:17" itemprop="dateModified" datetime="2023-09-28T09:06:17+00:00">2023-09-28</time>
+                <time title="Modified: 2023-10-07 02:31:16" itemprop="dateModified" datetime="2023-10-07T02:31:16+00:00">2023-10-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -834,7 +802,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-09-28 09:06:17" itemprop="dateModified" datetime="2023-09-28T09:06:17+00:00">2023-09-28</time>
+                <time title="Modified: 2023-10-07 02:31:16" itemprop="dateModified" datetime="2023-10-07T02:31:16+00:00">2023-10-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -941,7 +909,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-09-28 09:06:17" itemprop="dateModified" datetime="2023-09-28T09:06:17+00:00">2023-09-28</time>
+                <time title="Modified: 2023-10-07 02:31:16" itemprop="dateModified" datetime="2023-10-07T02:31:16+00:00">2023-10-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1039,7 +1007,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-09-28 09:06:17" itemprop="dateModified" datetime="2023-09-28T09:06:17+00:00">2023-09-28</time>
+                <time title="Modified: 2023-10-07 02:31:16" itemprop="dateModified" datetime="2023-10-07T02:31:16+00:00">2023-10-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1136,7 +1104,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-09-28 09:06:17" itemprop="dateModified" datetime="2023-09-28T09:06:17+00:00">2023-09-28</time>
+                <time title="Modified: 2023-10-07 02:31:16" itemprop="dateModified" datetime="2023-10-07T02:31:16+00:00">2023-10-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
