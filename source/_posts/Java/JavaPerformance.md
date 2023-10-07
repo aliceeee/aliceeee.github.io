@@ -18,6 +18,7 @@ jps
 
 jps -v  # 列出jvm参数
 ```
+<!-- more -->
 
 ## jstat - 查看gc
 
